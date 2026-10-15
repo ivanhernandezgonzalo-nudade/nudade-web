@@ -981,7 +981,8 @@ class Component extends DCLogic {
     /* ---------- VIVIENDAS (datos externos: viviendas.json) ---------- */
     const grid = $('#ndVivGrid');
     /* ---------- Visor de fotos ampliadas ---------- */
-    const openLB = (srcs, start, alt) => {
+    const openLB = (srcs, start, alt, flags) => {
+      flags = flags || [];
       let i = start;
       const ov = document.createElement('div');
       ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Fotos de la vivienda');
@@ -990,9 +991,11 @@ class Component extends DCLogic {
       ov.innerHTML = '<img alt="" style="max-width:92vw;max-height:84vh;object-fit:contain;border-radius:6px;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);user-select:none">'
         + '<button data-lb="x" aria-label="Cerrar" style="' + btn + ';top:18px;right:18px">&times;</button>'
         + (srcs.length > 1 ? '<button data-lb="p" aria-label="Foto anterior" style="' + btn + ';left:18px;top:50%;transform:translateY(-50%)">&lsaquo;</button><button data-lb="n" aria-label="Foto siguiente" style="' + btn + ';right:18px;top:50%;transform:translateY(-50%)">&rsaquo;</button>' : '')
-        + '<span style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(245,242,236,.85);font-size:14px;font-weight:600;letter-spacing:.06em"></span>';
+        + '<span style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(245,242,236,.85);font-size:14px;font-weight:600;letter-spacing:.06em"></span>'
+        + '<div data-lb="r" style="display:none;position:absolute;top:22px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 150px);text-align:center;background:#F5F2EC;color:#1F3A2E;font-size:14px;font-weight:700;line-height:1.35;padding:10px 18px;border-radius:999px;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)">Recreación virtual de una posible reforma · No refleja el estado actual</div>';
       const img = ov.querySelector('img'), cnt = ov.querySelector('span');
-      const show = () => { img.src = srcs[i]; img.alt = alt + ' (foto ' + (i + 1) + ' de ' + srcs.length + ')'; cnt.textContent = srcs.length > 1 ? (i + 1) + ' / ' + srcs.length : ''; };
+      const rLbl = ov.querySelector('[data-lb="r"]');
+      const show = () => { rLbl.style.display = flags[i] ? 'block' : 'none'; img.src = srcs[i]; img.alt = alt + ' (foto ' + (i + 1) + ' de ' + srcs.length + ')'; cnt.textContent = srcs.length > 1 ? (i + 1) + ' / ' + srcs.length : ''; };
       const step = (d) => { i = (i + d + srcs.length) % srcs.length; show(); };
       const close = () => { document.removeEventListener('keydown', onKey); ov.style.opacity = '0'; document.body.style.overflow = ''; setTimeout(() => ov.remove(), 250); };
       const onKey = (e) => { if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); };
@@ -1011,7 +1014,8 @@ class Component extends DCLogic {
         if (w.dataset.zoom) return; w.dataset.zoom = '1';
         const imgs = Array.from(w.querySelectorAll('img'));
         const srcs = imgs.map(im => im.getAttribute('src'));
-        imgs.forEach((im, k) => { im.style.cursor = 'zoom-in'; im.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openLB(srcs, k, (im.getAttribute('alt') || 'Vivienda').replace(/ \(foto.*$/, '')); }); });
+        const flags = imgs.map(im => im.getAttribute('data-render') === '1');
+        imgs.forEach((im, k) => { im.style.cursor = 'zoom-in'; im.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openLB(srcs, k, (im.getAttribute('alt') || 'Vivienda').replace(/ \(foto.*$/, ''), flags); }); });
       });
     };
     function vivCols(g) {
@@ -1044,17 +1048,20 @@ class Component extends DCLogic {
       const imgF = sold ? ';filter:grayscale(.55) brightness(.82)' : '';
       const ctaTxt = sold ? 'Ver viviendas similares' : 'Solicitar informaci\u00f3n';
       const fotos = (v.fotos && v.fotos.length) ? v.fotos : (v.foto ? [v.foto] : []);
+      const renders = v.renders || [];
+      const isR = (f) => renders.indexOf(f) !== -1;
+      const rTag = '<span style="position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;background:rgba(15,22,18,.74);color:#F5F2EC;font-size:11.5px;font-weight:700;letter-spacing:.03em;padding:6px 11px;border-radius:999px;pointer-events:none;backdrop-filter:blur(4px)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px" aria-hidden="true"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/></svg>Recreación · posible reforma</span>';
       const alt = (v.titulo || v.localidad || 'Vivienda');
       const media = fotos.length > 1
         ? '<div class="ndGalWrap' + (v.sinFotos ? '' : ' ndZoom') + '" style="position:relative;aspect-ratio:4/3;overflow:hidden">'
           + '<div class="ndGal" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch">'
-          + fotos.map((f, i) => '<img src="' + f + '" alt="' + alt + ' (foto ' + (i + 1) + ' de ' + fotos.length + ')" loading="' + (i ? 'lazy' : 'eager') + '" style="flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start' + imgF + '">').join('')
+          + fotos.map((f, i) => '<div style="flex:0 0 100%;width:100%;height:100%;position:relative;scroll-snap-align:start"><img src="' + f + '" alt="' + alt + ' (foto ' + (i + 1) + ' de ' + fotos.length + (isR(f) ? ', recreación de una posible reforma' : '') + ')"' + (isR(f) ? ' data-render="1"' : '') + ' loading="' + (i ? 'lazy' : 'eager') + '" style="width:100%;height:100%;object-fit:cover;display:block' + imgF + '">' + (isR(f) ? rTag : '') + '</div>').join('')
           + '</div>'
           + '<button class="ndGalP" aria-label="Foto anterior" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:none;background:rgba(245,242,236,.92);color:#1F3A2E;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px -4px rgba(15,22,18,.45)">&lsaquo;</button>'
           + '<button class="ndGalN" aria-label="Foto siguiente" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:none;background:rgba(245,242,236,.92);color:#1F3A2E;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px -4px rgba(15,22,18,.45)">&rsaquo;</button>'
           + '<span class="ndGalC" style="position:absolute;right:12px;bottom:12px;background:rgba(15,22,18,.62);color:#F5F2EC;font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:999px;pointer-events:none">1 / ' + fotos.length + '</span>'
         : fotos.length
-          ? '<div class="' + (v.sinFotos ? '' : 'ndZoom') + '" style="position:relative;aspect-ratio:4/3;overflow:hidden"><img src="' + fotos[0] + '" alt="' + alt + '" loading="lazy" style="width:100%;height:100%;object-fit:cover' + imgF + '">'
+          ? '<div class="' + (v.sinFotos ? '' : 'ndZoom') + '" style="position:relative;aspect-ratio:4/3;overflow:hidden"><img src="' + fotos[0] + '" alt="' + alt + '"' + (isR(fotos[0]) ? ' data-render="1"' : '') + ' loading="lazy" style="width:100%;height:100%;object-fit:cover' + imgF + '">' + (isR(fotos[0]) ? rTag : '')
           : '<div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:repeating-linear-gradient(135deg,#ECE7DD,#ECE7DD 12px,#E4DED2 12px,#E4DED2 24px);display:flex;align-items:flex-end;justify-content:center;padding:18px"><span style="font-family:ui-monospace,monospace;font-size:11.5px;color:#5A6B7D;background:rgba(245,242,236,.9);padding:6px 11px;border-radius:5px">foto · ' + (v.localidad || '') + '</span>';
       const amen = [];
       if (v.habitaciones) amen.push(v.habitaciones + ' hab.');
@@ -1066,7 +1073,7 @@ class Component extends DCLogic {
       return '<article data-reveal class="ndVivCard" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(31,58,46,.1);display:flex;flex-direction:column;transition:transform .4s ease, box-shadow .4s ease">'
         + media
         + ribbon
-        + '<span style="position:absolute;top:14px;left:14px;background:rgba(31,58,46,.9);color:#F5F2EC;font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:6px 13px;border-radius:999px;backdrop-filter:blur(4px)">Nuda propiedad</span></div>'
+        + '<div style="position:absolute;top:14px;left:14px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none">' + (v.etiqueta ? '<span style="background:#F5F2EC;color:#1F3A2E;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px;box-shadow:0 4px 14px -6px rgba(15,22,18,.5)">' + v.etiqueta + '</span>' : '') + '<span style="background:rgba(31,58,46,.9);color:#F5F2EC;font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:6px 13px;border-radius:999px;backdrop-filter:blur(4px)">Nuda propiedad</span></div></div>'
         + '<div style="padding:22px 22px 24px;display:flex;flex-direction:column;gap:15px;flex:1">'
         + '<div style="display:flex;flex-direction:column;gap:3px"><strong style="color:#1A1A1A;font-weight:700;font-size:1.05rem;letter-spacing:-.01em">' + (v.localidad || '') + (v.cp ? ' \u00b7 ' + v.cp : '') + '</strong><span style="color:#5A6B7D;font-size:13.5px">' + (v.zona || '') + '</span></div>'
         + '<div style="display:flex;flex-wrap:wrap;gap:7px">' + amenHtml + '</div>'
