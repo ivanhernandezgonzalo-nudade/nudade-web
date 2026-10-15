@@ -227,7 +227,7 @@ class Component extends DCLogic {
     let menuOpen = false;
     const applyResponsive = () => {
       const waMob = $('#ndWaMobile'); if (waMob) waMob.style.display = mq1.matches ? 'inline-flex' : 'none';
-      const word = $('#ndWord'); if (word) word.style.display = window.matchMedia('(max-width:400px)').matches ? 'none' : '';
+      const word = $('#ndWord'); if (word) word.style.display = window.matchMedia('(max-width:350px)').matches ? 'none' : '';
       if (mq1.matches) {
         toggle.style.display = 'flex';
         if (!menuOpen) links.style.display = 'none';
