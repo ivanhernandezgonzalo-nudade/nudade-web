@@ -1,6 +1,58 @@
 {
   "viviendas": [
     {
+      "id": "valencia-benimaclet",
+      "titulo": "Dúplex en Benimaclet, València",
+      "localidad": "València",
+      "cp": "",
+      "zona": "Benimaclet",
+      "pagoInicial": "259.000 €",
+      "renta": "",
+      "tasacion": "",
+      "habitaciones": "3",
+      "superficie": "126 m²",
+      "altura": "1ª planta",
+      "ascensor": true,
+      "extras": [
+        "Dúplex",
+        "3 baños",
+        "Aire acondicionado",
+        "Balcón"
+      ],
+      "descripcion": "Dúplex luminoso de 1993, amplio y bien distribuido, en una de las zonas más demandadas de Valencia. Los usufructuarios asumen suministros, IBI, comunidad y derramas.",
+      "propietarios": [
+        {
+          "sexo": "Hombre",
+          "edad": 73
+        },
+        {
+          "sexo": "Mujer",
+          "edad": 70
+        }
+      ],
+      "foto": "assets/viviendas/valencia-benimaclet-1-salon-reforma.webp",
+      "fotos": [
+        "assets/viviendas/valencia-benimaclet-1-salon-reforma.webp",
+        "assets/viviendas/valencia-benimaclet-2-salon.webp",
+        "assets/viviendas/valencia-benimaclet-3-salon-comedor.webp",
+        "assets/viviendas/valencia-benimaclet-4-comedor-reforma.webp",
+        "assets/viviendas/valencia-benimaclet-5-comedor.webp",
+        "assets/viviendas/valencia-benimaclet-6-dormitorio-reforma.webp",
+        "assets/viviendas/valencia-benimaclet-7-dormitorio.webp",
+        "assets/viviendas/valencia-benimaclet-8-dormitorio-2.webp",
+        "assets/viviendas/valencia-benimaclet-9-fachada.webp"
+      ],
+      "renders": [
+        "assets/viviendas/valencia-benimaclet-1-salon-reforma.webp",
+        "assets/viviendas/valencia-benimaclet-4-comedor-reforma.webp",
+        "assets/viviendas/valencia-benimaclet-6-dormitorio-reforma.webp"
+      ],
+      "etiqueta": "Novedad",
+      "destacada": true,
+      "estado": "disponible",
+      "orden": 1
+    },
+    {
       "id": "barcelona-sant-gervasi-galvany",
       "titulo": "Piso en Sant Gervasi - Galvany, Barcelona",
       "localidad": "Barcelona",
@@ -28,7 +80,7 @@
       "foto": "assets/viviendas/barcelona-sant-gervasi-galvany-1.webp",
       "destacada": true,
       "estado": "disponible",
-      "orden": 1,
+      "orden": 2,
       "fotos": [
         "assets/viviendas/barcelona-sant-gervasi-galvany-1.webp",
         "assets/viviendas/barcelona-sant-gervasi-galvany-2.webp",
@@ -63,7 +115,7 @@
       "foto": "assets/viviendas/barcelona-guinardo.webp",
       "destacada": true,
       "estado": "disponible",
-      "orden": 2,
+      "orden": 3,
       "sinFotos": true
     }
   ]
