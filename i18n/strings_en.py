@@ -376,5 +376,5 @@ HELPERS = r"""
     const SX = (s) => ({ Hombre: 'Male', Mujer: 'Female' }[s] || s);
     const EUR = (s) => { if (!s) return s; const n = parseFloat(String(s).replace(/[^0-9,]/g, '').replace(',', '.')); return isNaN(n) ? s : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n); };
     const FLOOR = (s) => { if (!s) return s; const m = /^(\d+)\s*[ªº]?\s*planta/i.exec(s); if (m) { const n = +m[1], suf = (n % 100 >= 11 && n % 100 <= 13) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th'); return n + suf + ' floor'; } if (/^bajo/i.test(s)) return 'Ground floor'; if (/^[aá]tico/i.test(s)) return 'Penthouse'; return s; };
-    const L = (v) => { const e = v.en || {}; const o = Object.assign({}, v, e); if (!e.altura) o.altura = FLOOR(v.altura); o.pagoInicial = EUR(o.pagoInicial); o.tasacion = EUR(o.tasacion); return o; };
+    const L = (v) => { const e = v.en || {}; const o = Object.assign({}, v, e); if (!e.altura) o.altura = FLOOR(v.altura); o.pagoInicial = EUR(o.pagoInicial); if (o.superficie) o.superficie = String(o.superficie).replace(',', '.'); o.tasacion = EUR(o.tasacion); return o; };
 """

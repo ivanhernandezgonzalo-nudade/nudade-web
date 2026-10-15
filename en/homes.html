@@ -14,7 +14,7 @@
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#1F3A2E">
-<style>@media (max-width:1199px){.ndWaLong{display:none}}.ndLangMob{display:none}@media (max-width:760px){.ndLangMob{display:inline-flex}.ndLangLi{display:none !important}}</style>
+<style>@media (max-width:1199px){.ndWaLong{display:none}}#ndLinks a{white-space:nowrap}@media (min-width:761px) and (max-width:1199px){#ndLinks{gap:clamp(12px,1.9vw,22px) !important}#ndLinks a{font-size:14px !important}}.ndLangMob{display:none}@media (max-width:760px){.ndLangMob{display:inline-flex}.ndLangLi{display:none !important}}</style>
 <script src="/support.js"></script>
 </head>
 <body>
@@ -346,7 +346,7 @@ class Component extends DCLogic {
         const SX = (s) => ({ Hombre: 'Male', Mujer: 'Female' }[s] || s);
     const EUR = (s) => { if (!s) return s; const n = parseFloat(String(s).replace(/[^0-9,]/g, '').replace(',', '.')); return isNaN(n) ? s : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n); };
     const FLOOR = (s) => { if (!s) return s; const m = /^(\d+)\s*[ªº]?\s*planta/i.exec(s); if (m) { const n = +m[1], suf = (n % 100 >= 11 && n % 100 <= 13) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th'); return n + suf + ' floor'; } if (/^bajo/i.test(s)) return 'Ground floor'; if (/^[aá]tico/i.test(s)) return 'Penthouse'; return s; };
-    const L = (v) => { const e = v.en || {}; const o = Object.assign({}, v, e); if (!e.altura) o.altura = FLOOR(v.altura); o.pagoInicial = EUR(o.pagoInicial); o.tasacion = EUR(o.tasacion); return o; };
+    const L = (v) => { const e = v.en || {}; const o = Object.assign({}, v, e); if (!e.altura) o.altura = FLOOR(v.altura); o.pagoInicial = EUR(o.pagoInicial); if (o.superficie) o.superficie = String(o.superficie).replace(',', '.'); o.tasacion = EUR(o.tasacion); return o; };
     const card = (v) => {
       v = L(v);
       const owners = v.propietarios || [];
