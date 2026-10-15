@@ -50,7 +50,19 @@
       "etiqueta": "Novedad",
       "destacada": true,
       "estado": "disponible",
-      "orden": 1
+      "orden": 1,
+      "en": {
+        "titulo": "Duplex in Benimaclet, València",
+        "etiqueta": "New",
+        "altura": "1st floor",
+        "extras": [
+          "Duplex",
+          "3 bathrooms",
+          "Air conditioning",
+          "Balcony"
+        ],
+        "descripcion": "Bright 1993 duplex, spacious and well laid out, in one of Valencia’s most sought-after areas. The residents cover utilities, property tax (IBI), community fees and special levies."
+      }
     },
     {
       "id": "barcelona-sant-gervasi-galvany",
@@ -87,7 +99,13 @@
         "assets/viviendas/barcelona-sant-gervasi-galvany-3.webp",
         "assets/viviendas/barcelona-sant-gervasi-galvany-4.webp",
         "assets/viviendas/barcelona-sant-gervasi-galvany-5.webp"
-      ]
+      ],
+      "en": {
+        "titulo": "Flat in Sant Gervasi - Galvany, Barcelona",
+        "altura": "6th floor",
+        "extras": [],
+        "descripcion": "Very bright living room with city views. Currently let: the buyer can take over the tenancy from September 2027."
+      }
     },
     {
       "id": "barcelona-guinardo",
@@ -116,7 +134,15 @@
       "destacada": true,
       "estado": "disponible",
       "orden": 3,
-      "sinFotos": true
+      "sinFotos": true,
+      "en": {
+        "titulo": "Flat in El Guinardó, Barcelona",
+        "altura": "1st floor",
+        "extras": [
+          "2 parking spaces"
+        ],
+        "descripcion": "Includes two parking spaces in the same area. Estimated sale price of the flat alone: €309,000."
+      }
     }
   ]
 }
