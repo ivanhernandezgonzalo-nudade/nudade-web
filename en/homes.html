@@ -14,7 +14,7 @@
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#1F3A2E">
-<style>@media (max-width:1199px){.ndWaLong{display:none}}#ndLinks a{white-space:nowrap}@media (min-width:761px) and (max-width:1199px){#ndLinks{gap:clamp(12px,1.9vw,22px) !important}#ndLinks a{font-size:14px !important}}.ndLangMob{display:none}@media (max-width:760px){.ndLangMob{display:inline-flex}.ndLangLi{display:none !important}}</style>
+<style>@media (max-width:1199px){.ndWaLong{display:none}}#ndLinks a{white-space:nowrap}@media (min-width:981px) and (max-width:1199px){#ndLinks{gap:clamp(12px,1.9vw,22px) !important}#ndLinks a{font-size:14px !important}}.ndLangMob{display:none}@media (max-width:980px){.ndLangMob{display:inline-flex}.ndLangLi{display:none !important}}</style>
 <script src="/support.js"></script>
 </head>
 <body>
@@ -236,7 +236,7 @@ class Component extends DCLogic {
 
     /* ---------- Mobile menu / responsive ---------- */
     const toggle = $('#ndToggle'), links = $('#ndLinks');
-    const mq1 = window.matchMedia('(max-width:760px)');
+    const mq1 = window.matchMedia('(max-width:980px)');
     const mq2 = window.matchMedia('(max-width:980px)');
     let menuOpen = false;
     const applyResponsive = () => {

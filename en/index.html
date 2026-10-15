@@ -14,7 +14,7 @@
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#1F3A2E">
-<style>@media (max-width:1199px){.ndWaLong{display:none}}#ndLinks a{white-space:nowrap}@media (min-width:641px) and (max-width:1199px){#ndLinks{gap:clamp(12px,1.9vw,22px) !important}#ndLinks a{font-size:14px !important}}.ndLangMob{display:none}@media (max-width:640px){.ndLangMob{display:inline-flex}.ndLangLi{display:none !important}}</style>
+<style>@media (max-width:1199px){.ndWaLong{display:none}}#ndLinks a{white-space:nowrap}@media (min-width:981px) and (max-width:1199px){#ndLinks{gap:clamp(12px,1.9vw,22px) !important}#ndLinks a{font-size:14px !important}}.ndLangMob{display:none}@media (max-width:980px){.ndLangMob{display:inline-flex}.ndLangLi{display:none !important}}</style>
 <script src="/support.js"></script>
 </head>
 <body>
@@ -710,12 +710,13 @@ class Component extends DCLogic {
     /* ---------- Responsive (JS-driven, inline-only) ---------- */
     const mq2 = window.matchMedia('(max-width:980px)');
     const mq1 = window.matchMedia('(max-width:640px)');
+    const mqNav = window.matchMedia('(max-width:980px)');
     const applyResponsive = () => {
-      const waMob = $('#ndWaMobile'); if (waMob) waMob.style.display = mq1.matches ? 'inline-flex' : 'none';
+      const waMob = $('#ndWaMobile'); if (waMob) waMob.style.display = mqNav.matches ? 'inline-flex' : 'none';
       const word = $('#ndWord'); if (word) word.style.display = window.matchMedia('(max-width:350px)').matches ? 'none' : '';
       const wide = !mq2.matches;
       // nav links vs hamburger
-      if (mq1.matches) {
+      if (mqNav.matches) {
         toggle.style.display = 'flex';
         if (!menuOpen) links.style.display = 'none';
       } else {
@@ -782,6 +783,7 @@ class Component extends DCLogic {
     applyResponsive();
     mq2.addEventListener('change', applyResponsive);
     mq1.addEventListener('change', applyResponsive);
+    mqNav.addEventListener('change', applyResponsive);
 
     /* ---------- Smooth anchor scroll ---------- */
     $$('a[data-nav]').forEach(a => {
