@@ -1,0 +1,61 @@
+{
+  "viviendas": [
+    {
+      "id": "barcelona-eixample",
+      "titulo": "Piso en l'Eixample, Barcelona",
+      "localidad": "Barcelona",
+      "cp": "08015",
+      "zona": "Nova Esquerra de l'Eixample",
+      "pagoInicial": "80.000 €",
+      "renta": "1.000 €/mes",
+      "tasacion": "525.738 €",
+      "habitaciones": "4",
+      "superficie": "90 m²",
+      "altura": "5ª planta",
+      "ascensor": true,
+      "propietarios": [{ "sexo": "Mujer", "edad": 70 }],
+      "foto": "",
+      "destacada": true,
+      "estado": "disponible",
+      "orden": 1
+    },
+    {
+      "id": "sabadell-creualta",
+      "titulo": "Piso en Nova Creu Alta, Sabadell",
+      "localidad": "Sabadell",
+      "cp": "08208",
+      "zona": "Nova Creu Alta",
+      "pagoInicial": "95.000 €",
+      "renta": "2.100 €/mes",
+      "tasacion": "380.370 €",
+      "habitaciones": "4",
+      "superficie": "95 m²",
+      "altura": "4ª planta",
+      "ascensor": true,
+      "propietarios": [{ "sexo": "Mujer", "edad": 91 }],
+      "foto": "",
+      "destacada": true,
+      "estado": "disponible",
+      "orden": 2
+    },
+    {
+      "id": "manresa-vicremei",
+      "titulo": "Piso en Vic-Remei, Manresa",
+      "localidad": "Manresa",
+      "cp": "08241",
+      "zona": "Vic-Remei",
+      "pagoInicial": "20.000 €",
+      "renta": "80 €/mes",
+      "tasacion": "155.049 €",
+      "habitaciones": "4",
+      "superficie": "96,5 m²",
+      "altura": "1ª planta",
+      "ascensor": true,
+      "propietarios": [{ "sexo": "Hombre", "edad": 67 }, { "sexo": "Mujer", "edad": 67 }],
+      "foto": "",
+      "destacada": true,
+      "estado": "disponible",
+      "orden": 3
+    }
+  ]
+}

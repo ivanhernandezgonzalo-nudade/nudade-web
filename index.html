@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+
+<!-- Netlify form detection stubs (hidden; bots parse these at deploy time) -->
+<form name="te-llamamos" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="te-llamamos">
+  <input type="text" name="nombre"><input type="tel" name="telefono"><input type="text" name="horario">
+</form>
+<form name="valoracion" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="valoracion">
+  <input type="text" name="nombre"><input type="email" name="email"><input type="tel" name="telefono">
+  <input type="text" name="relacion"><input type="text" name="edad"><input type="text" name="provincia"><input type="text" name="mensaje">
+</form>
+<form name="calculadora" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="calculadora">
+  <input type="email" name="email"><input type="text" name="valor_vivienda"><input type="text" name="modalidad">
+  <input type="text" name="propietarios"><input type="text" name="edad1"><input type="text" name="sexo1"><input type="text" name="edad2"><input type="text" name="sexo2">
+</form>
+
+<x-dc>
+<helmet>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;background:#F5F2EC;color:#1A1A1A;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+  ul{list-style:none}
+  a{text-decoration:none;color:inherit}
+  ::selection{background:#1F3A2E;color:#F5F2EC}
+  @keyframes nd-heroUp{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes nd-heroFig{from{opacity:0;transform:translateY(50px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes nd-spin{to{transform:rotate(360deg)}}
+  @keyframes nd-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* ---- Rendimiento de scroll en movil ---- */
+  @media (max-width:640px){
+    #ndNav{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:#F5F2EC !important;box-shadow:0 1px 0 rgba(31,58,46,.08)}
+    #ndCallOverlay{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(15,22,18,.7) !important}
+  }
+</style>
+</helmet>
+
+<div data-screen-label="Nudade home">
+
+<!-- ===================== NAV ===================== -->
+<nav id="ndNav" style="position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(245,242,236,.72);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid transparent;transition:border-color .4s ease, background .4s ease">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,44px);display:flex;align-items:center;justify-content:space-between;height:74px">
+    <a href="#top" data-nav class="ndBrand" style="display:flex;align-items:center;gap:11px">
+      <svg viewBox="0 0 100 120" fill="none" stroke="#1F3A2E" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" style="height:30px;width:auto"><path d="M9 116 L9 52 A41 41 0 0 1 91 52 L91 116"/><path d="M35 116 L35 65 A15 15 0 0 1 65 65 L65 116"/></svg>
+      <span style="font-weight:700;font-size:18px;letter-spacing:.26em;color:#1F3A2E">NUDADE</span>
+    </a>
+    <ul id="ndLinks" style="display:flex;align-items:center;gap:30px;list-style:none">
+      <li><a href="#como-funciona" data-nav style="font-size:14.5px;color:#1F3A2E;font-weight:500;text-decoration:none">Cómo funciona</a></li>
+      <li><a href="#por-que" data-nav style="font-size:14.5px;color:#1F3A2E;font-weight:500;text-decoration:none">Por qué Nudade</a></li>
+      <li><a href="viviendas.html" style="font-size:14.5px;color:#1F3A2E;font-weight:500;text-decoration:none">Viviendas</a></li>
+      <li><a href="#garantias" data-nav style="font-size:14.5px;color:#1F3A2E;font-weight:500;text-decoration:none">Garantías</a></li>
+      <li><a href="#calculadora" data-nav style="font-size:14.5px;color:#1F3A2E;font-weight:500;text-decoration:none">Calcular</a></li>
+      <li><a href="#faq" data-nav style="font-size:14.5px;color:#1F3A2E;font-weight:500;text-decoration:none">Preguntas</a></li>
+      <li><button id="ndCallBtn" style="font-family:inherit;cursor:pointer;background:#1F3A2E;color:#F5F2EC;border:none;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:background .3s, transform .3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>Te llamamos</button></li>
+    </ul>
+    <button id="ndToggle" aria-label="Menú" style="display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;width:34px;height:34px;align-items:center;justify-content:center">
+      <span style="display:block;width:22px;height:2px;background:#1F3A2E"></span>
+      <span style="display:block;width:22px;height:2px;background:#1F3A2E"></span>
+      <span style="display:block;width:22px;height:2px;background:#1F3A2E"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header id="top" style="position:relative;padding:148px clamp(20px,5vw,44px) clamp(70px,9vw,110px);overflow:hidden">
+  <svg viewBox="0 0 600 600" fill="none" stroke="#1F3A2E" stroke-width="1.2" data-parallax="0.12" style="position:absolute;top:-120px;right:-160px;width:760px;height:760px;opacity:.06;pointer-events:none"><path d="M60 580 L60 300 A240 240 0 0 1 540 300 L540 580"/><path d="M160 580 L160 320 A140 140 0 0 1 440 320 L440 580"/><path d="M250 580 L250 350 A50 50 0 0 1 350 350 L350 580"/></svg>
+  <div style="max-width:1240px;margin:0 auto;position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(28px,5vw,70px);align-items:center" class="ndHeroGrid">
+    <div data-reveal>
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.2em;color:#5A6B7D;font-weight:600;margin-bottom:24px">Especialistas en nuda propiedad en España</p>
+      <h1 style="font-size:clamp(2.5rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.03em;color:#1F3A2E;font-weight:700;margin-bottom:26px;text-wrap:balance">Tu casa sigue siendo tu casa.<br><span style="color:#5A6B7D">Ahora también es liquidez.</span></h1>
+      <p style="font-size:clamp(1.05rem,1.5vw,1.28rem);line-height:1.55;color:#5A6B7D;max-width:540px;margin-bottom:34px">Convertimos el valor de la vivienda que tanto les costó conseguir en liquidez real. Siguen viviendo en ella de por vida. Sin mudanzas, sin deudas, sin papeleo bancario.</p>
+      <div style="display:flex;gap:13px;flex-wrap:wrap;margin-bottom:42px" class="ndHeroCta">
+        <a href="#valoracion" data-nav class="ndBtnP" style="display:inline-block;background:#1F3A2E;color:#F5F2EC;padding:16px 30px;border-radius:999px;font-size:15.5px;font-weight:600;text-decoration:none;transition:transform .3s, background .3s">Valoración gratuita</a>
+        <button class="ndCallTrigger ndBtnS" style="font-family:inherit;cursor:pointer;background:transparent;color:#1F3A2E;border:1.5px solid #1F3A2E;padding:16px 30px;border-radius:999px;font-size:15.5px;font-weight:600;transition:background .3s, color .3s">Te llamamos</button>
+      </div>
+      <ul style="display:flex;flex-wrap:wrap;gap:14px 26px;list-style:none;border-top:1px solid rgba(31,58,46,.12);padding-top:24px">
+        <li style="display:flex;align-items:center;gap:9px;font-size:14px;color:#5A6B7D;font-weight:500"><span style="width:6px;height:6px;background:#1F3A2E;border-radius:50%"></span>Tasación independiente</li>
+        <li style="display:flex;align-items:center;gap:9px;font-size:14px;color:#5A6B7D;font-weight:500"><span style="width:6px;height:6px;background:#1F3A2E;border-radius:50%"></span>Acompañamiento notarial</li>
+        <li style="display:flex;align-items:center;gap:9px;font-size:14px;color:#5A6B7D;font-weight:500"><span style="width:6px;height:6px;background:#1F3A2E;border-radius:50%"></span>Derecho vitalicio garantizado</li>
+      </ul>
+    </div>
+    <div data-parallax="-0.06" data-reveal>
+      <div style="position:relative;border-radius:230px 230px 10px 10px;overflow:hidden;aspect-ratio:4/5;border:1px solid rgba(31,58,46,.12);box-shadow:0 30px 70px -30px rgba(31,58,46,.45)">
+        <img class="ndKen" src="assets/hero-pareja-sofa.png" alt="Pareja sénior en su hogar" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:85% center">
+        <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(31,58,46,.58),transparent 46%)"></div>
+        <p style="position:absolute;left:26px;bottom:24px;right:26px;color:#F5F2EC;font-size:15.5px;font-style:italic;line-height:1.4;text-shadow:0 1px 8px rgba(15,22,18,.4)">Su casa, su vida, sus decisiones. Sin cambios.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== MARQUEE / FRANJA ===================== -->
+<div style="background:#1F3A2E;overflow:hidden;padding:18px 0;border-top:1px solid rgba(245,242,236,.08)">
+  <div id="ndMarquee" style="display:flex;gap:0;white-space:nowrap;width:max-content;animation:nd-marquee 34s linear infinite">
+    <span style="display:inline-flex;align-items:center">
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Liquidez sin desarraigo</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Uso vitalicio garantizado</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Tasación oficial independiente</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Sin deuda, sin intereses</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Firma ante notario</span><span style="color:rgba(245,242,236,.4)">·</span>
+    </span>
+    <span style="display:inline-flex;align-items:center" aria-hidden="true">
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Liquidez sin desarraigo</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Uso vitalicio garantizado</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Tasación oficial independiente</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Sin deuda, sin intereses</span><span style="color:rgba(245,242,236,.4)">·</span>
+      <span style="color:#F5F2EC;font-size:15px;letter-spacing:.04em;padding:0 26px;opacity:.9">Firma ante notario</span><span style="color:rgba(245,242,236,.4)">·</span>
+    </span>
+  </div>
+</div>
+
+<!-- ===================== PROBLEMA ===================== -->
+<section style="background:#ECE7DD;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px)">
+  <div style="max-width:1180px;margin:0 auto">
+    <div data-reveal style="max-width:760px;margin-bottom:clamp(44px,5vw,68px)">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">El problema silencioso</p>
+      <h2 style="font-size:clamp(1.9rem,3.8vw,3rem);line-height:1.08;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance">Una pensión ajustada. Una casa con un gran valor inmovilizado.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:44px" class="ndProblemGrid">
+      <article data-reveal style="background:#F5F2EC;border-radius:8px;padding:34px 30px 32px;border-top:3px solid #1F3A2E">
+        <div style="font-size:clamp(2.6rem,4.5vw,3.4rem);font-weight:700;color:#1F3A2E;line-height:1;letter-spacing:-.03em;margin-bottom:14px"><span data-count="39" data-suffix="%">39%</span></div>
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D;font-weight:600;margin-bottom:14px">de las pensiones no llegan a 1.000 €/mes</p>
+        <p style="font-size:15.5px;line-height:1.6;color:#1A1A1A">Cubre lo básico, pero no la vida que se merecen. 2,6 millones de jubilados en España cobran menos de esa cifra.</p>
+      </article>
+      <article data-reveal style="background:#F5F2EC;border-radius:8px;padding:34px 30px 32px;border-top:3px solid #1F3A2E">
+        <div style="font-size:clamp(2.6rem,4.5vw,3.4rem);font-weight:700;color:#1F3A2E;line-height:1;letter-spacing:-.03em;margin-bottom:14px"><span data-count="85" data-suffix="%">85%</span></div>
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D;font-weight:600;margin-bottom:14px">de los mayores de 65 tiene vivienda en propiedad</p>
+        <p style="font-size:15.5px;line-height:1.6;color:#1A1A1A">Su mayor patrimonio está inmovilizado en la casa donde viven. Un valor que no pueden disfrutar.</p>
+      </article>
+      <article data-reveal style="background:#1F3A2E;border-radius:8px;padding:34px 30px 32px;border-top:3px solid #F5F2EC;color:#F5F2EC">
+        <div style="font-size:clamp(2.6rem,4.5vw,3.4rem);font-weight:700;color:#F5F2EC;line-height:1;letter-spacing:-.03em;margin-bottom:14px">+ años</div>
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,242,236,.7);font-weight:600;margin-bottom:14px">de vida con mayor calidad</p>
+        <p style="font-size:15.5px;line-height:1.6;color:rgba(245,242,236,.92)">Una ayuda en casa, un viaje, esa reforma pendiente, gastos médicos sin agobios. Todo es posible.</p>
+      </article>
+    </div>
+    <p data-reveal style="font-size:clamp(1.1rem,1.9vw,1.4rem);line-height:1.5;color:#1F3A2E;max-width:780px;text-wrap:pretty">Vender la casa no es opción: ahí está su rutina, su entorno, su seguridad. Lo que necesitan es <strong style="font-weight:700">liquidez sin desarraigo</strong>.</p>
+  </div>
+</section>
+
+<!-- ===================== PINNED FULL-BLEED SCROLL ZOOM ===================== -->
+<section id="ndPin" style="position:relative;height:340vh;background:#1F3A2E">
+  <div style="position:sticky;top:0;height:100vh;overflow:hidden">
+    <div id="ndPinRow" style="display:flex;width:100%;height:100vh;gap:0;padding:0;box-sizing:border-box;align-items:center">
+      <div class="ndPinPanel" style="position:relative;flex:1;height:100vh;overflow:hidden;box-sizing:border-box">
+        <img class="ndPinPImg" src="assets/cielo-ella.png" alt="Mujer sénior" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;transform:scale(1.18);will-change:transform">
+        <div class="ndPinPGrad" style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,22,18,.82),rgba(15,22,18,.25) 42%,transparent 64%);opacity:0"></div>
+        <div class="ndPinCap" style="position:absolute;left:32px;right:32px;bottom:clamp(34px,5vh,56px);opacity:0;transform:translateY(16px);color:#F5F2EC">
+          <span style="display:block;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:rgba(245,242,236,.85);font-weight:600;margin-bottom:14px">Propietaria</span>
+          <p style="font-size:clamp(1.12rem,1.45vw,1.4rem);font-style:italic;font-weight:500;line-height:1.36;color:#F5F2EC;max-width:330px;text-shadow:0 2px 16px rgba(15,22,18,.65);margin-bottom:12px">«Sigo en mi casa, con mis cosas de siempre. Y ahora ya no le pido nada a nadie.»</p>
+          <span style="display:block;font-size:13px;color:rgba(245,242,236,.8);font-weight:600">Carmen, 70 años</span>
+        </div>
+      </div>
+      <div class="ndPinPanel" style="position:relative;flex:1;height:100vh;overflow:hidden;box-sizing:border-box">
+        <img class="ndPinPImg" src="assets/cielo-el.png" alt="Hombre sénior" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;transform:scale(1.18);will-change:transform">
+        <div class="ndPinPGrad" style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,22,18,.82),rgba(15,22,18,.25) 42%,transparent 64%);opacity:0"></div>
+        <div class="ndPinCap" style="position:absolute;left:32px;right:32px;bottom:clamp(34px,5vh,56px);opacity:0;transform:translateY(16px);color:#F5F2EC">
+          <span style="display:block;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:rgba(245,242,236,.85);font-weight:600;margin-bottom:14px">Propietario</span>
+          <p style="font-size:clamp(1.12rem,1.45vw,1.4rem);font-style:italic;font-weight:500;line-height:1.36;color:#F5F2EC;max-width:330px;text-shadow:0 2px 16px rgba(15,22,18,.65);margin-bottom:12px">«He podido ayudar a mis hijos y darme algún capricho. Sin deudas ni mudanzas.»</p>
+          <span style="display:block;font-size:13px;color:rgba(245,242,236,.8);font-weight:600">José, 74 años</span>
+        </div>
+      </div>
+      <div class="ndPinPanel" style="position:relative;flex:1;height:100vh;overflow:hidden;box-sizing:border-box">
+        <img class="ndPinPImg" src="assets/cielo-hijos.png" alt="Hombre sénior" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:62% 16%;transform:scale(1.18);will-change:transform">
+        <div class="ndPinPGrad" style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,22,18,.82),rgba(15,22,18,.25) 42%,transparent 64%);opacity:0"></div>
+        <div class="ndPinCap" style="position:absolute;left:32px;right:32px;bottom:clamp(34px,5vh,56px);opacity:0;transform:translateY(16px);color:#F5F2EC">
+          <span style="display:block;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:rgba(245,242,236,.85);font-weight:600;margin-bottom:14px">El hijo</span>
+          <p style="font-size:clamp(1.12rem,1.45vw,1.4rem);font-style:italic;font-weight:500;line-height:1.36;color:#F5F2EC;max-width:330px;text-shadow:0 2px 16px rgba(15,22,18,.65);margin-bottom:12px">«Mis padres viven mejor y siguen en su hogar de siempre. Es la tranquilidad de todos.»</p>
+          <span style="display:block;font-size:13px;color:rgba(245,242,236,.8);font-weight:600">Carlos</span>
+        </div>
+      </div>
+    </div>
+    <img id="ndPinSingle" src="assets/cielo-pareja.png" alt="Pareja sénior disfrutando del aire libre" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;transform:scale(1.12);will-change:transform, opacity">
+    <div id="ndPinHero" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#F5F2EC;padding:0 24px;pointer-events:none">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(15,22,18,.42),rgba(15,22,18,.22) 45%,rgba(15,22,18,.5))"></div>
+      <div style="position:relative;max-width:880px">
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.22em;color:rgba(245,242,236,.82);font-weight:600;margin-bottom:22px;text-shadow:0 2px 12px rgba(15,22,18,.5)">La nuda propiedad, en humano</p>
+        <h2 style="font-size:clamp(2.1rem,5.2vw,4rem);line-height:1.05;letter-spacing:-.025em;font-weight:700;color:#F5F2EC;text-wrap:balance;text-shadow:0 2px 24px rgba(15,22,18,.55)">Liquidez para vivir mejor.<br>Y muchísimo más.</h2>
+        <p style="font-size:clamp(1.05rem,1.7vw,1.3rem);line-height:1.5;color:rgba(245,242,236,.92);margin-top:24px;max-width:560px;margin-left:auto;margin-right:auto;text-shadow:0 2px 14px rgba(15,22,18,.5)">Sigue haciendo scroll: una misma decisión, tres vidas que cambian.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CÓMO FUNCIONA (sticky pinned) ===================== -->
+<section id="como-funciona" style="background:#F5F2EC;padding:clamp(60px,7vw,90px) clamp(20px,5vw,44px) clamp(40px,5vw,60px)">
+  <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:start" class="ndStickyGrid">
+    <div class="ndStickyCol" style="position:sticky;top:118px">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Qué es la nuda propiedad</p>
+      <h2 style="font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;margin-bottom:20px;text-wrap:balance">Una figura jurídica con más de 200 años de historia.</h2>
+      <p style="font-size:16px;line-height:1.6;color:#5A6B7D;margin-bottom:26px;max-width:420px">Tres pasos sencillos, cero sorpresas. El precio refleja la edad y la esperanza de vida: cuanto mayor sea el propietario, mayor es el importe. Una ecuación transparente que un notario certifica.</p>
+      <a href="#calculadora" data-nav class="ndBtnP" style="display:inline-block;background:#1F3A2E;color:#F5F2EC;padding:15px 28px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .3s, background .3s">Calcular una estimación</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <article data-reveal style="background:#fff;border-radius:10px;padding:34px;border:1px solid rgba(31,58,46,.1);display:flex;gap:24px;align-items:flex-start">
+        <svg viewBox="0 0 100 120" fill="none" stroke="#1F3A2E" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:auto;flex-shrink:0"><path d="M9 116 L9 52 A41 41 0 0 1 91 52 L91 116"/><path d="M35 116 L35 65 A15 15 0 0 1 65 65 L65 116"/></svg>
+        <div>
+          <span style="display:block;font-size:13px;font-weight:700;letter-spacing:.12em;color:#5A6B7D;margin-bottom:10px">PASO 01</span>
+          <h3 style="font-size:1.3rem;color:#1F3A2E;font-weight:700;margin-bottom:9px;letter-spacing:-.01em">Se vende la nuda propiedad</h3>
+          <p style="font-size:15.5px;line-height:1.6;color:#5A6B7D">El propietario vende la titularidad manteniendo el derecho de uso vitalicio. Recibe el importe acordado en su cuenta.</p>
+        </div>
+      </article>
+      <article data-reveal style="background:#fff;border-radius:10px;padding:34px;border:1px solid rgba(31,58,46,.1);display:flex;gap:24px;align-items:flex-start">
+        <svg viewBox="0 0 60 70" fill="none" stroke="#1F3A2E" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="width:54px;height:auto;flex-shrink:0"><path d="M10 30 L30 14 L50 30"/><path d="M14 28 L14 60 L46 60 L46 28"/><path d="M26 60 L26 42 L34 42 L34 60"/></svg>
+        <div>
+          <span style="display:block;font-size:13px;font-weight:700;letter-spacing:.12em;color:#5A6B7D;margin-bottom:10px">PASO 02</span>
+          <h3 style="font-size:1.3rem;color:#1F3A2E;font-weight:700;margin-bottom:9px;letter-spacing:-.01em">Conservan el usufructo de por vida</h3>
+          <p style="font-size:15.5px;line-height:1.6;color:#5A6B7D">Siguen viviendo en su casa exactamente igual que antes. Nadie puede entrar, modificar nada ni pedirles que se marchen.</p>
+        </div>
+      </article>
+      <article data-reveal style="background:#1F3A2E;border-radius:10px;padding:34px;display:flex;gap:24px;align-items:flex-start">
+        <svg viewBox="0 0 60 70" fill="none" stroke="#F5F2EC" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="width:54px;height:auto;flex-shrink:0"><path d="M12 36 L26 50 L50 20"/><circle cx="30" cy="35" r="27"/></svg>
+        <div>
+          <span style="display:block;font-size:13px;font-weight:700;letter-spacing:.12em;color:rgba(245,242,236,.65);margin-bottom:10px">PASO 03</span>
+          <h3 style="font-size:1.3rem;color:#F5F2EC;font-weight:700;margin-bottom:9px;letter-spacing:-.01em">El comprador recibe la plena propiedad</h3>
+          <p style="font-size:15.5px;line-height:1.6;color:rgba(245,242,236,.9)">Cuando la vivienda queda libre de usufructo, el comprador recibe la propiedad libre de cargas.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OPCIONES DE COBRO ===================== -->
+<section style="background:#F5F2EC;padding:clamp(60px,8vw,100px) clamp(20px,5vw,44px)">
+  <div style="max-width:1180px;margin:0 auto">
+    <div data-reveal style="max-width:760px;margin-bottom:clamp(40px,5vw,60px)">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">A medida de cada familia</p>
+      <h2 style="font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.1;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance">Tres formas de recibir el dinero. La que mejor se adapte.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px" class="ndOpcGrid">
+      <article data-reveal style="background:#ECE7DD;border-radius:10px;padding:36px 32px;transition:transform .4s ease, box-shadow .4s ease" class="ndOpc">
+        <span style="display:block;font-size:13px;font-weight:700;letter-spacing:.12em;color:#1F3A2E;margin-bottom:18px">01</span>
+        <h3 style="font-size:1.32rem;color:#1F3A2E;font-weight:700;margin-bottom:6px;letter-spacing:-.01em">Pago único al inicio</h3>
+        <p style="font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Liquidez inmediata</p>
+        <p style="font-size:15px;line-height:1.6;color:#5A6B7D">El importe íntegro se transfiere el día de la firma ante notario. Ideal para afrontar gastos médicos, ayudar a los hijos o disfrutar de la jubilación sin esperar.</p>
+      </article>
+      <article data-reveal style="background:#1F3A2E;border-radius:10px;padding:36px 32px;transition:transform .4s ease, box-shadow .4s ease" class="ndOpc">
+        <span style="display:block;font-size:13px;font-weight:700;letter-spacing:.12em;color:rgba(245,242,236,.6);margin-bottom:18px">02 · La más elegida</span>
+        <h3 style="font-size:1.32rem;color:#F5F2EC;font-weight:700;margin-bottom:6px;letter-spacing:-.01em">Pago inicial + renta vitalicia</h3>
+        <p style="font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,242,236,.8);font-weight:600;margin-bottom:18px">El equilibrio perfecto</p>
+        <p style="font-size:15px;line-height:1.6;color:rgba(245,242,236,.9)">Una parte se cobra al inicio para las necesidades inmediatas y el resto se transforma en una renta mensual garantizada de por vida.</p>
+      </article>
+      <article data-reveal style="background:#ECE7DD;border-radius:10px;padding:36px 32px;transition:transform .4s ease, box-shadow .4s ease" class="ndOpc">
+        <span style="display:block;font-size:13px;font-weight:700;letter-spacing:.12em;color:#1F3A2E;margin-bottom:18px">03</span>
+        <h3 style="font-size:1.32rem;color:#1F3A2E;font-weight:700;margin-bottom:6px;letter-spacing:-.01em">Solo renta vitalicia</h3>
+        <p style="font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Tranquilidad mensual</p>
+        <p style="font-size:15px;line-height:1.6;color:#5A6B7D">Todo el valor se convierte en una renta mensual de por vida que complementa la pensión. Para quien busca un ingreso estable y predecible cada mes.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SPLIT BAND IMAGEN + PARALLAX ===================== -->
+<section style="background:#F5F2EC;padding:clamp(50px,7vw,90px) clamp(20px,5vw,44px)">
+  <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,64px);align-items:center" class="ndSplitGrid">
+    <div data-reveal>
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Su rutina, intacta</p>
+      <h2 style="font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.1;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance;margin-bottom:18px">Nada cambia en su día a día. Solo desaparecen las preocupaciones.</h2>
+      <p style="font-size:16.5px;line-height:1.6;color:#5A6B7D;max-width:480px">Siguen durmiendo en la misma habitación, regando las mismas plantas y tomando café en la misma cocina. Lo único que cambia es la tranquilidad de tener el dinero que necesitan, cuando lo necesitan.</p>
+    </div>
+    <div data-reveal style="position:relative">
+      <div style="position:relative;border-radius:10px 10px 220px 220px;overflow:hidden;aspect-ratio:5/6;border:1px solid rgba(31,58,46,.12);box-shadow:0 30px 70px -34px rgba(31,58,46,.5)">
+        <img class="ndKen" src="assets/hogar-pareja.png" alt="Pareja en el salón de su hogar" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== POR QUÉ (full-bleed verde + comparativa) ===================== -->
+<section id="por-que" style="position:relative;background:#1F3A2E;color:#F5F2EC;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px);overflow:hidden">
+  <svg viewBox="0 0 600 600" fill="none" stroke="#F5F2EC" stroke-width="1.2" data-parallax="0.1" style="position:absolute;bottom:-200px;left:-180px;width:680px;height:680px;opacity:.05;pointer-events:none"><path d="M60 580 L60 300 A240 240 0 0 1 540 300 L540 580"/><path d="M180 580 L180 330 A120 120 0 0 1 420 330 L420 580"/></svg>
+  <div style="max-width:1100px;margin:0 auto;position:relative">
+    <div data-reveal style="max-width:740px;margin-bottom:clamp(40px,5vw,58px)">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:rgba(245,242,236,.6);font-weight:600;margin-bottom:18px">Por qué Nudade</p>
+      <h2 style="font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.1;letter-spacing:-.02em;color:#F5F2EC;font-weight:700;text-wrap:balance">No somos una entidad bancaria. Somos especialistas.</h2>
+    </div>
+    <div data-reveal class="ndCmpWrap" style="background:rgba(245,242,236,.04);border:1px solid rgba(245,242,236,.14);border-radius:12px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;font-weight:700;font-size:14px" class="ndCmpRow">
+        <div style="padding:18px 20px"></div>
+        <div style="padding:18px 14px;text-align:center;background:rgba(245,242,236,.1);color:#F5F2EC;letter-spacing:.08em">NUDADE</div>
+        <div style="padding:18px 14px;text-align:center;color:rgba(245,242,236,.75)">Hipoteca inversa</div>
+        <div style="padding:18px 14px;text-align:center;color:rgba(245,242,236,.75)">Venta tradicional</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;border-top:1px solid rgba(245,242,236,.12)" class="ndCmpRow">
+        <div style="padding:17px 20px;font-weight:500;font-size:14.5px">Sigue viviendo en su casa</div>
+        <div style="padding:17px 14px;text-align:center;font-weight:700;background:rgba(245,242,236,.07);color:#F5F2EC;font-size:14.5px">Sí, de por vida</div>
+        <div style="padding:17px 14px;text-align:center;color:rgba(245,242,236,.7);font-size:14px">Sí</div>
+        <div style="padding:17px 14px;text-align:center;color:#D9A8A0;font-size:14px">No</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;border-top:1px solid rgba(245,242,236,.12)" class="ndCmpRow">
+        <div style="padding:17px 20px;font-weight:500;font-size:14.5px">Sin deuda ni intereses</div>
+        <div style="padding:17px 14px;text-align:center;font-weight:700;background:rgba(245,242,236,.07);color:#F5F2EC;font-size:14.5px">Sin deuda</div>
+        <div style="padding:17px 14px;text-align:center;color:#D9A8A0;font-size:14px">Deuda creciente</div>
+        <div style="padding:17px 14px;text-align:center;color:rgba(245,242,236,.7);font-size:14px">Sin deuda</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;border-top:1px solid rgba(245,242,236,.12)" class="ndCmpRow">
+        <div style="padding:17px 20px;font-weight:500;font-size:14.5px">Importe recibido</div>
+        <div style="padding:17px 14px;text-align:center;font-weight:700;background:rgba(245,242,236,.07);color:#F5F2EC;font-size:14.5px">Hasta 70 %</div>
+        <div style="padding:17px 14px;text-align:center;color:rgba(245,242,236,.7);font-size:14px">25 – 45 %</div>
+        <div style="padding:17px 14px;text-align:center;color:rgba(245,242,236,.7);font-size:14px">100 %</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;border-top:1px solid rgba(245,242,236,.12)" class="ndCmpRow">
+        <div style="padding:17px 20px;font-weight:500;font-size:14.5px">Gastos a cargo del mayor</div>
+        <div style="padding:17px 14px;text-align:center;font-weight:700;background:rgba(245,242,236,.07);color:#F5F2EC;font-size:14.5px">Solo suministros</div>
+        <div style="padding:17px 14px;text-align:center;color:rgba(245,242,236,.7);font-size:14px">Mantenim. + seguros</div>
+        <div style="padding:17px 14px;text-align:center;color:rgba(245,242,236,.7);font-size:14px">No aplica</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;border-top:1px solid rgba(245,242,236,.12)" class="ndCmpRow">
+        <div style="padding:17px 20px;font-weight:500;font-size:14.5px">Carga emocional del cambio</div>
+        <div style="padding:17px 14px;text-align:center;font-weight:700;background:rgba(245,242,236,.07);color:#F5F2EC;font-size:14.5px">Ninguna</div>
+        <div style="padding:17px 14px;text-align:center;color:rgba(245,242,236,.7);font-size:14px">Baja</div>
+        <div style="padding:17px 14px;text-align:center;color:#D9A8A0;font-size:14px">Alta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VIVIENDAS ===================== -->
+<section id="viviendas" style="background:#ECE7DD;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px)">
+  <div style="max-width:1180px;margin:0 auto">
+    <div data-reveal style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(38px,5vw,56px)">
+      <div style="max-width:680px">
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Viviendas disponibles</p>
+        <h2 style="font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.1;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance">Oportunidades reales disponibles hoy</h2>
+        <p style="font-size:16px;line-height:1.55;color:#5A6B7D;margin-top:14px;max-width:560px">Inmuebles en nuda propiedad con renta vitalicia garantizada. El usufructuario continúa viviendo en su casa; el inversor accede a la propiedad en condiciones excepcionales.</p>
+      </div>
+      <span style="font-size:13px;font-weight:600;letter-spacing:.04em;color:#5A6B7D;white-space:nowrap">Selección destacada</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px" class="ndVivGrid" id="ndVivGrid"></div>
+    <div data-reveal style="display:flex;justify-content:center;margin-top:clamp(34px,4vw,48px)">
+      <a href="viviendas.html" class="ndBtnP" style="display:inline-flex;align-items:center;gap:9px;background:#1F3A2E;color:#F5F2EC;padding:16px 32px;border-radius:999px;font-size:15.5px;font-weight:600;text-decoration:none;transition:transform .3s, background .3s">Ver todas las viviendas <span style="font-size:18px;line-height:1">›</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GARANTÍAS ===================== -->
+<section id="garantias" style="background:#F5F2EC;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px)">
+  <div style="max-width:1180px;margin:0 auto">
+    <div data-reveal style="max-width:720px;margin-bottom:clamp(44px,5vw,64px)">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Garantías reales</p>
+      <h2 style="font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance">La tranquilidad no se promete, se firma ante notario.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px" class="ndTrustGrid">
+      <div data-reveal style="background:#fff;border-radius:10px;padding:30px 28px;border:1px solid rgba(31,58,46,.1)"><h3 style="font-size:1.12rem;color:#1F3A2E;font-weight:700;margin-bottom:11px;padding-bottom:11px;border-bottom:2px solid #1F3A2E;display:inline-block">Tasación oficial independiente</h3><p style="font-size:14.5px;line-height:1.6;color:#5A6B7D">Trabajamos con sociedades homologadas por el Banco de España. El valor lo fija un tercero, no nosotros.</p></div>
+      <div data-reveal style="background:#fff;border-radius:10px;padding:30px 28px;border:1px solid rgba(31,58,46,.1)"><h3 style="font-size:1.12rem;color:#1F3A2E;font-weight:700;margin-bottom:11px;padding-bottom:11px;border-bottom:2px solid #1F3A2E;display:inline-block">Notario de libre elección</h3><p style="font-size:14.5px;line-height:1.6;color:#5A6B7D">Tus padres eligen al notario que les inspire confianza. Nosotros nos adaptamos, no al revés.</p></div>
+      <div data-reveal style="background:#fff;border-radius:10px;padding:30px 28px;border:1px solid rgba(31,58,46,.1)"><h3 style="font-size:1.12rem;color:#1F3A2E;font-weight:700;margin-bottom:11px;padding-bottom:11px;border-bottom:2px solid #1F3A2E;display:inline-block">Usufructo vitalicio inscrito</h3><p style="font-size:14.5px;line-height:1.6;color:#5A6B7D">El derecho de uso queda inscrito en el Registro de la Propiedad. Nadie puede revocarlo. Ni siquiera nosotros.</p></div>
+      <div data-reveal style="background:#fff;border-radius:10px;padding:30px 28px;border:1px solid rgba(31,58,46,.1)"><h3 style="font-size:1.12rem;color:#1F3A2E;font-weight:700;margin-bottom:11px;padding-bottom:11px;border-bottom:2px solid #1F3A2E;display:inline-block">Asesoría jurídica para la familia</h3><p style="font-size:14.5px;line-height:1.6;color:#5A6B7D">Acompañamos también a hijos y herederos en todo el proceso. Sin presiones ni plazos artificiales.</p></div>
+      <div data-reveal style="background:#fff;border-radius:10px;padding:30px 28px;border:1px solid rgba(31,58,46,.1)"><h3 style="font-size:1.12rem;color:#1F3A2E;font-weight:700;margin-bottom:11px;padding-bottom:11px;border-bottom:2px solid #1F3A2E;display:inline-block">Cobro íntegro en el cierre</h3><p style="font-size:14.5px;line-height:1.6;color:#5A6B7D">El importe se transfiere el mismo día de la firma. Sin pagos aplazados ni condicionantes ocultos.</p></div>
+      <div data-reveal style="background:#fff;border-radius:10px;padding:30px 28px;border:1px solid rgba(31,58,46,.1)"><h3 style="font-size:1.12rem;color:#1F3A2E;font-weight:700;margin-bottom:11px;padding-bottom:11px;border-bottom:2px solid #1F3A2E;display:inline-block">Confidencialidad absoluta</h3><p style="font-size:14.5px;line-height:1.6;color:#5A6B7D">El proceso es discreto. El entorno nunca sabrá nada salvo que la familia decida compartirlo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CALCULADORA ===================== -->
+<section id="calculadora" style="background:#ECE7DD;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px)">
+  <div style="max-width:780px;margin:0 auto">
+    <div data-reveal style="text-align:center;margin-bottom:36px">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Herramienta de simulación</p>
+      <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.1;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance">Calcula lo que podría valer tu vivienda.</h2>
+      <p style="font-size:16px;line-height:1.55;color:#5A6B7D;margin-top:12px">Introduce unos datos básicos y obtén una estimación orientativa al instante.</p>
+    </div>
+    <div data-reveal style="background:#F5F2EC;border:1px solid rgba(31,58,46,.14);border-radius:14px;padding:clamp(22px,3vw,36px)">
+      <p style="font-size:12.5px;color:#5A6B7D;margin-bottom:22px;font-style:italic;line-height:1.5">Estimación orientativa basada en tablas actuariales INE. Los resultados son aproximados y no constituyen una oferta vinculante.</p>
+
+      <label style="display:block;font-size:12.5px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.09em;margin-bottom:9px">Valor aproximado de la vivienda</label>
+      <div style="display:flex;align-items:stretch;margin-bottom:22px;border:2px solid #1F3A2E;border-radius:6px;overflow:hidden;background:#fff">
+        <span style="padding:0 16px;font-size:17px;font-weight:700;color:#fff;background:#1F3A2E;display:flex;align-items:center">€</span>
+        <input type="text" inputmode="numeric" id="calcValor" placeholder="Introduce el valor" style="flex:1;padding:13px 15px;border:none;font-family:inherit;font-size:16px;color:#1A1A1A;background:#fff;outline:none">
+      </div>
+
+      <label style="display:block;font-size:12.5px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.09em;margin-bottom:9px">Modalidad de cobro</label>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px" class="ndCalc3">
+        <div class="ndCopt ndModal active" data-modal="unico" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:6px;background:#1F3A2E;color:#fff;cursor:pointer;text-align:center;padding:14px 6px;min-height:62px;user-select:none;transition:background .15s, border-color .15s"><span style="font-size:14.5px;font-weight:700;margin-bottom:3px">Pago único</span><span style="font-size:11.5px;opacity:.85">Todo al inicio</span></div>
+        <div class="ndCopt ndModal" data-modal="mixto" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:6px;background:#1F3A2E;color:#fff;cursor:pointer;text-align:center;padding:14px 6px;min-height:62px;user-select:none;transition:background .15s, border-color .15s"><span style="font-size:14.5px;font-weight:700;margin-bottom:3px">Mixto</span><span style="font-size:11.5px;opacity:.85">Inicial + renta</span></div>
+        <div class="ndCopt ndModal" data-modal="renta" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:6px;background:#1F3A2E;color:#fff;cursor:pointer;text-align:center;padding:14px 6px;min-height:62px;user-select:none;transition:background .15s, border-color .15s"><span style="font-size:14.5px;font-weight:700;margin-bottom:3px">Solo renta</span><span style="font-size:11.5px;opacity:.85">Mensual vitalicia</span></div>
+      </div>
+
+      <div id="calcSliderMix" style="display:none;margin-bottom:22px;padding:18px 20px;background:#fff;border:2px solid rgba(31,58,46,.25);border-radius:6px">
+        <label style="display:block;font-size:12.5px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.09em;margin-bottom:10px">Reparto entre pago fijo y renta mensual</label>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#5A6B7D;margin-bottom:8px"><span>Más renta</span><span>Más pago fijo</span></div>
+        <input type="range" id="calcMixSlider" min="0" max="100" value="50" step="5" style="width:100%;accent-color:#1F3A2E;cursor:pointer">
+        <div style="display:flex;justify-content:space-between;margin-top:14px;gap:16px">
+          <div style="flex:1;text-align:center;background:#F5F2EC;border-radius:6px;padding:12px 8px"><div id="calcPctFijo" style="font-size:1.5rem;font-weight:700;color:#1F3A2E;line-height:1">50%</div><div style="font-size:11px;color:#5A6B7D;text-transform:uppercase;letter-spacing:.06em;margin-top:6px;font-weight:600">Pago fijo inicial</div></div>
+          <div style="flex:1;text-align:center;background:#F5F2EC;border-radius:6px;padding:12px 8px"><div id="calcPctRenta" style="font-size:1.5rem;font-weight:700;color:#1F3A2E;line-height:1">50%</div><div style="font-size:11px;color:#5A6B7D;text-transform:uppercase;letter-spacing:.06em;margin-top:6px;font-weight:600">En renta vitalicia</div></div>
+        </div>
+      </div>
+
+      <label style="display:block;font-size:12.5px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.09em;margin-bottom:9px">Número de propietarios</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px">
+        <div class="ndCopt ndProp active" data-prop="1" style="display:flex;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:6px;background:#1F3A2E;color:#fff;cursor:pointer;padding:13px;font-size:14.5px;font-weight:700;user-select:none;transition:background .15s, border-color .15s">Una persona</div>
+        <div class="ndCopt ndProp" data-prop="2" style="display:flex;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:6px;background:#1F3A2E;color:#fff;cursor:pointer;padding:13px;font-size:14.5px;font-weight:700;user-select:none;transition:background .15s, border-color .15s">Dos personas</div>
+      </div>
+
+      <div id="calcPersona1" style="background:#fff;border:2px solid rgba(31,58,46,.25);border-radius:6px;padding:18px 20px;margin-bottom:16px">
+        <h4 style="font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;color:#5A6B7D;margin-bottom:12px;font-weight:700">Propietario/a</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div><span style="display:block;font-size:12px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Edad</span><input type="number" id="calcEdad1" placeholder="Edad" min="30" max="110" step="1" style="width:100%;padding:11px 13px;border:2px solid rgba(31,58,46,.35);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"></div>
+          <div><span style="display:block;font-size:12px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Sexo</span>
+            <div style="display:flex;gap:8px">
+              <div class="ndCopt ndSex active" data-p="1" data-sex="H" style="flex:1;display:flex;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:5px;background:#1F3A2E;color:#fff;cursor:pointer;padding:9px;font-size:13.5px;font-weight:700;user-select:none;transition:background .15s">Hombre</div>
+              <div class="ndCopt ndSex" data-p="1" data-sex="M" style="flex:1;display:flex;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:5px;background:#1F3A2E;color:#fff;cursor:pointer;padding:9px;font-size:13.5px;font-weight:700;user-select:none;transition:background .15s">Mujer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="calcPersona2" style="display:none;background:#fff;border:2px solid rgba(31,58,46,.25);border-radius:6px;padding:18px 20px;margin-bottom:16px">
+        <h4 style="font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;color:#5A6B7D;margin-bottom:12px;font-weight:700">Segundo/a propietario/a</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div><span style="display:block;font-size:12px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Edad</span><input type="number" id="calcEdad2" placeholder="Edad" min="30" max="110" step="1" style="width:100%;padding:11px 13px;border:2px solid rgba(31,58,46,.35);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"></div>
+          <div><span style="display:block;font-size:12px;font-weight:700;color:#1F3A2E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Sexo</span>
+            <div style="display:flex;gap:8px">
+              <div class="ndCopt ndSex active" data-p="2" data-sex="H" style="flex:1;display:flex;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:5px;background:#1F3A2E;color:#fff;cursor:pointer;padding:9px;font-size:13.5px;font-weight:700;user-select:none;transition:background .15s">Hombre</div>
+              <div class="ndCopt ndSex" data-p="2" data-sex="M" style="flex:1;display:flex;align-items:center;justify-content:center;border:2px solid #14271E;border-radius:5px;background:#1F3A2E;color:#fff;cursor:pointer;padding:9px;font-size:13.5px;font-weight:700;user-select:none;transition:background .15s">Mujer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ndCalcBtn disabled" id="calcBtn" style="display:block;width:100%;padding:15px;background:#B4B2A9;color:#fff;border:2px solid #B4B2A9;border-radius:999px;font-family:inherit;font-size:15.5px;font-weight:700;cursor:not-allowed;letter-spacing:.03em;text-align:center;user-select:none;transition:background .15s;margin-top:4px">Completa los datos para calcular</div>
+
+      <div id="calcGate" style="display:none;margin-top:20px;padding:22px;background:#fff;border:2px solid #1F3A2E;border-radius:8px">
+        <h3 style="font-size:1.1rem;color:#1F3A2E;font-weight:700;margin-bottom:7px">Recibe tu estimación</h3>
+        <p style="font-size:13.5px;color:#5A6B7D;margin-bottom:14px;line-height:1.5">Introduce tu email para ver el resultado. Un asesor podrá ampliarte la valoración si lo deseas.</p>
+        <input type="email" id="calcGateEmail" placeholder="tu@email.com" style="width:100%;padding:12px 15px;border:2px solid rgba(31,58,46,.35);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;margin-bottom:13px;outline:none">
+        <label style="display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:#5A6B7D;margin-bottom:15px;cursor:pointer;line-height:1.45"><input type="checkbox" id="calcGateGdpr" style="margin-top:2px;flex-shrink:0;width:16px;height:16px;accent-color:#1F3A2E"><span>He leído y acepto la <a href="#" style="color:inherit;font-weight:700;text-decoration:underline">política de privacidad</a> y el tratamiento de mis datos conforme al RGPD.</span></label>
+        <div class="ndCalcBtn" id="calcGateBtn" style="display:block;width:100%;padding:14px;background:#1F3A2E;color:#fff;border:2px solid #1F3A2E;border-radius:999px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;text-align:center;user-select:none">Ver mi estimación</div>
+      </div>
+
+      <div id="calcResultBox" style="display:none;margin-top:22px;background:#1F3A2E;border-radius:10px;padding:28px 30px">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:rgba(245,242,236,.65);margin-bottom:14px">Estimación orientativa · Nudade</div>
+        <div id="calcResMain" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px"></div>
+        <div style="font-size:12.5px;color:rgba(245,242,236,.55);border-top:1px solid rgba(245,242,236,.15);padding-top:15px;line-height:1.6">Cálculo basado en tablas INE y tipos de descuento de mercado (3–4%). El importe real depende de la tasación oficial, el estado de la vivienda y la ubicación. Para una valoración exacta y gratuita, contacta con un asesor.</div>
+        <div style="margin-top:18px"><a href="#valoracion" data-nav style="display:inline-block;background:#F5F2EC;color:#1F3A2E;padding:14px 26px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none">Solicitar valoración exacta y gratuita</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VALORACIÓN / FORM ===================== -->
+<section id="valoracion" style="background:#1F3A2E;color:#F5F2EC;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px)">
+  <div style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,5vw,64px);align-items:stretch" class="ndFormGrid">
+    <div data-reveal>
+      <h2 style="font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-.02em;color:#F5F2EC;font-weight:700;text-wrap:balance">Solicita una estimación sin compromiso.</h2>
+      <p style="font-size:16.5px;line-height:1.6;color:rgba(245,242,236,.85);margin:22px 0 28px;max-width:480px">Un asesor de Nudade contactará en menos de 24 horas con un primer rango orientativo y, si lo deseas, agendará una visita o una videollamada antes de implicar a nadie más.</p>
+      <ul style="display:flex;flex-direction:column;gap:12px;list-style:none">
+        <li style="display:flex;align-items:center;gap:12px;font-size:15px;color:#F5F2EC"><span style="width:8px;height:8px;background:#F5F2EC;border-radius:50%;flex-shrink:0"></span>Sin coste y sin compromiso</li>
+        <li style="display:flex;align-items:center;gap:12px;font-size:15px;color:#F5F2EC"><span style="width:8px;height:8px;background:#F5F2EC;border-radius:50%;flex-shrink:0"></span>Confidencial</li>
+        <li style="display:flex;align-items:center;gap:12px;font-size:15px;color:#F5F2EC"><span style="width:8px;height:8px;background:#F5F2EC;border-radius:50%;flex-shrink:0"></span>Respuesta en menos de 24 horas</li>
+      </ul>
+      <div style="position:relative;margin-top:34px;border-radius:10px 10px 160px 160px;overflow:hidden;aspect-ratio:16/11;max-width:460px;border:1px solid rgba(245,242,236,.18)">
+        <img class="ndKen" src="assets/elegante-pareja.png" alt="Pareja sénior tras una asesoría de Nudade" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%">
+      </div>
+    </div>
+    <div data-reveal>
+      <form id="ndLeadForm" style="background:#F5F2EC;padding:clamp(30px,3.2vw,42px);border-radius:12px;color:#1A1A1A;height:100%;display:flex;flex-direction:column;justify-content:space-between">
+        <div style="margin-bottom:26px"><span style="display:block;font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:700;margin-bottom:7px">Valoración gratuita</span><span style="display:block;font-size:1.25rem;font-weight:700;color:#1F3A2E;letter-spacing:-.01em">Cuéntanos lo básico</span></div>
+        <div style="margin-bottom:22px"><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Tu nombre</label><input type="text" name="nombre" required style="width:100%;padding:12px 14px;border:1px solid rgba(31,58,46,.22);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px" class="ndFRow">
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Email</label><input type="email" name="email" required style="width:100%;padding:12px 14px;border:1px solid rgba(31,58,46,.22);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Teléfono</label><input type="tel" name="telefono" required style="width:100%;padding:12px 14px;border:1px solid rgba(31,58,46,.22);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"></div>
+        </div>
+        <div style="margin-bottom:22px"><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Relación con el propietario</label><select name="relacion" required style="width:100%;padding:12px 14px;border:1px solid rgba(31,58,46,.22);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"><option value="">Selecciona una opción</option><option>Soy hijo o hija</option><option>Soy familiar directo</option><option>Soy el propietario</option><option>Soy asesor de la familia</option></select></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px" class="ndFRow">
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Ciudad de la vivienda</label><input type="text" name="ciudad" required style="width:100%;padding:12px 14px;border:1px solid rgba(31,58,46,.22);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Edad del propietario</label><input type="number" name="edad" min="60" max="110" required style="width:100%;padding:12px 14px;border:1px solid rgba(31,58,46,.22);border-radius:5px;font-family:inherit;font-size:15px;color:#1A1A1A;background:#fff;outline:none"></div>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:9px;margin:18px 0;font-size:13px;color:#5A6B7D;cursor:pointer;line-height:1.45"><input type="checkbox" name="rgpd" required style="margin-top:2px;flex-shrink:0;accent-color:#1F3A2E"><span>He leído y acepto la <a href="#" style="color:#1F3A2E;text-decoration:underline">política de privacidad</a>.</span></label>
+        <button type="submit" style="display:block;width:100%;background:#1F3A2E;color:#F5F2EC;border:none;padding:16px;border-radius:999px;font-family:inherit;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .3s">Solicitar valoración</button>
+        <p style="font-size:13px;color:#5A6B7D;text-align:center;margin-top:14px">También puedes llamarnos al <strong style="color:#1F3A2E">605 23 98 09</strong>.</p>
+      </form>
+      <div id="ndLeadSuccess" style="display:none;background:#F5F2EC;padding:48px 32px;border-radius:12px;text-align:center;color:#1A1A1A"><h3 style="color:#1F3A2E;font-size:1.4rem;font-weight:700;margin-bottom:12px">Gracias por confiar en Nudade.</h3><p style="font-size:15.5px;color:#5A6B7D;line-height:1.6">Hemos recibido tu solicitud. Un asesor te contactará en menos de 24 horas con una primera estimación.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq" style="background:#F5F2EC;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px)">
+  <div style="max-width:880px;margin:0 auto">
+    <div data-reveal style="margin-bottom:clamp(36px,5vw,52px)">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#5A6B7D;font-weight:600;margin-bottom:18px">Preguntas frecuentes</p>
+      <h2 style="font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance">Lo que las familias suelen preguntarnos.</h2>
+    </div>
+    <div data-reveal id="ndFaq"></div>
+  </div>
+</section>
+
+<!-- ===================== TE LLAMAMOS (banda) ===================== -->
+<section style="background:#ECE7DD;padding:clamp(56px,7vw,90px) clamp(20px,5vw,44px)">
+  <div data-reveal style="max-width:980px;margin:0 auto;background:#1F3A2E;border-radius:16px;padding:clamp(36px,5vw,60px);display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(28px,4vw,52px);align-items:center;position:relative;overflow:hidden" class="ndCallBand">
+    <svg viewBox="0 0 300 300" fill="none" stroke="#F5F2EC" stroke-width="2" style="position:absolute;top:-60px;right:-40px;width:300px;height:300px;opacity:.07;pointer-events:none"><path d="M40 290 L40 150 A110 110 0 0 1 260 150 L260 290"/><path d="M100 290 L100 175 A50 50 0 0 1 200 175 L200 290"/></svg>
+    <div style="position:relative">
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:rgba(245,242,236,.6);font-weight:600;margin-bottom:16px">¿Prefieres que te llamemos?</p>
+      <h2 style="font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.1;letter-spacing:-.02em;color:#F5F2EC;font-weight:700;margin-bottom:14px;text-wrap:balance">Déjanos tu teléfono. Te llamamos nosotros.</h2>
+      <p style="font-size:16px;line-height:1.55;color:rgba(245,242,236,.82);max-width:420px">Sin esperas ni formularios largos. Un asesor te llama cuando mejor te venga, te escucha y resuelve tus dudas con calma.</p>
+    </div>
+    <div style="position:relative;text-align:left">
+      <button class="ndCallTrigger" style="font-family:inherit;cursor:pointer;background:#F5F2EC;color:#1F3A2E;border:none;padding:17px 34px;border-radius:999px;font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:10px;transition:transform .3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>Te llamamos</button>
+      <p style="font-size:13.5px;color:rgba(245,242,236,.6);margin-top:14px">o llámanos al <a href="tel:+34605239809" style="color:#F5F2EC;text-decoration:underline">605 23 98 09</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTNERS ===================== -->
+<section style="background:#1A1A1A;color:#F5F2EC;padding:clamp(60px,8vw,100px) clamp(20px,5vw,44px)">
+  <div data-reveal style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(24px,4vw,48px);align-items:center" class="ndPartners">
+    <div>
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:rgba(245,242,236,.5);font-weight:600;margin-bottom:16px">Inversores y partnerships</p>
+      <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.12;letter-spacing:-.02em;color:#F5F2EC;font-weight:700;text-wrap:balance">Construyendo la mayor plataforma de nuda propiedad de España.</h2>
+      <p style="font-size:16px;line-height:1.6;color:rgba(245,242,236,.72);margin-top:16px;max-width:560px">Trabajamos con family offices, fondos institucionales y aseguradoras que buscan exposición al residencial español con riesgo controlado y un componente de impacto social tangible.</p>
+    </div>
+    <div style="text-align:right" class="ndPartnersCta"><a href="mailto:info@nudade.es" style="font-size:15px;color:rgba(245,242,236,.85);text-decoration:underline">info@nudade.es</a></div>
+  </div>
+</section>
+
+<!-- ===================== ARCH REVEAL (efecto wow) ===================== -->
+<section id="ndArch" style="position:relative;height:240vh;background:#ECE7DD">
+  <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center">
+    <div id="ndArchClip" style="position:absolute;top:0;left:0;right:0;bottom:0;clip-path:inset(16% 20% 12% 20% round 200px 200px 0px 0px);-webkit-clip-path:inset(16% 20% 12% 20% round 200px 200px 0px 0px);will-change:clip-path">
+      <img id="ndArchImg" src="assets/marron-pareja.png" alt="Pareja sénior en su hogar" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:64% 35%;transform:scale(1.12);will-change:transform">
+      <div id="ndArchDim" style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(15,22,18,.5)"></div>
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,22,18,.62),transparent 52%)"></div>
+      <div id="ndArchIntro" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 clamp(30px,6vw,72px);box-sizing:border-box;pointer-events:none">
+        <h2 style="font-size:clamp(1.65rem,3.6vw,2.8rem);line-height:1.16;letter-spacing:-.02em;font-weight:700;color:#F5F2EC;text-wrap:balance;max-width:400px;text-shadow:0 2px 26px rgba(15,22,18,.6)">Y al final del día, todo y todos siguen en su sitio.</h2>
+      </div>
+    </div>
+    <div id="ndArchCap" style="position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:0 24px 9vh;opacity:0;transform:translateY(20px);pointer-events:none">
+      <p style="color:#F5F2EC;font-size:clamp(1.2rem,2.4vw,1.9rem);line-height:1.25;font-weight:700;letter-spacing:-.015em;text-align:center;max-width:720px;text-shadow:0 2px 22px rgba(15,22,18,.55)">Su hogar, su gente, sus costumbres. Intactos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA FINAL ===================== -->
+<section id="contacto" style="background:#F5F2EC;padding:clamp(70px,9vw,120px) clamp(20px,5vw,44px);text-align:center">
+  <div data-reveal style="max-width:680px;margin:0 auto">
+    <svg viewBox="0 0 100 120" fill="none" stroke="#1F3A2E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" style="height:52px;width:auto;margin:0 auto 28px"><path d="M9 116 L9 52 A41 41 0 0 1 91 52 L91 116"/><path d="M35 116 L35 65 A15 15 0 0 1 65 65 L65 116"/></svg>
+    <h2 style="font-size:clamp(2rem,4vw,3rem);line-height:1.08;letter-spacing:-.025em;color:#1F3A2E;font-weight:700;text-wrap:balance">Hablemos sin compromiso.</h2>
+    <p style="font-size:clamp(1.05rem,1.7vw,1.25rem);color:#5A6B7D;margin:16px 0 32px">Cada familia es un caso. Lo primero es escucharte.</p>
+    <div style="display:flex;gap:13px;justify-content:center;flex-wrap:wrap" class="ndHeroCta">
+      <a href="#valoracion" data-nav class="ndBtnP" style="display:inline-block;background:#1F3A2E;color:#F5F2EC;padding:16px 32px;border-radius:999px;font-size:15.5px;font-weight:600;text-decoration:none;transition:transform .3s, background .3s">Solicitar valoración</a>
+      <button class="ndCallTrigger ndBtnS" style="font-family:inherit;cursor:pointer;background:transparent;color:#1F3A2E;border:1.5px solid #1F3A2E;padding:16px 32px;border-radius:999px;font-size:15.5px;font-weight:600;transition:background .3s, color .3s">Te llamamos</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer style="background:#1F3A2E;color:#F5F2EC;padding:64px clamp(20px,5vw,44px) 30px">
+  <div style="max-width:1180px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px;padding-bottom:42px;border-bottom:1px solid rgba(245,242,236,.15)" class="ndFootGrid">
+      <div>
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px">
+          <svg viewBox="0 0 100 120" fill="none" stroke="#F5F2EC" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" style="height:32px;width:auto"><path d="M9 116 L9 52 A41 41 0 0 1 91 52 L91 116"/><path d="M35 116 L35 65 A15 15 0 0 1 65 65 L65 116"/></svg>
+          <span style="font-weight:700;font-size:20px;letter-spacing:.26em;color:#F5F2EC">NUDADE</span>
+        </div>
+        <p style="color:rgba(245,242,236,.7);font-size:15px;line-height:1.5;max-width:300px">Tu casa sigue siendo tu casa, ahora también es liquidez. Nuda propiedad en España.</p>
+      </div>
+      <div>
+        <h4 style="color:#F5F2EC;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;font-weight:700">Nudade</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:11px">
+          <li><a href="#como-funciona" data-nav style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Cómo funciona</a></li>
+          <li><a href="#calculadora" data-nav style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Calcular</a></li>
+          <li><a href="#por-que" data-nav style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Por qué Nudade</a></li>
+          <li><a href="viviendas.html" style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Viviendas</a></li>
+          <li><a href="#garantias" data-nav style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Garantías</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#F5F2EC;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;font-weight:700">Contacto</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:11px">
+          <li style="font-size:14.5px;color:rgba(245,242,236,.75)"><a href="tel:+34605239809" style="color:inherit;text-decoration:none">605 23 98 09</a></li>
+          <li style="font-size:14.5px;color:rgba(245,242,236,.75)"><a href="mailto:info@nudade.es" style="color:inherit;text-decoration:none">info@nudade.es</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#F5F2EC;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;font-weight:700">Legal</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:11px">
+          <li><a href="#" style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Aviso legal</a></li>
+          <li><a href="#" style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Política de privacidad</a></li>
+          <li><a href="#" style="font-size:14.5px;color:rgba(245,242,236,.75);text-decoration:none">Política de cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding-top:24px;display:flex;justify-content:space-between;font-size:13px;color:rgba(245,242,236,.6);flex-wrap:wrap;gap:8px">
+      <p>© 2026 Nudade. Todos los derechos reservados.</p>
+      <p>nudade.es · nudade.com</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== MODAL TE LLAMAMOS ===================== -->
+<div id="ndCallModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:120;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;padding:24px 20px">
+  <div id="ndCallOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,22,18,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)"></div>
+  <div style="position:relative;background:#F5F2EC;border-radius:16px;width:100%;max-width:440px;margin:auto 0;flex-shrink:0;padding:clamp(26px,4vw,40px);box-shadow:0 30px 80px -20px rgba(15,22,18,.5)">
+    <button id="ndCallClose" aria-label="Cerrar" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:26px;line-height:1;color:#5A6B7D;cursor:pointer">&times;</button>
+    <div id="ndCallFormWrap">
+      <svg viewBox="0 0 100 120" fill="none" stroke="#1F3A2E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" style="height:40px;width:auto;margin-bottom:18px"><path d="M9 116 L9 52 A41 41 0 0 1 91 52 L91 116"/><path d="M35 116 L35 65 A15 15 0 0 1 65 65 L65 116"/></svg>
+      <h3 style="font-size:1.5rem;color:#1F3A2E;font-weight:700;letter-spacing:-.01em;margin-bottom:8px">Te llamamos</h3>
+      <p style="font-size:14.5px;color:#5A6B7D;line-height:1.5;margin-bottom:22px">Déjanos tu teléfono y un asesor te llamará a la mayor brevedad. Sin compromiso.</p>
+      <form id="ndCallForm">
+        <div style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Tu nombre</label><input type="text" name="nombre" required placeholder="Nombre y apellidos" style="width:100%;padding:13px 15px;border:1.5px solid rgba(31,58,46,.25);border-radius:6px;font-family:inherit;font-size:15.5px;color:#1A1A1A;background:#fff;outline:none"></div>
+        <div style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Teléfono</label><input type="tel" name="telefono" required placeholder="6XX XX XX XX" inputmode="tel" style="width:100%;padding:13px 15px;border:1.5px solid rgba(31,58,46,.25);border-radius:6px;font-family:inherit;font-size:15.5px;color:#1A1A1A;background:#fff;outline:none"></div>
+        <div style="margin-bottom:6px"><label style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Mejor franja horaria <span style="font-weight:400;color:#5A6B7D;font-size:12px">(opcional)</span></label><select name="horario" style="width:100%;padding:13px 15px;border:1.5px solid rgba(31,58,46,.25);border-radius:6px;font-family:inherit;font-size:15.5px;color:#1A1A1A;background:#fff;outline:none"><option value="">Cuando mejor os venga</option><option>Por la mañana (9–14h)</option><option>Por la tarde (14–18h)</option><option>A última hora (18–20h)</option></select></div>
+        <label style="display:flex;align-items:flex-start;gap:9px;margin:16px 0;font-size:12.5px;color:#5A6B7D;cursor:pointer;line-height:1.45"><input type="checkbox" name="rgpd" required style="margin-top:2px;flex-shrink:0;accent-color:#1F3A2E"><span>Acepto la <a href="#" style="color:#1F3A2E;text-decoration:underline">política de privacidad</a> y que Nudade me contacte por teléfono.</span></label>
+        <button type="submit" style="display:block;width:100%;background:#1F3A2E;color:#F5F2EC;border:none;padding:15px;border-radius:999px;font-family:inherit;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .3s">Quiero que me llaméis</button>
+      </form>
+      <p style="font-size:12.5px;color:#5A6B7D;text-align:center;margin-top:14px">O escríbenos a <a href="mailto:info@nudade.es" style="color:#1F3A2E;text-decoration:underline">info@nudade.es</a></p>
+    </div>
+    <div id="ndCallSuccess" style="display:none;text-align:center;padding:14px 0">
+      <div style="width:60px;height:60px;border-radius:50%;background:#1F3A2E;display:flex;align-items:center;justify-content:center;margin:0 auto 20px"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F2EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h3 style="font-size:1.4rem;color:#1F3A2E;font-weight:700;margin-bottom:10px">¡Recibido!</h3>
+      <p style="font-size:15px;color:#5A6B7D;line-height:1.55">Hemos registrado tu teléfono. Un asesor de Nudade te llamará muy pronto.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Dinámico&quot;,&quot;Sereno&quot;],&quot;default&quot;:&quot;Dinámico&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = this.el || document;
+    const $ = (s, c) => (c || root).querySelector(s);
+    const $$ = (s, c) => Array.from((c || root).querySelectorAll(s));
+    const motion = (this.props.motion ?? 'Dinámico');
+    const calm = motion === 'Sereno';
+    const NAV_H = 74;
+
+    /* ---------- NAV scroll state ---------- */
+    const nav = $('#ndNav');
+    const onScroll = () => {
+      if (window.scrollY > 12) { nav.style.borderBottomColor = 'rgba(31,58,46,.1)'; nav.style.background = 'rgba(245,242,236,.86)'; }
+      else { nav.style.borderBottomColor = 'transparent'; nav.style.background = 'rgba(245,242,236,.72)'; }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* ---------- Mobile menu ---------- */
+    const toggle = $('#ndToggle');
+    const links = $('#ndLinks');
+    const setMenu = (open) => {
+      if (open) {
+        links.style.display = 'flex'; links.style.flexDirection = 'column';
+        links.style.position = 'absolute'; links.style.top = NAV_H + 'px';
+        links.style.left = '0'; links.style.right = '0'; links.style.gap = '20px';
+        links.style.background = '#F5F2EC'; links.style.padding = '24px 32px 32px';
+        links.style.borderBottom = '1px solid rgba(31,58,46,.1)'; links.style.alignItems = 'flex-start';
+      } else { links.removeAttribute('style'); applyResponsive(); }
+    };
+    let menuOpen = false;
+    toggle.addEventListener('click', () => { menuOpen = !menuOpen; setMenu(menuOpen); });
+
+    /* ---------- Responsive (JS-driven, inline-only) ---------- */
+    const mq2 = window.matchMedia('(max-width:980px)');
+    const mq1 = window.matchMedia('(max-width:640px)');
+    const applyResponsive = () => {
+      const wide = !mq2.matches;
+      // nav links vs hamburger
+      if (mq1.matches) {
+        toggle.style.display = 'flex';
+        if (!menuOpen) links.style.display = 'none';
+      } else {
+        toggle.style.display = 'none'; menuOpen = false;
+        links.removeAttribute('style'); links.style.display = 'flex';
+        links.style.alignItems = 'center'; links.style.gap = '30px';
+      }
+      // grids -> 1 col on narrow
+      const cols = (sel, wideCols, midCols) => $$(sel).forEach(g => {
+        g.style.gridTemplateColumns = mq1.matches ? '1fr' : (mq2.matches ? midCols : wideCols);
+      });
+      cols('.ndHeroGrid', '1.08fr .92fr', '1fr');
+      cols('.ndStickyGrid', '.9fr 1.1fr', '1fr');
+      cols('.ndProblemGrid', 'repeat(3,1fr)', 'repeat(3,1fr)');
+      cols('.ndOpcGrid', 'repeat(3,1fr)', '1fr');
+      cols('.ndVivGrid', 'repeat(3,1fr)', 'repeat(2,1fr)');
+      cols('.ndTrustGrid', 'repeat(3,1fr)', 'repeat(2,1fr)');
+      cols('.ndFormGrid', '1fr 1.05fr', '1fr');
+      cols('.ndCallBand', '1.2fr 1fr', '1fr');
+      cols('.ndPartners', '1.5fr 1fr', '1fr');
+      cols('.ndFootGrid', '1.6fr 1fr 1fr 1fr', '1fr 1fr');
+      cols('.ndSplitGrid', '1fr 1fr', '1fr');
+      // sticky col -> static on narrow
+      $$('.ndStickyCol').forEach(c => { c.style.position = mq2.matches ? 'static' : 'sticky'; });
+      // tabla comparativa -> columnas proporcionadas + scroll horizontal en móvil
+      $$('.ndCmpRow > div').forEach(d => { d.style.minWidth = '0'; });
+      $$('.ndCmpRow').forEach(r => { r.style.minWidth = mq1.matches ? '540px' : ''; });
+      $$('.ndCmpWrap').forEach(w => { w.style.overflowX = mq1.matches ? 'auto' : 'hidden'; w.style.webkitOverflowScrolling = 'touch'; });
+      // partners cta align
+      $$('.ndPartnersCta').forEach(c => { c.style.textAlign = mq2.matches ? 'left' : 'right'; });
+      // pinned split -> stack en móvil
+      const pinEl = $('#ndPin'), pinRow = $('#ndPinRow'), pinHero = $('#ndPinHero');
+      if (pinEl && pinRow) {
+        if (mq1.matches) {
+          pinEl.dataset.mobile = '1';
+          pinEl.style.height = 'auto';
+          pinRow.parentElement.style.position = 'static';
+          pinRow.parentElement.style.height = 'auto';
+          pinRow.parentElement.style.overflow = 'visible';
+          pinRow.style.flexDirection = 'column';
+          pinRow.style.height = 'auto';
+          pinRow.style.gap = '14px';
+          pinRow.style.padding = '20px';
+          $$('.ndPinPanel', pinEl).forEach(pn => { pn.style.height = '62vh'; pn.style.borderRadius = '120px 120px 10px 10px'; });
+          $$('.ndPinPGrad', pinEl).forEach(g => { g.style.opacity = '1'; });
+          $$('.ndPinCap', pinEl).forEach(c => { c.style.opacity = '1'; c.style.transform = 'none'; });
+          $$('.ndPinPImg', pinEl).forEach(im => { im.style.transform = 'scale(1.04)'; im.style.willChange = 'auto'; });
+          const sgl = $('#ndPinSingle'); if (sgl) sgl.style.display = 'none';
+          if (pinHero) pinHero.style.display = 'none';
+        } else if (pinEl.dataset.mobile === '1') {
+          pinEl.dataset.mobile = '';
+          pinEl.style.height = '320vh';
+          pinRow.parentElement.style.position = 'sticky';
+          pinRow.parentElement.style.height = '100vh';
+          pinRow.parentElement.style.overflow = 'hidden';
+          pinRow.style.flexDirection = 'row';
+          pinRow.style.height = '100vh';
+          $$('.ndPinPImg', pinEl).forEach(im => { im.style.willChange = 'transform'; });
+          const sgl2 = $('#ndPinSingle'); if (sgl2) sgl2.style.display = 'block';
+          if (pinHero) pinHero.style.display = 'flex';
+        }
+      }
+    };
+    applyResponsive();
+    mq2.addEventListener('change', applyResponsive);
+    mq1.addEventListener('change', applyResponsive);
+
+    /* ---------- Smooth anchor scroll ---------- */
+    $$('a[data-nav]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (!id || id.charAt(0) !== '#' || id.length < 2) return;
+        const target = id === '#top' ? document.body : $(id);
+        if (!target) return;
+        e.preventDefault();
+        if (menuOpen) { menuOpen = false; setMenu(false); }
+        const top = id === '#top' ? 0 : (target.getBoundingClientRect().top + window.scrollY - NAV_H - 8);
+        window.scrollTo({ top, behavior: calm ? 'auto' : 'smooth' });
+      });
+    });
+
+    /* ---------- Scroll reveal ---------- */
+    const reveals = $$('[data-reveal]');
+    reveals.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(' + (calm ? 14 : 30) + 'px)';
+      el.style.transition = 'opacity ' + (calm ? .6 : .85) + 's cubic-bezier(.22,.61,.36,1), transform ' + (calm ? .6 : .85) + 's cubic-bezier(.22,.61,.36,1)';
+      el.style.willChange = 'opacity, transform';
+    });
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((ents) => {
+        ents.forEach(en => {
+          if (en.isIntersecting) {
+            en.target.style.opacity = '1';
+            en.target.style.transform = 'none';
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      reveals.forEach(el => io.observe(el));
+    } else { reveals.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); }
+
+    /* ---------- Parallax ---------- */
+    const plx = $$('[data-parallax]');
+    let ticking = false;
+    const runParallax = () => {
+      const vh = window.innerHeight;
+      plx.forEach(el => {
+        const r = el.getBoundingClientRect();
+        const center = r.top + r.height / 2;
+        const off = (center - vh / 2) * parseFloat(el.getAttribute('data-parallax'));
+        el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
+      });
+      ticking = false;
+    };
+    const ndSmall = () => window.matchMedia('(max-width:640px)').matches;
+    const onParallaxScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(runParallax); } };
+    if (!calm && plx.length && !ndSmall()) {
+      window.addEventListener('scroll', onParallaxScroll, { passive: true });
+      runParallax();
+    } else { plx.forEach(el => { el.style.transform = 'none'; el.style.willChange = 'auto'; }); }
+
+    /* ---------- Pinned: 1 imagen -> 3 paneles (split fluido) ---------- */
+    const pin = $('#ndPin');
+    if (pin) {
+      const row = $('#ndPinRow'), hero = $('#ndPinHero'), single = $('#ndPinSingle');
+      const panels = $$('.ndPinPanel', pin);
+      const imgs = $$('.ndPinPImg', pin);
+      const grads = $$('.ndPinPGrad', pin);
+      const caps = $$('.ndPinCap', pin);
+      caps.forEach(c => { c.style.transition = 'opacity .3s ease, transform .3s ease'; });
+      const cl = (x) => Math.min(1, Math.max(0, x));
+      const ease = (x) => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2;
+      const runPin = () => {
+        if (pin.dataset.mobile === '1') return;
+        const vh = window.innerHeight;
+        const total = pin.offsetHeight - vh;
+        const p = cl(-pin.getBoundingClientRect().top / total);
+        // fase split: arranca en 0.22, completa en 0.62
+        const s = ease(cl((p - 0.22) / 0.40));
+        // foto única general: visible al inicio, se desvanece para revelar los 3 paneles
+        if (single) {
+          single.style.opacity = (1 - cl((p - 0.20) / 0.18)).toFixed(2);
+          single.style.transform = 'scale(' + (1.12 - 0.10 * cl(p / 0.5)).toFixed(3) + ')';
+        }
+        // zoom-out continuo de las imágenes de panel
+        imgs.forEach(im => {
+          const op = im.style.objectPosition || 'center 20%';
+          im.style.transform = 'scale(' + (1.18 - 0.14 * cl(p / 0.6)).toFixed(3) + ')';
+        });
+        // separación de paneles
+        row.style.gap = (s * 20).toFixed(1) + 'px';
+        row.style.padding = (s * 7).toFixed(2) + 'vh ' + (s * 4.5).toFixed(2) + 'vw';
+        const rTop = (s * 150).toFixed(0), rBot = (s * 10).toFixed(1);
+        const ph = (100 - s * 18).toFixed(1);
+        panels.forEach((pn, i) => {
+          pn.style.height = ph + 'vh';
+          pn.style.borderRadius = rTop + 'px ' + rTop + 'px ' + rBot + 'px ' + rBot + 'px';
+          grads[i].style.opacity = s.toFixed(2);
+          const ci = cl((s - (0.40 + i * 0.07)) / 0.25);
+          caps[i].style.opacity = ci.toFixed(2);
+          caps[i].style.transform = 'translateY(' + ((1 - ci) * 16).toFixed(1) + 'px)';
+        });
+        // overlay headline se desvanece al iniciar el split
+        hero.style.opacity = (1 - cl((p - 0.16) / 0.14)).toFixed(2);
+      };
+      window.addEventListener('scroll', runPin, { passive: true });
+      runPin();
+    }
+
+    /* ---------- Arch reveal (efecto wow) ---------- */
+    const arch = $('#ndArch');
+    if (arch) {
+      const clip = $('#ndArchClip'), aimg = $('#ndArchImg'), intro = $('#ndArchIntro'), acap = $('#ndArchCap'), dim = $('#ndArchDim');
+      acap.style.transition = 'opacity .3s ease, transform .3s ease';
+      const cl2 = (x) => Math.min(1, Math.max(0, x));
+      const ease2 = (x) => 1 - Math.pow(1 - x, 3);
+      const isMobile = () => window.matchMedia('(max-width:640px)').matches;
+      let archMobileSet = false;
+      const runArch = () => {
+        if (isMobile()) {
+          if (archMobileSet) return;
+          archMobileSet = true;
+          clip.style.clipPath = clip.style.webkitClipPath = 'inset(0 0 0 0 round 16px 16px 0 0)';
+          clip.style.willChange = 'auto'; aimg.style.willChange = 'auto';
+          aimg.style.transform = 'scale(1.02)'; intro.style.opacity = '0'; if (dim) dim.style.opacity = '0'; acap.style.opacity = '1'; acap.style.transform = 'none';
+          return;
+        }
+        archMobileSet = false;
+        const vh = window.innerHeight;
+        const total = arch.offsetHeight - vh;
+        const p = cl2(-arch.getBoundingClientRect().top / total);
+        const s = ease2(cl2((p - 0.08) / 0.62));
+        const top = (16 * (1 - s)).toFixed(2), side = (20 * (1 - s)).toFixed(2), bot = (12 * (1 - s)).toFixed(2);
+        const r = (200 * (1 - s) + 18 * s).toFixed(0);
+        const ins = 'inset(' + top + '% ' + side + '% ' + bot + '% ' + side + '% round ' + r + 'px ' + r + 'px 0px 0px)';
+        clip.style.clipPath = clip.style.webkitClipPath = ins;
+        aimg.style.transform = 'scale(' + (1.12 - 0.1 * s).toFixed(3) + ')';
+        const introOp = 1 - cl2((p - 0.05) / 0.16);
+        intro.style.opacity = introOp.toFixed(2);
+        if (dim) dim.style.opacity = (0.5 * introOp).toFixed(2);
+        const co = cl2((s - 0.7) / 0.25);
+        acap.style.opacity = co.toFixed(2);
+        acap.style.transform = 'translateY(' + ((1 - co) * 20).toFixed(1) + 'px)';
+      };
+      window.addEventListener('scroll', runArch, { passive: true });
+      runArch();
+    }
+
+    /* ---------- Ken-burns zoom on framed photos (scroll-driven) ---------- */
+    const kens = $$('.ndKen');
+    if (kens.length) {
+      const kenMobile = window.matchMedia('(max-width:640px)').matches;
+      if (kenMobile) {
+        // En móvil (Safari) el zoom por scroll provoca parpadeo: dejamos la imagen estática.
+        kens.forEach(im => { im.style.transition = 'none'; im.style.willChange = 'auto'; im.style.transform = 'scale(1.02)'; });
+      } else {
+      kens.forEach(im => { im.style.transition = 'transform .1s linear'; im.style.willChange = 'transform'; });
+      const runKen = () => {
+        const vh = window.innerHeight;
+        kens.forEach(im => {
+          const fr = im.parentElement.getBoundingClientRect();
+          if (fr.bottom < -50 || fr.top > vh + 50) return;
+          const prog = Math.min(1, Math.max(0, (vh - fr.top) / (vh + fr.height)));
+          im.style.transform = 'scale(' + (1.03 + 0.1 * prog).toFixed(3) + ')';
+        });
+      };
+      window.addEventListener('scroll', runKen, { passive: true });
+      runKen();
+      }
+    }
+
+    /* ---------- Count up ---------- */
+    const counts = $$('[data-count]');
+    const animCount = (el) => {
+      const target = parseFloat(el.getAttribute('data-count'));
+      const suffix = el.getAttribute('data-suffix') || '';
+      const dur = calm ? 600 : 1300, t0 = performance.now();
+      const step = (t) => {
+        const p = Math.min(1, (t - t0) / dur);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * e) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    if ('IntersectionObserver' in window) {
+      const cio = new IntersectionObserver((ents) => {
+        ents.forEach(en => { if (en.isIntersecting) { animCount(en.target); cio.unobserve(en.target); } });
+      }, { threshold: 0.6 });
+      counts.forEach(el => cio.observe(el));
+    }
+
+    /* ---------- Hover micro-interactions ---------- */
+    $$('.ndBtnP').forEach(b => {
+      b.addEventListener('mouseenter', () => { b.style.background = '#1A1A1A'; b.style.transform = 'translateY(-2px)'; });
+      b.addEventListener('mouseleave', () => { b.style.background = '#1F3A2E'; b.style.transform = 'none'; });
+    });
+    $$('.ndBtnS').forEach(b => {
+      b.addEventListener('mouseenter', () => { b.style.background = '#1F3A2E'; b.style.color = '#F5F2EC'; });
+      b.addEventListener('mouseleave', () => { b.style.background = 'transparent'; b.style.color = '#1F3A2E'; });
+    });
+    const callBtn = $('#ndCallBtn');
+    if (callBtn) {
+      callBtn.addEventListener('mouseenter', () => { callBtn.style.background = '#1A1A1A'; callBtn.style.transform = 'translateY(-2px)'; });
+      callBtn.addEventListener('mouseleave', () => { callBtn.style.background = '#1F3A2E'; callBtn.style.transform = 'none'; });
+    }
+    $$('.ndOpc').forEach(c => {
+      c.addEventListener('mouseenter', () => { c.style.transform = 'translateY(-5px)'; c.style.boxShadow = '0 18px 40px -18px rgba(31,58,46,.3)'; });
+      c.addEventListener('mouseleave', () => { c.style.transform = 'none'; c.style.boxShadow = 'none'; });
+    });
+
+    /* ---------- VIVIENDAS (datos externos: viviendas.json) ---------- */
+    const grid = $('#ndVivGrid');
+    const vivCard = (v) => {
+      const owners = v.propietarios || [];
+      const ownerLabel = owners.length > 1 ? owners.length + ' usufructuarios' : '1 usufructuario';
+      const pills = owners.map(p => '<span style="font-size:13px;font-weight:500;color:#1F3A2E;background:rgba(31,58,46,.08);border-radius:999px;padding:5px 12px;white-space:nowrap">' + p.sexo + ' \u00b7 ' + p.edad + ' a\u00f1os</span>').join('');
+      const estado = (v.estado || 'disponible');
+      const sold = estado === 'vendida';
+      const reserved = estado === 'reservada';
+      const ribbon = (sold || reserved)
+        ? '<span style="position:absolute;top:0;right:0;width:132px;height:132px;overflow:hidden;pointer-events:none"><span style="position:absolute;top:36px;left:50%;width:184px;margin-left:-92px;text-align:center;transform:rotate(45deg);background:' + (sold ? '#1F3A2E' : '#C25A48') + ';color:#F5F2EC;font-size:12px;font-weight:700;letter-spacing:.1em;padding:7px 0;box-shadow:0 6px 18px -6px rgba(15,22,18,.5)">' + (sold ? 'VENDIDO' : 'RESERVADO') + '</span></span>'
+        : '';
+      const imgF = sold ? ';filter:grayscale(.55) brightness(.82)' : '';
+      const ctaTxt = sold ? 'Ver viviendas similares' : 'Solicitar informaci\u00f3n';
+      const media = v.foto
+        ? '<div style="position:relative;aspect-ratio:4/3;overflow:hidden"><img src="' + v.foto + '" alt="' + (v.titulo || v.localidad || 'Vivienda') + '" loading="lazy" style="width:100%;height:100%;object-fit:cover' + imgF + '">'
+        : '<div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:repeating-linear-gradient(135deg,#ECE7DD,#ECE7DD 12px,#E4DED2 12px,#E4DED2 24px);display:flex;align-items:flex-end;justify-content:center;padding:18px"><span style="font-family:ui-monospace,monospace;font-size:11.5px;color:#5A6B7D;background:rgba(245,242,236,.9);padding:6px 11px;border-radius:5px">foto \u00b7 ' + (v.localidad || '') + '</span>';
+      const amen = [];
+      if (v.habitaciones) amen.push(v.habitaciones + ' hab.');
+      if (v.superficie) amen.push(v.superficie);
+      if (v.altura) amen.push(v.altura);
+      if (v.ascensor) amen.push('Ascensor');
+      const amenHtml = amen.map(a => '<span style="font-size:13px;color:#1A1A1A;background:#F5F2EC;border:1px solid rgba(31,58,46,.1);padding:5px 11px;border-radius:5px;font-weight:500">' + a + '</span>').join('');
+      return '<article data-reveal class="ndVivCard" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(31,58,46,.1);display:flex;flex-direction:column;transition:transform .4s ease, box-shadow .4s ease">'
+        + media
+        + ribbon
+        + '<span style="position:absolute;top:14px;left:14px;background:rgba(31,58,46,.9);color:#F5F2EC;font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:6px 13px;border-radius:999px;backdrop-filter:blur(4px)">Nuda propiedad</span></div>'
+        + '<div style="padding:22px 22px 24px;display:flex;flex-direction:column;gap:15px;flex:1">'
+        + '<div style="display:flex;flex-direction:column;gap:3px"><strong style="color:#1A1A1A;font-weight:700;font-size:1.05rem;letter-spacing:-.01em">' + (v.localidad || '') + (v.cp ? ' \u00b7 ' + v.cp : '') + '</strong><span style="color:#5A6B7D;font-size:13.5px">' + (v.zona || '') + '</span></div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:7px">' + amenHtml + '</div>'
+        + '<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:#5A6B7D;font-weight:600">' + ownerLabel + '</span><div style="display:flex;flex-wrap:wrap;gap:7px">' + pills + '</div></div>'
+        + '<div style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;padding-top:16px;border-top:1px solid rgba(31,58,46,.1)">'
+        + '<div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D">Pago inicial</span><span style="font-size:1.25rem;font-weight:700;color:#1F3A2E;line-height:1.1">' + (v.pagoInicial || '') + '</span></div>'
+        + '<div style="display:flex;flex-direction:column;gap:3px;text-align:right"><span style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D">Renta</span><span style="font-size:1.25rem;font-weight:700;color:#1F3A2E;line-height:1.1">' + ((v.renta || '').replace('/mes', '')) + '<small style="font-size:12px;font-weight:500;color:#5A6B7D">/mes</small></span></div></div>'
+        + (v.tasacion ? '<div style="font-size:12px;color:#5A6B7D">Tasaci\u00f3n oficial: <strong style="color:#1A1A1A">' + v.tasacion + '</strong></div>' : '')
+        + '<a href="#valoracion" data-nav-viv style="display:block;text-align:center;background:transparent;color:#1F3A2E;border:1.5px solid #1F3A2E;padding:12px;border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;transition:background .25s, color .25s">' + ctaTxt + '</a>'
+        + '</div></article>';
+    };
+    const wireVivGrid = () => {
+      const newReveals = $$('[data-reveal]', grid);
+      newReveals.forEach(el => {
+        el.style.opacity = '0'; el.style.transform = 'translateY(' + (calm ? 14 : 30) + 'px)';
+        el.style.transition = 'opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1)';
+      });
+      if ('IntersectionObserver' in window) {
+        const io2 = new IntersectionObserver((ents) => { ents.forEach(en => { if (en.isIntersecting) { en.target.style.opacity = '1'; en.target.style.transform = 'none'; io2.unobserve(en.target); } }); }, { threshold: 0.1 });
+        newReveals.forEach(el => io2.observe(el));
+      } else { newReveals.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); }
+      $$('.ndVivCard', grid).forEach(c => {
+        c.addEventListener('mouseenter', () => { c.style.transform = 'translateY(-5px)'; c.style.boxShadow = '0 20px 44px -20px rgba(31,58,46,.34)'; });
+        c.addEventListener('mouseleave', () => { c.style.transform = 'none'; c.style.boxShadow = 'none'; });
+      });
+      $$('a[data-nav-viv]', grid).forEach(a => {
+        a.addEventListener('mouseenter', () => { a.style.background = '#1F3A2E'; a.style.color = '#F5F2EC'; });
+        a.addEventListener('mouseleave', () => { a.style.background = 'transparent'; a.style.color = '#1F3A2E'; });
+        a.addEventListener('click', (e) => { e.preventDefault(); const t = $('#valoracion'); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - NAV_H - 8, behavior: calm ? 'auto' : 'smooth' }); });
+      });
+    };
+    if (grid) {
+      fetch('viviendas.json', { cache: 'no-store' })
+        .then(r => r.json())
+        .then(data => {
+          const all = (data && data.viviendas) ? data.viviendas : [];
+          const destacadas = all
+            .filter(v => v.destacada)
+            .sort((a, b) => (a.orden || 99) - (b.orden || 99))
+            .slice(0, 3);
+          const list = destacadas.length ? destacadas : all.slice(0, 3);
+          grid.innerHTML = list.map(vivCard).join('');
+          wireVivGrid();
+        })
+        .catch(() => {});
+    }
+
+    /* ---------- FAQ (accordion) ---------- */
+    const FAQ = [
+      ['¿Pueden mis padres ser desalojados en algún momento?', 'No. El derecho de usufructo vitalicio queda inscrito en el Registro de la Propiedad y es irrevocable. Pueden vivir en la casa hasta el final de sus días sin que nadie pueda pedirles que se marchen.'],
+      ['¿Qué pasa con la herencia que íbamos a recibir?', 'La nuda propiedad deja de formar parte de la herencia. A cambio, tus padres reciben una cantidad significativa que pueden usar en vida o que también será heredable. La decisión es siempre familiar.'],
+      ['¿Quién paga las reparaciones, el IBI y la comunidad?', 'Tus padres siguen pagando los suministros y los gastos de comunidad ordinarios. Las grandes reparaciones estructurales y el IBI pasan al nuevo propietario. Suele suponer un alivio mensual relevante.'],
+      ['¿Cuánto dinero podrían recibir aproximadamente?', 'Depende de la edad del propietario y del valor de tasación. A modo orientativo, un propietario de 75 años con una vivienda de 300.000 € puede recibir entre 150.000 € y 200.000 €. La valoración exacta es gratuita.'],
+      ['¿Y si quieren mudarse en el futuro a una residencia?', 'Pueden hacerlo. El usufructo es suyo y pueden ceder su uso, alquilarlo bajo ciertas condiciones o dejar de utilizarlo. Lo trabajamos caso por caso para que la decisión les beneficie.'],
+      ['¿Es legal y está regulado en España?', 'Sí. La nuda propiedad está regulada en el Código Civil español desde el siglo XIX. Es una figura plenamente válida, escriturada ante notario e inscrita en el Registro de la Propiedad.'],
+      ['¿Cuánto tarda el proceso desde que contactamos?', 'Una operación tipo se cierra en 45 a 60 días desde la primera reunión. El ritmo lo marca la familia. Nunca presionamos.'],
+      ['¿Tiene implicaciones fiscales para mis padres?', 'La venta tributa como cualquier transmisión, con reducciones por reinversión en vivienda habitual y por edad superior a 65 años. En la mayoría de los casos la fiscalidad es muy favorable. Nuestro equipo legal lo explica antes de firmar.']
+    ];
+    const faqWrap = $('#ndFaq');
+    if (faqWrap) {
+      faqWrap.innerHTML = FAQ.map((f, i) => '<div class="ndFaqItem" data-i="' + i + '" style="border-top:1px solid rgba(31,58,46,.12)' + (i === FAQ.length - 1 ? ';border-bottom:1px solid rgba(31,58,46,.12)' : '') + '">'
+        + '<button class="ndFaqQ" style="width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:inherit;font-weight:600;color:#1F3A2E;font-size:1.05rem;padding:22px 0;display:flex;justify-content:space-between;align-items:center;gap:16px">'
+        + '<span>' + f[0] + '</span><span class="ndFaqIco" style="font-size:1.6rem;font-weight:300;color:#1F3A2E;flex-shrink:0;transition:transform .3s">+</span></button>'
+        + '<div class="ndFaqA" style="overflow:hidden;max-height:0;transition:max-height .4s ease"><p style="color:#5A6B7D;font-size:15.5px;line-height:1.65;padding-bottom:22px;max-width:740px">' + f[1] + '</p></div></div>').join('');
+      $$('.ndFaqItem', faqWrap).forEach(item => {
+        const q = $('.ndFaqQ', item), a = $('.ndFaqA', item), ico = $('.ndFaqIco', item);
+        q.addEventListener('click', () => {
+          const open = a.style.maxHeight && a.style.maxHeight !== '0px';
+          $$('.ndFaqItem', faqWrap).forEach(o => { $('.ndFaqA', o).style.maxHeight = '0px'; $('.ndFaqIco', o).textContent = '+'; $('.ndFaqIco', o).style.transform = 'none'; });
+          if (!open) { a.style.maxHeight = a.scrollHeight + 'px'; ico.textContent = '–'; }
+        });
+      });
+    }
+
+    /* ---------- TE LLAMAMOS modal ---------- */
+    const modal = $('#ndCallModal'), overlay = $('#ndCallOverlay'), closeBtn = $('#ndCallClose');
+    const openModal = () => { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; setTimeout(() => { const f = $('#ndCallForm input[name=nombre]'); if (f) f.focus(); }, 60); };
+    const closeModal = () => { modal.style.display = 'none'; document.body.style.overflow = ''; };
+    $$('.ndCallTrigger').forEach(b => b.addEventListener('click', openModal));
+    if (callBtn) callBtn.addEventListener('click', openModal);
+    overlay.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.style.display === 'flex') closeModal(); });
+
+    const callForm = $('#ndCallForm');
+    callForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(callForm);
+      const nombre = (fd.get('nombre') || '').toString();
+      const tel = (fd.get('telefono') || '').toString();
+      const horario = (fd.get('horario') || 'Sin preferencia').toString();
+      // Envío real: Netlify form (si está desplegado) + fallback mailto a info@nudade.es
+      const params = new URLSearchParams({ 'form-name': 'te-llamamos', nombre, telefono: tel, horario });
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() }).catch(() => {});
+      const subject = encodeURIComponent('Solicitud "Te llamamos" - ' + nombre);
+      const body = encodeURIComponent('Nombre: ' + nombre + '\nTeléfono: ' + tel + '\nFranja horaria: ' + horario + '\n\nSolicitud enviada desde nudade.es');
+      // abre cliente de correo como respaldo garantizado de entrega a info@nudade.es
+      try { window.location.href = 'mailto:info@nudade.es?subject=' + subject + '&body=' + body; } catch (_) {}
+      $('#ndCallFormWrap').style.display = 'none';
+      $('#ndCallSuccess').style.display = 'block';
+    });
+
+    /* ---------- VALORACIÓN form ---------- */
+    const leadForm = $('#ndLeadForm');
+    if (leadForm) {
+      leadForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(leadForm);
+        const params = new URLSearchParams({ 'form-name': 'valoracion' });
+        fd.forEach((v, k) => params.append(k, v));
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() }).catch(() => {});
+        leadForm.style.display = 'none';
+        $('#ndLeadSuccess').style.display = 'block';
+      });
+    }
+
+    /* ---------- CALCULADORA ---------- */
+    this.initCalc(root, $, $$);
+  }
+
+  initCalc(root, $, $$) {
+    let modalidad = 'unico', numProp = 1, sex1 = 'H', sex2 = 'H';
+    const UPLIFT = 1.10;
+    const EV = {
+      H: {30:49.5,31:48.6,32:47.6,33:46.7,34:45.7,35:44.8,36:43.8,37:42.9,38:41.9,39:41.0,40:40.0,41:39.1,42:38.2,43:37.2,44:36.3,45:35.4,46:34.4,47:33.5,48:32.6,49:31.7,50:30.7,51:29.8,52:28.9,53:28.0,54:27.1,55:26.2,56:25.3,57:24.4,58:23.5,59:22.7,60:21.8,61:21.0,62:20.2,63:19.4,64:18.6,65:17.8,66:17.0,67:16.3,68:15.5,69:14.8,70:14.1,71:13.4,72:12.7,73:12.0,74:11.4,75:10.7,76:10.1,77:9.5,78:9.0,79:8.4,80:7.9,81:7.4,82:6.9,83:6.5,84:6.1,85:5.7,86:5.3,87:4.9,88:4.6,89:4.3,90:4.0,91:3.7,92:3.5,93:3.2,94:3.0,95:2.8,96:2.6,97:2.5,98:2.3,99:2.2,100:2.0,101:1.9,102:1.8,103:1.7,104:1.6,105:1.5,106:1.4,107:1.3,108:1.3,109:1.2,110:1.1},
+      M: {30:53.7,31:52.7,32:51.7,33:50.8,34:49.8,35:48.8,36:47.8,37:46.9,38:45.9,39:44.9,40:44.0,41:43.0,42:42.0,43:41.1,44:40.1,45:39.2,46:38.2,47:37.3,48:36.3,49:35.4,50:34.4,51:33.5,52:32.6,53:31.6,54:30.7,55:29.8,56:28.9,57:28.0,58:27.0,59:26.1,60:25.2,61:24.4,62:23.5,63:22.6,64:21.7,65:20.9,66:20.0,67:19.2,68:18.4,69:17.5,70:16.7,71:15.9,72:15.1,73:14.4,74:13.6,75:12.9,76:12.1,77:11.4,78:10.7,79:10.1,80:9.4,81:8.8,82:8.2,83:7.7,84:7.1,85:6.6,86:6.1,87:5.7,88:5.3,89:4.9,90:4.5,91:4.2,92:3.9,93:3.6,94:3.3,95:3.1,96:2.9,97:2.7,98:2.5,99:2.3,100:2.2,101:2.0,102:1.9,103:1.8,104:1.7,105:1.6,106:1.5,107:1.4,108:1.3,109:1.2,110:1.1}
+    };
+    const ev = (e, s) => { const a = Math.max(30, Math.min(110, parseInt(e) || 70)); return EV[s][a]; };
+    const vp = (e, t) => { t = t / 100 / 12; let v = 0, n = Math.ceil(e * 12); for (let i = 1; i <= n; i++) v += 1 / Math.pow(1 + t, i); return v / 12; };
+    const evc = (a, b) => a + b - (a * b) / (a + b);
+    const fmt = (n) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.round(n));
+    const fmtm = (n) => fmt(n) + '/mes';
+    const parseValor = () => { const raw = ($('#calcValor').value || '').replace(/\./g, '').replace(/[^0-9]/g, ''); return parseInt(raw) || 0; };
+    const getEV = () => { const e1 = parseInt($('#calcEdad1').value) || 70; if (numProp === 2) { const e2 = parseInt($('#calcEdad2').value) || 68; return evc(ev(e1, sex1), ev(e2, sex2)); } return ev(e1, sex1); };
+    const getVN = () => { const v = parseValor(), e = getEV(); const f = Math.min(0.88, vp(e, 3.5) / vp(40, 3.5)); return v * (1 - f) * 0.95 * UPLIFT; };
+    const camposOk = () => { const valor = parseValor(); const e1 = parseInt($('#calcEdad1').value); if (!valor || valor < 50000) return false; if (!e1 || e1 < 30 || e1 > 110) return false; if (numProp === 2) { const e2 = parseInt($('#calcEdad2').value); if (!e2 || e2 < 30 || e2 > 110) return false; } return true; };
+    const ACT = { bg: '#1A1A1A', bc: '#1A1A1A' }, INACT = { bg: '#1F3A2E', bc: '#14271E' };
+    const setActive = (el, on) => { el.style.background = on ? ACT.bg : INACT.bg; el.style.borderColor = on ? ACT.bc : INACT.bc; };
+
+    const btn = $('#calcBtn');
+    const checkReady = () => {
+      if (camposOk()) { btn.style.background = '#1F3A2E'; btn.style.borderColor = '#1F3A2E'; btn.style.cursor = 'pointer'; btn.textContent = 'Calcular estimación'; btn.dataset.ready = '1'; }
+      else { btn.style.background = '#B4B2A9'; btn.style.borderColor = '#B4B2A9'; btn.style.cursor = 'not-allowed'; btn.textContent = 'Completa los datos para calcular'; btn.dataset.ready = ''; }
+    };
+
+    $('#calcValor').addEventListener('input', function () {
+      const raw = this.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+      if (raw !== '') this.value = new Intl.NumberFormat('es-ES').format(parseInt(raw));
+      checkReady();
+    });
+    $('#calcEdad1').addEventListener('input', checkReady);
+    const e2el = $('#calcEdad2'); if (e2el) e2el.addEventListener('input', checkReady);
+
+    $$('.ndModal').forEach(o => o.addEventListener('click', () => {
+      modalidad = o.getAttribute('data-modal');
+      $$('.ndModal').forEach(x => setActive(x, x === o));
+      $('#calcSliderMix').style.display = modalidad === 'mixto' ? 'block' : 'none';
+      if (modalidad === 'mixto') updateMix();
+    }));
+    $$('.ndProp').forEach(o => o.addEventListener('click', () => {
+      numProp = parseInt(o.getAttribute('data-prop'));
+      $$('.ndProp').forEach(x => setActive(x, x === o));
+      $('#calcPersona2').style.display = numProp === 2 ? 'block' : 'none';
+      checkReady();
+    }));
+    $$('.ndSex').forEach(o => o.addEventListener('click', () => {
+      const p = o.getAttribute('data-p'), s = o.getAttribute('data-sex');
+      if (p === '1') sex1 = s; else sex2 = s;
+      $$('.ndSex').forEach(x => { if (x.getAttribute('data-p') === p) setActive(x, x === o); });
+    }));
+    const mixSlider = $('#calcMixSlider');
+    const updateMix = () => { const pct = parseInt(mixSlider.value); $('#calcPctFijo').textContent = pct + '%'; $('#calcPctRenta').textContent = (100 - pct) + '%'; };
+    mixSlider.addEventListener('input', updateMix);
+
+    const gate = $('#calcGate');
+    btn.addEventListener('click', () => {
+      if (!camposOk()) return;
+      gate.style.display = 'block';
+      gate.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    $('#calcGateBtn').addEventListener('click', () => {
+      const email = $('#calcGateEmail').value.trim();
+      const gdpr = $('#calcGateGdpr').checked;
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!re.test(email)) { alert('Introduce un email válido.'); return; }
+      if (!gdpr) { alert('Debes aceptar la política de privacidad para ver el resultado.'); return; }
+      const evv = getEV(), vn = getVN(), valor = parseValor();
+      let html = '';
+      const card = (lab, val, sub) => '<div style="background:rgba(255,255,255,.1);border-radius:8px;padding:16px 18px"><div style="font-size:12px;color:rgba(245,242,236,.65);text-transform:uppercase;letter-spacing:.09em;margin-bottom:7px">' + lab + '</div><div style="font-size:1.3rem;font-weight:700;color:#F5F2EC;line-height:1.2">' + val + '</div><div style="font-size:12px;color:rgba(245,242,236,.55);margin-top:5px">' + sub + '</div></div>';
+      if (modalidad === 'unico') {
+        html = card('Importe estimado', fmt(vn * 0.90) + ' – ' + fmt(vn * 1.10), 'Pago único al cierre notarial') + card('Sobre el valor de la vivienda', Math.round((vn / valor) * 100) + ' %', 'Estimación ±10%');
+      } else if (modalidad === 'renta') {
+        const r = (vn / vp(evv, 3.5)) / 12;
+        html = card('Renta mensual vitalicia', fmtm(r * 0.92) + ' – ' + fmtm(r * 1.08), 'De por vida garantizada') + card('Valor presente total', fmt(vn * 0.90) + ' – ' + fmt(vn * 1.10), 'Equivalente al contado');
+      } else {
+        const pct = parseInt(mixSlider.value), ini = vn * (pct / 100), r = ((vn - ini) / vp(evv, 3.5)) / 12;
+        html = card('Pago fijo inicial (' + pct + '%)', fmt(ini * 0.92) + ' – ' + fmt(ini * 1.08), 'Al cierre notarial') + card('Renta mensual (' + (100 - pct) + '%)', fmtm(r * 0.92) + ' – ' + fmtm(r * 1.08), 'De por vida');
+      }
+      $('#calcResMain').innerHTML = html;
+      gate.style.display = 'none';
+      const box = $('#calcResultBox');
+      box.style.display = 'block';
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const params = new URLSearchParams({ 'form-name': 'calculadora', email, valor_vivienda: valor, modalidad, propietarios: numProp, edad1: $('#calcEdad1').value, sexo1: sex1, edad2: numProp === 2 ? $('#calcEdad2').value : '', sexo2: numProp === 2 ? sex2 : '' });
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() }).catch(() => {});
+    });
+
+    checkReady();
+  }
+}
+</script>
+</body>
+</html>
