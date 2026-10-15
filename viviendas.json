@@ -46,7 +46,7 @@
       "pagoInicial": "180.000 €",
       "renta": "",
       "tasacion": "",
-      "habitaciones": "",
+      "habitaciones": "4",
       "superficie": "86,43 m²",
       "altura": "1ª planta",
       "ascensor": false,
@@ -63,7 +63,8 @@
       "foto": "assets/viviendas/barcelona-guinardo.webp",
       "destacada": true,
       "estado": "disponible",
-      "orden": 2
+      "orden": 2,
+      "sinFotos": true
     }
   ]
 }

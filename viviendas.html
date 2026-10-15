@@ -76,7 +76,7 @@
 <!-- ===================== COUNT BAR ===================== -->
 <div style="position:sticky;top:74px;z-index:40;background:rgba(245,242,236,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(31,58,46,.1)">
   <div style="max-width:1240px;margin:0 auto;padding:16px clamp(20px,5vw,44px);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
-    <span style="font-size:13.5px;font-weight:600;color:#1F3A2E">Toda España</span>
+    <span id="ndZona" style="font-size:13.5px;font-weight:600;color:#1F3A2E">Toda España</span>
     <span id="ndCount" style="font-size:13.5px;font-weight:600;color:#5A6B7D;white-space:nowrap"></span>
   </div>
 </div>
@@ -198,7 +198,7 @@ class Component extends DCLogic {
         links.removeAttribute('style'); links.style.display = 'flex'; links.style.alignItems = 'center'; links.style.gap = '30px';
       }
       const grid = $('#ndVivGrid');
-      if (grid) grid.style.gridTemplateColumns = mq1.matches ? '1fr' : (mq2.matches ? 'repeat(2,1fr)' : 'repeat(3,1fr)');
+      if (grid) vivCols(grid);
       $$('.ndCtaBand').forEach(b => { b.style.gridTemplateColumns = mq2.matches ? '1fr' : '1.3fr 1fr'; });
     };
     const openMenu = () => {
@@ -216,6 +216,47 @@ class Component extends DCLogic {
     let VIVIENDAS = [];
 
     const grid = $('#ndVivGrid'), countEl = $('#ndCount'), emptyEl = $('#ndEmpty');
+    /* ---------- Visor de fotos ampliadas ---------- */
+    const openLB = (srcs, start, alt) => {
+      let i = start;
+      const ov = document.createElement('div');
+      ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Fotos de la vivienda');
+      ov.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(15,22,18,.94);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s ease';
+      const btn = 'position:absolute;border:none;cursor:pointer;background:rgba(245,242,236,.14);color:#F5F2EC;border-radius:50%;width:48px;height:48px;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .2s';
+      ov.innerHTML = '<img alt="" style="max-width:92vw;max-height:84vh;object-fit:contain;border-radius:6px;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);user-select:none">'
+        + '<button data-lb="x" aria-label="Cerrar" style="' + btn + ';top:18px;right:18px">&times;</button>'
+        + (srcs.length > 1 ? '<button data-lb="p" aria-label="Foto anterior" style="' + btn + ';left:18px;top:50%;transform:translateY(-50%)">&lsaquo;</button><button data-lb="n" aria-label="Foto siguiente" style="' + btn + ';right:18px;top:50%;transform:translateY(-50%)">&rsaquo;</button>' : '')
+        + '<span style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(245,242,236,.85);font-size:14px;font-weight:600;letter-spacing:.06em"></span>';
+      const img = ov.querySelector('img'), cnt = ov.querySelector('span');
+      const show = () => { img.src = srcs[i]; img.alt = alt + ' (foto ' + (i + 1) + ' de ' + srcs.length + ')'; cnt.textContent = srcs.length > 1 ? (i + 1) + ' / ' + srcs.length : ''; };
+      const step = (d) => { i = (i + d + srcs.length) % srcs.length; show(); };
+      const close = () => { document.removeEventListener('keydown', onKey); ov.style.opacity = '0'; document.body.style.overflow = ''; setTimeout(() => ov.remove(), 250); };
+      const onKey = (e) => { if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); };
+      ov.addEventListener('click', (e) => { const a = e.target.getAttribute && e.target.getAttribute('data-lb'); if (a === 'x' || e.target === ov) close(); else if (a === 'p') step(-1); else if (a === 'n') step(1); });
+      ov.querySelectorAll('button').forEach(b => { b.addEventListener('mouseenter', () => { b.style.background = 'rgba(245,242,236,.28)'; }); b.addEventListener('mouseleave', () => { b.style.background = 'rgba(245,242,236,.14)'; }); });
+      let x0 = null;
+      ov.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+      ov.addEventListener('touchend', (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 45 && srcs.length > 1) step(dx < 0 ? 1 : -1); x0 = null; });
+      document.addEventListener('keydown', onKey);
+      show(); document.body.appendChild(ov); document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => { ov.style.opacity = '1'; });
+      ov.querySelector('[data-lb="x"]').focus();
+    };
+    const wireZoom = (root) => {
+      root.querySelectorAll('.ndZoom').forEach(w => {
+        if (w.dataset.zoom) return; w.dataset.zoom = '1';
+        const imgs = Array.from(w.querySelectorAll('img'));
+        const srcs = imgs.map(im => im.getAttribute('src'));
+        imgs.forEach((im, k) => { im.style.cursor = 'zoom-in'; im.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openLB(srcs, k, (im.getAttribute('alt') || 'Vivienda').replace(/ \(foto.*$/, '')); }); });
+      });
+    };
+    function vivCols(g) {
+      if (!g) return;
+      const n = g.children.length;
+      const max = window.matchMedia('(max-width:640px)').matches ? 1 : (window.matchMedia('(max-width:980px)').matches ? 2 : 3);
+      if (n > 0 && n < max) { g.style.gridTemplateColumns = 'repeat(' + n + ', minmax(0, 380px))'; g.style.justifyContent = 'center'; }
+      else { g.style.gridTemplateColumns = max === 1 ? '1fr' : 'repeat(' + max + ',1fr)'; g.style.justifyContent = ''; }
+    };
     const wireGal = (root) => {
       root.querySelectorAll('.ndGalWrap').forEach(w => {
         if (w.dataset.wired) return; w.dataset.wired = '1';
@@ -246,7 +287,7 @@ class Component extends DCLogic {
       const fotos = (v.fotos && v.fotos.length) ? v.fotos : (v.foto ? [v.foto] : []);
       const alt = (v.titulo || v.localidad || 'Vivienda');
       const media = fotos.length > 1
-        ? '<div class="ndGalWrap" style="position:relative;aspect-ratio:4/3;overflow:hidden">'
+        ? '<div class="ndGalWrap' + (v.sinFotos ? '' : ' ndZoom') + '" style="position:relative;aspect-ratio:4/3;overflow:hidden">'
           + '<div class="ndGal" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch">'
           + fotos.map((f, i) => '<img src="' + f + '" alt="' + alt + ' (foto ' + (i + 1) + ' de ' + fotos.length + ')" loading="' + (i ? 'lazy' : 'eager') + '" style="flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start' + imgF + '">').join('')
           + '</div>'
@@ -254,7 +295,7 @@ class Component extends DCLogic {
           + '<button class="ndGalN" aria-label="Foto siguiente" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:none;background:rgba(245,242,236,.92);color:#1F3A2E;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px -4px rgba(15,22,18,.45)">&rsaquo;</button>'
           + '<span class="ndGalC" style="position:absolute;right:12px;bottom:12px;background:rgba(15,22,18,.62);color:#F5F2EC;font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:999px;pointer-events:none">1 / ' + fotos.length + '</span>'
         : fotos.length
-          ? '<div style="position:relative;aspect-ratio:4/3;overflow:hidden"><img src="' + fotos[0] + '" alt="' + alt + '" loading="lazy" style="width:100%;height:100%;object-fit:cover' + imgF + '">'
+          ? '<div class="' + (v.sinFotos ? '' : 'ndZoom') + '" style="position:relative;aspect-ratio:4/3;overflow:hidden"><img src="' + fotos[0] + '" alt="' + alt + '" loading="lazy" style="width:100%;height:100%;object-fit:cover' + imgF + '">'
           : '<div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:repeating-linear-gradient(135deg,#ECE7DD,#ECE7DD 12px,#E4DED2 12px,#E4DED2 24px);display:flex;align-items:flex-end;justify-content:center;padding:18px"><span style="font-family:ui-monospace,monospace;font-size:11.5px;color:#5A6B7D;background:rgba(245,242,236,.9);padding:6px 11px;border-radius:5px">foto · ' + (v.localidad || '') + '</span>';
       const rentaHtml = v.renta
         ? '<div style="display:flex;flex-direction:column;gap:3px;text-align:right"><span style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D">Renta</span><span style="font-size:1.25rem;font-weight:700;color:#1F3A2E;line-height:1.1">' + v.renta.replace('/mes', '') + '<small style="font-size:12px;font-weight:500;color:#5A6B7D">/mes</small></span></div>'
@@ -284,6 +325,10 @@ class Component extends DCLogic {
       const list = VIVIENDAS.slice().sort((a, b) => (order[a.estado || 'disponible'] - order[b.estado || 'disponible']) || ((a.orden || 99) - (b.orden || 99)));
       grid.innerHTML = list.map(card).join('');
       wireGal(grid);
+      wireZoom(grid);
+      vivCols(grid);
+      const locs = Array.from(new Set(list.map(v => v.localidad).filter(Boolean)));
+      const zonaEl = $('#ndZona'); if (zonaEl) zonaEl.textContent = locs.length === 1 ? 'Viviendas en ' + locs[0] : 'Toda España';
       const disp = list.filter(v => (v.estado || 'disponible') === 'disponible').length;
       countEl.textContent = disp + (disp === 1 ? ' vivienda disponible' : ' viviendas disponibles');
       emptyEl.style.display = list.length ? 'none' : 'block';

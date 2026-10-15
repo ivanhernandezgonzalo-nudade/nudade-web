@@ -333,7 +333,6 @@
         <h2 style="font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.1;letter-spacing:-.02em;color:#1F3A2E;font-weight:700;text-wrap:balance">Oportunidades reales disponibles hoy</h2>
         <p style="font-size:16px;line-height:1.55;color:#5A6B7D;margin-top:14px;max-width:560px">Inmuebles en nuda propiedad con renta vitalicia garantizada. El usufructuario continúa viviendo en su casa; el inversor accede a la propiedad en condiciones excepcionales.</p>
       </div>
-      <span style="font-size:13px;font-weight:600;letter-spacing:.04em;color:#5A6B7D;white-space:nowrap">Selección destacada</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px" class="ndVivGrid" id="ndVivGrid"></div>
     <div data-reveal style="display:flex;justify-content:center;margin-top:clamp(34px,4vw,48px)">
@@ -518,7 +517,7 @@
       <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.12;letter-spacing:-.02em;color:#F5F2EC;font-weight:700;text-wrap:balance">Construyendo la mayor plataforma de nuda propiedad de España.</h2>
       <p style="font-size:16px;line-height:1.6;color:rgba(245,242,236,.72);margin-top:16px;max-width:560px">Trabajamos con family offices, fondos institucionales y aseguradoras que buscan exposición al residencial español con riesgo controlado y un componente de impacto social tangible.</p>
     </div>
-    <div style="text-align:right" class="ndPartnersCta"><a href="mailto:info@nudade.es" style="font-size:15px;color:rgba(245,242,236,.85);text-decoration:underline">info@nudade.es</a></div>
+    <div style="text-align:right" class="ndPartnersCta"><a href="mailto:info@nudade.es" class="ndMailBtn" style="display:inline-flex;align-items:center;gap:10px;background:#F5F2EC;color:#1A1A1A;padding:15px 26px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none;transition:transform .3s, background .3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>info@nudade.es</a></div>
   </div>
 </section>
 
@@ -680,7 +679,7 @@ class Component extends DCLogic {
       cols('.ndStickyGrid', '.9fr 1.1fr', '1fr');
       cols('.ndProblemGrid', 'repeat(3,1fr)', 'repeat(3,1fr)');
       cols('.ndOpcGrid', 'repeat(3,1fr)', '1fr');
-      cols('.ndVivGrid', 'repeat(3,1fr)', 'repeat(2,1fr)');
+      vivCols($('#ndVivGrid'));
       cols('.ndTrustGrid', 'repeat(3,1fr)', 'repeat(2,1fr)');
       cols('.ndFormGrid', '1fr 1.05fr', '1fr');
       cols('.ndCallBand', '1.2fr 1fr', '1fr');
@@ -932,6 +931,10 @@ class Component extends DCLogic {
       callBtn.addEventListener('mouseenter', () => { callBtn.style.background = '#1A1A1A'; callBtn.style.transform = 'translateY(-2px)'; });
       callBtn.addEventListener('mouseleave', () => { callBtn.style.background = '#1F3A2E'; callBtn.style.transform = 'none'; });
     }
+    $$('.ndMailBtn').forEach(b => {
+      b.addEventListener('mouseenter', () => { b.style.background = '#FFFFFF'; b.style.transform = 'translateY(-2px)'; });
+      b.addEventListener('mouseleave', () => { b.style.background = '#F5F2EC'; b.style.transform = 'none'; });
+    });
     $$('.ndOpc').forEach(c => {
       c.addEventListener('mouseenter', () => { c.style.transform = 'translateY(-5px)'; c.style.boxShadow = '0 18px 40px -18px rgba(31,58,46,.3)'; });
       c.addEventListener('mouseleave', () => { c.style.transform = 'none'; c.style.boxShadow = 'none'; });
@@ -939,6 +942,47 @@ class Component extends DCLogic {
 
     /* ---------- VIVIENDAS (datos externos: viviendas.json) ---------- */
     const grid = $('#ndVivGrid');
+    /* ---------- Visor de fotos ampliadas ---------- */
+    const openLB = (srcs, start, alt) => {
+      let i = start;
+      const ov = document.createElement('div');
+      ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Fotos de la vivienda');
+      ov.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(15,22,18,.94);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s ease';
+      const btn = 'position:absolute;border:none;cursor:pointer;background:rgba(245,242,236,.14);color:#F5F2EC;border-radius:50%;width:48px;height:48px;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .2s';
+      ov.innerHTML = '<img alt="" style="max-width:92vw;max-height:84vh;object-fit:contain;border-radius:6px;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);user-select:none">'
+        + '<button data-lb="x" aria-label="Cerrar" style="' + btn + ';top:18px;right:18px">&times;</button>'
+        + (srcs.length > 1 ? '<button data-lb="p" aria-label="Foto anterior" style="' + btn + ';left:18px;top:50%;transform:translateY(-50%)">&lsaquo;</button><button data-lb="n" aria-label="Foto siguiente" style="' + btn + ';right:18px;top:50%;transform:translateY(-50%)">&rsaquo;</button>' : '')
+        + '<span style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(245,242,236,.85);font-size:14px;font-weight:600;letter-spacing:.06em"></span>';
+      const img = ov.querySelector('img'), cnt = ov.querySelector('span');
+      const show = () => { img.src = srcs[i]; img.alt = alt + ' (foto ' + (i + 1) + ' de ' + srcs.length + ')'; cnt.textContent = srcs.length > 1 ? (i + 1) + ' / ' + srcs.length : ''; };
+      const step = (d) => { i = (i + d + srcs.length) % srcs.length; show(); };
+      const close = () => { document.removeEventListener('keydown', onKey); ov.style.opacity = '0'; document.body.style.overflow = ''; setTimeout(() => ov.remove(), 250); };
+      const onKey = (e) => { if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); };
+      ov.addEventListener('click', (e) => { const a = e.target.getAttribute && e.target.getAttribute('data-lb'); if (a === 'x' || e.target === ov) close(); else if (a === 'p') step(-1); else if (a === 'n') step(1); });
+      ov.querySelectorAll('button').forEach(b => { b.addEventListener('mouseenter', () => { b.style.background = 'rgba(245,242,236,.28)'; }); b.addEventListener('mouseleave', () => { b.style.background = 'rgba(245,242,236,.14)'; }); });
+      let x0 = null;
+      ov.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+      ov.addEventListener('touchend', (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 45 && srcs.length > 1) step(dx < 0 ? 1 : -1); x0 = null; });
+      document.addEventListener('keydown', onKey);
+      show(); document.body.appendChild(ov); document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => { ov.style.opacity = '1'; });
+      ov.querySelector('[data-lb="x"]').focus();
+    };
+    const wireZoom = (root) => {
+      root.querySelectorAll('.ndZoom').forEach(w => {
+        if (w.dataset.zoom) return; w.dataset.zoom = '1';
+        const imgs = Array.from(w.querySelectorAll('img'));
+        const srcs = imgs.map(im => im.getAttribute('src'));
+        imgs.forEach((im, k) => { im.style.cursor = 'zoom-in'; im.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openLB(srcs, k, (im.getAttribute('alt') || 'Vivienda').replace(/ \(foto.*$/, '')); }); });
+      });
+    };
+    function vivCols(g) {
+      if (!g) return;
+      const n = g.children.length;
+      const max = window.matchMedia('(max-width:640px)').matches ? 1 : (window.matchMedia('(max-width:980px)').matches ? 2 : 3);
+      if (n > 0 && n < max) { g.style.gridTemplateColumns = 'repeat(' + n + ', minmax(0, 380px))'; g.style.justifyContent = 'center'; }
+      else { g.style.gridTemplateColumns = max === 1 ? '1fr' : 'repeat(' + max + ',1fr)'; g.style.justifyContent = ''; }
+    };
     const wireGal = (root) => {
       root.querySelectorAll('.ndGalWrap').forEach(w => {
         if (w.dataset.wired) return; w.dataset.wired = '1';
@@ -964,7 +1008,7 @@ class Component extends DCLogic {
       const fotos = (v.fotos && v.fotos.length) ? v.fotos : (v.foto ? [v.foto] : []);
       const alt = (v.titulo || v.localidad || 'Vivienda');
       const media = fotos.length > 1
-        ? '<div class="ndGalWrap" style="position:relative;aspect-ratio:4/3;overflow:hidden">'
+        ? '<div class="ndGalWrap' + (v.sinFotos ? '' : ' ndZoom') + '" style="position:relative;aspect-ratio:4/3;overflow:hidden">'
           + '<div class="ndGal" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch">'
           + fotos.map((f, i) => '<img src="' + f + '" alt="' + alt + ' (foto ' + (i + 1) + ' de ' + fotos.length + ')" loading="' + (i ? 'lazy' : 'eager') + '" style="flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start' + imgF + '">').join('')
           + '</div>'
@@ -972,7 +1016,7 @@ class Component extends DCLogic {
           + '<button class="ndGalN" aria-label="Foto siguiente" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:none;background:rgba(245,242,236,.92);color:#1F3A2E;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px -4px rgba(15,22,18,.45)">&rsaquo;</button>'
           + '<span class="ndGalC" style="position:absolute;right:12px;bottom:12px;background:rgba(15,22,18,.62);color:#F5F2EC;font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:999px;pointer-events:none">1 / ' + fotos.length + '</span>'
         : fotos.length
-          ? '<div style="position:relative;aspect-ratio:4/3;overflow:hidden"><img src="' + fotos[0] + '" alt="' + alt + '" loading="lazy" style="width:100%;height:100%;object-fit:cover' + imgF + '">'
+          ? '<div class="' + (v.sinFotos ? '' : 'ndZoom') + '" style="position:relative;aspect-ratio:4/3;overflow:hidden"><img src="' + fotos[0] + '" alt="' + alt + '" loading="lazy" style="width:100%;height:100%;object-fit:cover' + imgF + '">'
           : '<div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:repeating-linear-gradient(135deg,#ECE7DD,#ECE7DD 12px,#E4DED2 12px,#E4DED2 24px);display:flex;align-items:flex-end;justify-content:center;padding:18px"><span style="font-family:ui-monospace,monospace;font-size:11.5px;color:#5A6B7D;background:rgba(245,242,236,.9);padding:6px 11px;border-radius:5px">foto · ' + (v.localidad || '') + '</span>';
       const amen = [];
       if (v.habitaciones) amen.push(v.habitaciones + ' hab.');
@@ -1033,6 +1077,8 @@ class Component extends DCLogic {
           grid.innerHTML = list.map(vivCard).join('');
           wireVivGrid();
           wireGal(grid);
+          wireZoom(grid);
+          vivCols(grid);
         })
         .catch(() => {});
     }
