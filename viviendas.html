@@ -23,6 +23,11 @@
   <input type="text" name="propietarios"><input type="text" name="edad1"><input type="text" name="sexo1"><input type="text" name="edad2"><input type="text" name="sexo2">
 </form>
 
+<form name="inversores" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="inversores">
+  <input type="text" name="nombre"><input type="email" name="email"><input type="tel" name="telefono"><input type="text" name="zona">
+</form>
+
 <x-dc>
 <helmet>
 <style>
@@ -99,8 +104,8 @@
       <p style="font-size:15.5px;line-height:1.55;color:rgba(245,242,236,.82);max-width:420px">Te avisamos en cuanto publicamos oportunidades que encajen con tu perfil de inversión.</p>
     </div>
     <div style="position:relative">
-      <a href="mailto:info@nudade.es?subject=Quiero%20recibir%20nuevas%20viviendas" style="display:inline-block;background:#F5F2EC;color:#1F3A2E;padding:16px 30px;border-radius:999px;font-size:15.5px;font-weight:700;transition:transform .3s" class="ndBtnGhost">Quiero recibir oportunidades</a>
-      <p style="font-size:13.5px;color:rgba(245,242,236,.6);margin-top:13px">o llámanos al <a href="tel:+34605239809" style="color:#F5F2EC;text-decoration:underline">605 23 98 09</a></p>
+      <a href="#lista-inversores" role="button" style="display:inline-block;background:#F5F2EC;color:#1F3A2E;padding:16px 30px;border-radius:999px;font-size:15.5px;font-weight:700;transition:transform .3s" class="ndBtnGhost ndInvTrigger">Quiero recibir oportunidades</a>
+      <p style="font-size:13.5px;color:rgba(245,242,236,.6);margin:16px 0 10px">o escríbenos por WhatsApp</p><a href="https://wa.me/34605239809?text=Hola%20Nudade%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n" target="_blank" rel="noopener" class="ndWaBtn" aria-label="Escríbenos por WhatsApp al 605 23 98 09" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#F5F2EC;border:1.5px solid rgba(245,242,236,.55);padding:13px 22px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none;transition:background .3s, border-color .3s"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:19px;height:19px;flex-shrink:0"><path fill="#25D366" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.88.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.8h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.71.97.99-3.62-.23-.37a9.78 9.78 0 0 1-1.5-5.22c0-5.42 4.41-9.83 9.84-9.83 2.62 0 5.09 1.02 6.94 2.88a9.77 9.77 0 0 1 2.88 6.96c0 5.42-4.41 9.83-9.84 9.83m8.37-18.2A11.76 11.76 0 0 0 12.04.13C5.5.13.17 5.46.17 12a11.8 11.8 0 0 0 1.58 5.93L.07 24l6.22-1.63a11.84 11.84 0 0 0 5.66 1.44h.01c6.54 0 11.87-5.33 11.87-11.87 0-3.17-1.23-6.15-3.47-8.39"/></svg>605 23 98 09</a>
     </div>
   </div>
 </section>
@@ -128,7 +133,7 @@
         <div>
           <h4 style="color:#F5F2EC;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;font-weight:700">Contacto</h4>
           <ul style="display:flex;flex-direction:column;gap:10px">
-            <li><a href="tel:+34605239809" style="font-size:14.5px;color:rgba(245,242,236,.75)">605 23 98 09</a></li>
+            <li style="font-size:14.5px"><a href="https://wa.me/34605239809?text=Hola%20Nudade%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp al 605 23 98 09" style="display:inline-flex;align-items:center;gap:6px;color:rgba(245,242,236,.9);font-weight:700;text-decoration:none;vertical-align:middle"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;flex-shrink:0"><path fill="#25D366" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.88.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.8h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.71.97.99-3.62-.23-.37a9.78 9.78 0 0 1-1.5-5.22c0-5.42 4.41-9.83 9.84-9.83 2.62 0 5.09 1.02 6.94 2.88a9.77 9.77 0 0 1 2.88 6.96c0 5.42-4.41 9.83-9.84 9.83m8.37-18.2A11.76 11.76 0 0 0 12.04.13C5.5.13.17 5.46.17 12a11.8 11.8 0 0 0 1.58 5.93L.07 24l6.22-1.63a11.84 11.84 0 0 0 5.66 1.44h.01c6.54 0 11.87-5.33 11.87-11.87 0-3.17-1.23-6.15-3.47-8.39"/></svg>605 23 98 09</a></li>
             <li><a href="mailto:info@nudade.es" style="font-size:14.5px;color:rgba(245,242,236,.75)">info@nudade.es</a></li>
           </ul>
         </div>
@@ -171,6 +176,36 @@
       <div style="width:60px;height:60px;border-radius:50%;background:#1F3A2E;display:flex;align-items:center;justify-content:center;margin:0 auto 20px"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F2EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px"><path d="M20 6 9 17l-5-5"/></svg></div>
       <h3 style="font-size:1.4rem;color:#1F3A2E;font-weight:700;margin-bottom:10px">¡Recibido!</h3>
       <p style="font-size:15px;color:#5A6B7D;line-height:1.55">Hemos registrado tu teléfono. Un asesor de Nudade te llamará muy pronto.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL LISTA DE INVERSORES ===================== -->
+<div id="ndInvModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:120;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;padding:24px 20px">
+  <div id="ndInvOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,22,18,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)"></div>
+  <div style="position:relative;background:#F5F2EC;border-radius:16px;width:100%;max-width:460px;margin:auto 0;flex-shrink:0;padding:clamp(26px,4vw,40px);box-shadow:0 30px 80px -20px rgba(15,22,18,.5)">
+    <button id="ndInvClose" aria-label="Cerrar" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:26px;line-height:1;color:#5A6B7D;cursor:pointer">&times;</button>
+    <div id="ndInvFormWrap">
+      <svg viewBox="0 0 100 120" fill="none" stroke="#1F3A2E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" style="height:40px;width:auto;margin-bottom:18px"><path d="M9 116 L9 52 A41 41 0 0 1 91 52 L91 116"/><path d="M35 116 L35 65 A15 15 0 0 1 65 65 L65 116"/></svg>
+      <p style="font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#5A6B7D;font-weight:700;margin-bottom:8px">Lista prioritaria de inversores</p>
+      <h3 style="font-size:1.5rem;color:#1F3A2E;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;line-height:1.2">Accede antes que nadie a cada nueva vivienda.</h3>
+      <p style="font-size:14.5px;color:#5A6B7D;line-height:1.5;margin-bottom:22px">Déjanos tu email o tu teléfono. Te avisaremos de cada nueva oportunidad antes de publicarla, con prioridad para visitarla.</p>
+      <form id="ndInvForm" novalidate>
+        <input type="text" name="bot-field" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div style="margin-bottom:14px"><label for="ndInvNombre" style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Tu nombre</label><input id="ndInvNombre" type="text" name="nombre" required autocomplete="name" placeholder="Nombre y apellidos" style="width:100%;padding:13px 15px;border:1.5px solid rgba(31,58,46,.25);border-radius:6px;font-family:inherit;font-size:15.5px;color:#1A1A1A;background:#fff;outline:none"></div>
+        <div style="margin-bottom:14px"><label for="ndInvEmail" style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Email</label><input id="ndInvEmail" type="email" name="email" autocomplete="email" placeholder="tu@email.com" style="width:100%;padding:13px 15px;border:1.5px solid rgba(31,58,46,.25);border-radius:6px;font-family:inherit;font-size:15.5px;color:#1A1A1A;background:#fff;outline:none"></div>
+        <div style="margin-bottom:14px"><label for="ndInvTel" style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Teléfono</label><input id="ndInvTel" type="tel" name="telefono" autocomplete="tel" inputmode="tel" placeholder="6XX XX XX XX" style="width:100%;padding:13px 15px;border:1.5px solid rgba(31,58,46,.25);border-radius:6px;font-family:inherit;font-size:15.5px;color:#1A1A1A;background:#fff;outline:none"></div>
+        <div style="margin-bottom:6px"><label for="ndInvZona" style="display:block;font-size:13px;font-weight:600;color:#1F3A2E;margin-bottom:6px">Zona de interés <span style="font-weight:400;color:#5A6B7D;font-size:12px">(opcional)</span></label><input id="ndInvZona" type="text" name="zona" placeholder="Ej.: Barcelona, Sabadell..." style="width:100%;padding:13px 15px;border:1.5px solid rgba(31,58,46,.25);border-radius:6px;font-family:inherit;font-size:15.5px;color:#1A1A1A;background:#fff;outline:none"></div>
+        <p id="ndInvErr" role="alert" style="display:none;font-size:13px;color:#C25A48;font-weight:600;margin-top:10px">Indica al menos un email o un teléfono válido.</p>
+        <label style="display:flex;align-items:flex-start;gap:9px;margin:16px 0;font-size:12.5px;color:#5A6B7D;cursor:pointer;line-height:1.45"><input type="checkbox" name="rgpd" required style="margin-top:2px;flex-shrink:0;accent-color:#1F3A2E"><span>Acepto la <a href="/politica-privacidad/" target="_blank" rel="noopener" style="color:#1F3A2E;text-decoration:underline">política de privacidad</a> y que Nudade me contacte para informarme de nuevas viviendas.</span></label>
+        <button type="submit" style="display:block;width:100%;background:#1F3A2E;color:#F5F2EC;border:none;padding:15px;border-radius:999px;font-family:inherit;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .3s">Quiero estar en la lista</button>
+      </form>
+      <p style="font-size:12.5px;color:#5A6B7D;text-align:center;margin-top:14px">¿Prefieres hablar ya? Escríbenos por WhatsApp al <a href="https://wa.me/34605239809?text=Hola%20Nudade%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp al 605 23 98 09" style="display:inline-flex;align-items:center;gap:6px;color:#1F3A2E;font-weight:700;text-decoration:none;vertical-align:middle"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;flex-shrink:0"><path fill="#25D366" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.88.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.8h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.71.97.99-3.62-.23-.37a9.78 9.78 0 0 1-1.5-5.22c0-5.42 4.41-9.83 9.84-9.83 2.62 0 5.09 1.02 6.94 2.88a9.77 9.77 0 0 1 2.88 6.96c0 5.42-4.41 9.83-9.84 9.83m8.37-18.2A11.76 11.76 0 0 0 12.04.13C5.5.13.17 5.46.17 12a11.8 11.8 0 0 0 1.58 5.93L.07 24l6.22-1.63a11.84 11.84 0 0 0 5.66 1.44h.01c6.54 0 11.87-5.33 11.87-11.87 0-3.17-1.23-6.15-3.47-8.39"/></svg>605 23 98 09</a></p>
+    </div>
+    <div id="ndInvSuccess" style="display:none;text-align:center;padding:14px 0">
+      <div style="width:60px;height:60px;border-radius:50%;background:#1F3A2E;display:flex;align-items:center;justify-content:center;margin:0 auto 20px"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F2EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h3 style="font-size:1.4rem;color:#1F3A2E;font-weight:700;margin-bottom:10px">Ya estás en la lista.</h3>
+      <p style="font-size:15px;color:#5A6B7D;line-height:1.55">Te avisaremos de cada nueva vivienda antes de publicarla, con prioridad para visitarla.</p>
     </div>
   </div>
 </div>
@@ -354,6 +389,38 @@ class Component extends DCLogic {
     overlay.addEventListener('click', closeModal);
     closeBtn.addEventListener('click', closeModal);
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.style.display === 'flex') closeModal(); });
+
+    /* ---------- LISTA PRIORITARIA DE INVERSORES ---------- */
+    (() => {
+      const m = $('#ndInvModal'); if (!m) return;
+      const form = $('#ndInvForm'), err = $('#ndInvErr');
+      const open = (e) => { if (e) e.preventDefault(); m.style.display = 'flex'; document.body.style.overflow = 'hidden'; setTimeout(() => { const f = $('#ndInvNombre'); if (f) f.focus(); }, 60); };
+      const close = () => { m.style.display = 'none'; document.body.style.overflow = ''; };
+      $$('.ndInvTrigger').forEach(b => b.addEventListener('click', open));
+      $('#ndInvOverlay').addEventListener('click', close);
+      $('#ndInvClose').addEventListener('click', close);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.style.display === 'flex') close(); });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        if (fd.get('bot-field')) return;
+        const email = (fd.get('email') || '').toString().trim();
+        const tel = (fd.get('telefono') || '').toString().replace(/[^0-9+]/g, '');
+        const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), okTel = tel.replace(/\D/g, '').length >= 9;
+        if (!okEmail && !okTel) { err.style.display = 'block'; return; }
+        err.style.display = 'none';
+        if (!form.querySelector('[name=rgpd]').checked) { form.querySelector('[name=rgpd]').focus(); alert('Debes aceptar la política de privacidad para unirte a la lista.'); return; }
+        if (!(fd.get('nombre') || '').toString().trim()) { $('#ndInvNombre').focus(); return; }
+        const params = new URLSearchParams({ 'form-name': 'inversores', nombre: fd.get('nombre') || '', email, telefono: fd.get('telefono') || '', zona: fd.get('zona') || '' });
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() }).catch(() => {});
+        $('#ndInvFormWrap').style.display = 'none';
+        $('#ndInvSuccess').style.display = 'block';
+      });
+    })();
+    $$('.ndWaBtn').forEach(b => {
+      b.addEventListener('mouseenter', () => { b.style.background = 'rgba(245,242,236,.12)'; b.style.borderColor = '#F5F2EC'; });
+      b.addEventListener('mouseleave', () => { b.style.background = 'transparent'; b.style.borderColor = 'rgba(245,242,236,.55)'; });
+    });
     const callForm = $('#ndCallForm');
     callForm.addEventListener('submit', (e) => {
       e.preventDefault();
