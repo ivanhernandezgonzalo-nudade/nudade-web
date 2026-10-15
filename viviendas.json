@@ -15,11 +15,27 @@
       "ascensor": true,
       "extras": [],
       "descripcion": "Salón muy luminoso con vistas a la ciudad. Actualmente alquilado: el comprador podrá acceder al alquiler a partir de septiembre de 2027.",
-      "propietarios": [{ "sexo": "Mujer", "edad": 67 }, { "sexo": "Hombre", "edad": 71 }],
-      "foto": "assets/viviendas/barcelona-sant-gervasi-galvany.webp",
+      "propietarios": [
+        {
+          "sexo": "Mujer",
+          "edad": 67
+        },
+        {
+          "sexo": "Hombre",
+          "edad": 71
+        }
+      ],
+      "foto": "assets/viviendas/barcelona-sant-gervasi-galvany-1.webp",
       "destacada": true,
       "estado": "disponible",
-      "orden": 1
+      "orden": 1,
+      "fotos": [
+        "assets/viviendas/barcelona-sant-gervasi-galvany-1.webp",
+        "assets/viviendas/barcelona-sant-gervasi-galvany-2.webp",
+        "assets/viviendas/barcelona-sant-gervasi-galvany-3.webp",
+        "assets/viviendas/barcelona-sant-gervasi-galvany-4.webp",
+        "assets/viviendas/barcelona-sant-gervasi-galvany-5.webp"
+      ]
     },
     {
       "id": "barcelona-guinardo",
@@ -34,9 +50,16 @@
       "superficie": "86,43 m²",
       "altura": "1ª planta",
       "ascensor": false,
-      "extras": ["2 plazas de parking"],
+      "extras": [
+        "2 plazas de parking"
+      ],
       "descripcion": "Incluye dos plazas de parking en la misma zona. Precio estimado de venta solo del piso: 309.000 €.",
-      "propietarios": [{ "sexo": "Hombre", "edad": 66 }],
+      "propietarios": [
+        {
+          "sexo": "Hombre",
+          "edad": 66
+        }
+      ],
       "foto": "assets/viviendas/barcelona-guinardo.webp",
       "destacada": true,
       "estado": "disponible",
