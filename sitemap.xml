@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nudade.es/</loc><lastmod>2026-10-15</lastmod><priority>1.0</priority></url>
-  <url><loc>https://nudade.es/viviendas.html</loc><lastmod>2026-10-15</lastmod><priority>0.8</priority></url>
-  <url><loc>https://nudade.es/aviso-legal/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority></url>
-  <url><loc>https://nudade.es/politica-privacidad/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority></url>
-  <url><loc>https://nudade.es/politica-cookies/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://nudade.es/</loc><lastmod>2026-10-15</lastmod><priority>1.0</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/"/></url>
+  <url><loc>https://nudade.es/en/</loc><lastmod>2026-10-15</lastmod><priority>1.0</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/"/></url>
+  <url><loc>https://nudade.es/viviendas.html</loc><lastmod>2026-10-15</lastmod><priority>0.8</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/viviendas.html"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/homes.html"/></url>
+  <url><loc>https://nudade.es/en/homes.html</loc><lastmod>2026-10-15</lastmod><priority>0.8</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/viviendas.html"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/homes.html"/></url>
+  <url><loc>https://nudade.es/aviso-legal/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/aviso-legal/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/legal-notice/"/></url>
+  <url><loc>https://nudade.es/en/legal-notice/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/aviso-legal/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/legal-notice/"/></url>
+  <url><loc>https://nudade.es/politica-privacidad/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/politica-privacidad/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/privacy-policy/"/></url>
+  <url><loc>https://nudade.es/en/privacy-policy/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/politica-privacidad/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/privacy-policy/"/></url>
+  <url><loc>https://nudade.es/politica-cookies/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/politica-cookies/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/cookie-policy/"/></url>
+  <url><loc>https://nudade.es/en/cookie-policy/</loc><lastmod>2026-10-15</lastmod><priority>0.3</priority><xhtml:link rel="alternate" hreflang="es" href="https://nudade.es/politica-cookies/"/><xhtml:link rel="alternate" hreflang="en" href="https://nudade.es/en/cookie-policy/"/></url>
 </urlset>
