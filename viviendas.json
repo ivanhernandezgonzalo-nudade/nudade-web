@@ -1,6 +1,65 @@
 {
   "viviendas": [
     {
+      "id": "badalona-centre",
+      "titulo": "Piso en Centre, Badalona",
+      "localidad": "Badalona",
+      "cp": "08911",
+      "zona": "Centre",
+      "pagoInicial": "116.000 €",
+      "renta": "1.220 €/mes",
+      "tasacion": "475.034 €",
+      "habitaciones": "4",
+      "superficie": "95,5 m²",
+      "altura": "3ª planta",
+      "ascensor": true,
+      "extras": [
+        "Terraza de 9,5 m²",
+        "2 baños",
+        "Aire acondicionado",
+        "Renta con 3 años garantizados"
+      ],
+      "descripcion": "Piso luminoso con gran terraza junto al Parque de Can Solé, cerca del metro Pompeu Fabra y de todos los servicios. Renta vitalicia constante con 3 años garantizados. El IBI corre a cargo del comprador; comunidad y derramas, de los usufructuarios.",
+      "propietarios": [
+        {
+          "sexo": "Mujer",
+          "edad": 77
+        },
+        {
+          "sexo": "Hombre",
+          "edad": 81
+        }
+      ],
+      "foto": "assets/viviendas/badalona-centre-1-salon-render.webp",
+      "fotos": [
+        "assets/viviendas/badalona-centre-1-salon-render.webp",
+        "assets/viviendas/badalona-centre-2-salon.webp",
+        "assets/viviendas/badalona-centre-3-terraza.webp",
+        "assets/viviendas/badalona-centre-4-vistas.webp",
+        "assets/viviendas/badalona-centre-5-cocina.webp",
+        "assets/viviendas/badalona-centre-6-fachada.webp"
+      ],
+      "renders": [
+        "assets/viviendas/badalona-centre-1-salon-render.webp"
+      ],
+      "etiqueta": "Novedad",
+      "destacada": true,
+      "estado": "disponible",
+      "orden": 1,
+      "en": {
+        "titulo": "Flat in Centre, Badalona",
+        "etiqueta": "New",
+        "altura": "3rd floor",
+        "extras": [
+          "9.5 m² terrace",
+          "2 bathrooms",
+          "Air conditioning",
+          "Annuity with 3 years guaranteed"
+        ],
+        "descripcion": "Bright flat with a large terrace next to Can Solé Park, close to Pompeu Fabra metro station and all amenities. Fixed lifetime annuity with 3 years guaranteed. Property tax (IBI) is paid by the buyer; community fees and special levies by the residents."
+      }
+    },
+    {
       "id": "valencia-benimaclet",
       "titulo": "Dúplex en Benimaclet, València",
       "localidad": "València",
@@ -47,13 +106,11 @@
         "assets/viviendas/valencia-benimaclet-4-comedor-reforma.webp",
         "assets/viviendas/valencia-benimaclet-6-dormitorio-reforma.webp"
       ],
-      "etiqueta": "Novedad",
       "destacada": true,
       "estado": "disponible",
-      "orden": 1,
+      "orden": 2,
       "en": {
         "titulo": "Duplex in Benimaclet, València",
-        "etiqueta": "New",
         "altura": "1st floor",
         "extras": [
           "Duplex",
@@ -61,8 +118,10 @@
           "Air conditioning",
           "Balcony"
         ],
-        "descripcion": "Bright 1993 duplex, spacious and well laid out, in one of Valencia’s most sought-after areas. The residents cover utilities, property tax (IBI), community fees and special levies."
-      }
+        "descripcion": "Bright 1993 duplex, spacious and well laid out, in one of Valencia’s most sought-after areas. The residents cover utilities, property tax (IBI), community fees and special levies.",
+        "etiqueta": "New"
+      },
+      "etiqueta": "Novedad"
     },
     {
       "id": "barcelona-sant-gervasi-galvany",
@@ -92,7 +151,7 @@
       "foto": "assets/viviendas/barcelona-sant-gervasi-galvany-1.webp",
       "destacada": true,
       "estado": "disponible",
-      "orden": 2,
+      "orden": 3,
       "fotos": [
         "assets/viviendas/barcelona-sant-gervasi-galvany-1.webp",
         "assets/viviendas/barcelona-sant-gervasi-galvany-2.webp",
@@ -131,9 +190,9 @@
         }
       ],
       "foto": "assets/viviendas/barcelona-guinardo.webp",
-      "destacada": true,
+      "destacada": false,
       "estado": "disponible",
-      "orden": 3,
+      "orden": 4,
       "sinFotos": true,
       "en": {
         "titulo": "Flat in El Guinardó, Barcelona",
