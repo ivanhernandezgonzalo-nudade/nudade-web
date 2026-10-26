@@ -200,6 +200,59 @@
         ],
         "descripcion": "Includes two parking spaces in the same area. Estimated sale price of the flat alone: €309,000."
       }
+    },
+    {
+      "id": "arenys-de-mar-passeig-xifre",
+      "titulo": "Piso en primera línea de mar, Arenys de Mar",
+      "localidad": "Arenys de Mar",
+      "cp": "08350",
+      "zona": "Passeig Xifré",
+      "pagoInicial": "61.000 €",
+      "renta": "360 €/mes",
+      "tasacion": "316.529 €",
+      "habitaciones": "2",
+      "superficie": "81,24 m²",
+      "altura": "3ª planta",
+      "ascensor": true,
+      "extras": [
+        "Terraza con vistas al mar",
+        "Plaza de parking de 41 m² incluida",
+        "2 baños",
+        "Cocina abierta"
+      ],
+      "descripcion": "Piso en primera línea de mar, con salón comedor muy luminoso y salida a una terraza con vistas al mar. A un paso del puerto y del centro del pueblo, y con fácil acceso por autopista. El precio incluye una plaza de parking de 41 m² con espacio de almacenamiento. IBI y comunidad corren a cargo de la usufructuaria y las derramas extraordinarias, del comprador.",
+      "propietarios": [
+        {
+          "sexo": "Mujer",
+          "edad": 66
+        }
+      ],
+      "foto": "assets/viviendas/arenys-de-mar-1-salon-render.webp",
+      "fotos": [
+        "assets/viviendas/arenys-de-mar-1-salon-render.webp",
+        "assets/viviendas/arenys-de-mar-2-salon.webp",
+        "assets/viviendas/arenys-de-mar-3-terraza.webp",
+        "assets/viviendas/arenys-de-mar-4-vistas-mar.webp",
+        "assets/viviendas/arenys-de-mar-5-vistas.webp",
+        "assets/viviendas/arenys-de-mar-6-paseo.webp"
+      ],
+      "renders": [
+        "assets/viviendas/arenys-de-mar-1-salon-render.webp"
+      ],
+      "destacada": false,
+      "estado": "disponible",
+      "orden": 5,
+      "en": {
+        "titulo": "Seafront flat in Arenys de Mar",
+        "altura": "3rd floor",
+        "extras": [
+          "Terrace with sea views",
+          "41 m² parking space included",
+          "2 bathrooms",
+          "Open-plan kitchen"
+        ],
+        "descripcion": "Seafront flat with a very bright living and dining room opening onto a terrace with sea views. Steps from the marina and the town centre, with easy motorway access. The price includes a 41 m² parking space with storage room. Property tax (IBI) and community fees are paid by the resident; extraordinary levies by the buyer."
+      }
     }
   ]
 }
