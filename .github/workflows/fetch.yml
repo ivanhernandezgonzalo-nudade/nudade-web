@@ -1,0 +1,19 @@
+name: fetch-render
+on: push
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: vivienda-badalona-centre
+      - run: |
+          curl -fsSL -o render.png "https://d8j0ntlcm91z4.cloudfront.net/user_3JmKDO1KTdFHJRBzP8xgSOzg83b/hf_20261026_101401_a679e4b9-8dbf-4459-a1a6-9088b939270f.png"
+          mkdir -p tmp-render && mv render.png tmp-render/render.png
+          git config user.name "Iván Hernández"
+          git config user.email "342954019+ivanhernandezgonzalo-nudade@users.noreply.github.com"
+          git add tmp-render/render.png
+          git commit -m "tmp: render salón"
+          git push origin HEAD:vivienda-badalona-centre
