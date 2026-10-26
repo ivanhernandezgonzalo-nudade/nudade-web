@@ -42,13 +42,11 @@
       "renders": [
         "assets/viviendas/badalona-centre-1-salon-render.webp"
       ],
-      "etiqueta": "Novedad",
       "destacada": true,
       "estado": "disponible",
       "orden": 1,
       "en": {
         "titulo": "Flat in Centre, Badalona",
-        "etiqueta": "New",
         "altura": "3rd floor",
         "extras": [
           "9.5 m² terrace",
