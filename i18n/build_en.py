@@ -62,6 +62,9 @@ def build(p):
     out = src
     missing = []
 
+    # El blog solo existe en español: se quita del menú y el pie de la versión inglesa
+    out = re.sub(r'\s*<li class="ndBlogLi">.*?</li>', "", out)
+
     # Cabecera
     out = out.replace('<html lang="es">', '<html lang="en">', 1)
     out = re.sub(r"<title>.*?</title>", "<title>" + p["title"] + "</title>", out, count=1)
