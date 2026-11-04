@@ -24,7 +24,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "_blog", "posts")
 OUT = os.path.join(ROOT, "blog")
 SITE = "https://nudade.es"
-WA = "https://wa.me/34605239809?text=Hola%20Nudade%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n"
+WA = "https://wa.me/34604149420?text=Hola%20Nudade%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n"
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
          "septiembre", "octubre", "noviembre", "diciembre"]
 PROHIBIDOS = ["—", "–"]  # guion largo y guion medio
