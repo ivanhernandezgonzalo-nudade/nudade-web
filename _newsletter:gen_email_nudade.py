@@ -173,12 +173,12 @@ email = f'''<table role="presentation" width="100%" cellpadding="0" cellspacing=
 <p style="margin:0 0 14px 0;font-size:15px;line-height:23px;color:#1A1A1A;">Si alguna inversión encaja con lo que buscas, lo vemos en una llamada de 20 minutos y te paso la documentación completa.</p>
 <p style="margin:0 0 2px 0;font-size:15px;line-height:22px;color:#1A1A1A;">Un abrazo,</p>
 <p style="margin:0;font-size:15px;line-height:22px;font-weight:bold;color:#1F3A2E;">Iván Hernández Gonzalo</p>
-<p style="margin:0;font-size:13px;line-height:20px;color:#5A6B7D;">Fundador · Nudade · 605 23 98 09 · info@nudade.es</p>
+<p style="margin:0;font-size:13px;line-height:20px;color:#5A6B7D;">Fundador · Nudade · 604 14 94 20 · info@nudade.es</p>
 </td></tr>
 <tr><td style="background-color:#1F3A2E;border-radius:0 0 12px 12px;padding:24px 36px;{F}">
 <p style="margin:0 0 4px 0;font-size:16px;line-height:20px;font-weight:bold;letter-spacing:5px;color:#F5F2EC;">NUDADE</p>
 <p style="margin:0 0 14px 0;font-size:13px;line-height:19px;color:#F5F2EC;">Tu casa sigue siendo tu casa, ahora también es liquidez. Especialistas en nuda propiedad en España.</p>
-<p style="margin:0 0 14px 0;font-size:13px;line-height:19px;"><a href="{BASE}" target="_blank" style="color:#F5F2EC;text-decoration:underline;">nudade.es</a><span style="color:#8FA398;"> · </span><a href="{BASE}viviendas" target="_blank" style="color:#F5F2EC;text-decoration:underline;">Viviendas</a><span style="color:#8FA398;"> · </span><a href="https://wa.me/34605239809" target="_blank" style="color:#F5F2EC;text-decoration:underline;">WhatsApp</a></p>
+<p style="margin:0 0 14px 0;font-size:13px;line-height:19px;"><a href="{BASE}" target="_blank" style="color:#F5F2EC;text-decoration:underline;">nudade.es</a><span style="color:#8FA398;"> · </span><a href="{BASE}viviendas" target="_blank" style="color:#F5F2EC;text-decoration:underline;">Viviendas</a><span style="color:#8FA398;"> · </span><a href="https://wa.me/34604149420" target="_blank" style="color:#F5F2EC;text-decoration:underline;">WhatsApp</a></p>
 <p style="margin:0 0 10px 0;font-size:11px;line-height:16px;color:#B9C6BE;">Información orientativa y no vinculante, según la ficha publicada de cada vivienda. Las condiciones pueden variar hasta la firma ante notario. Este email no constituye asesoramiento de inversión.</p>
 <p style="margin:0;font-size:11px;line-height:16px;color:#B9C6BE;">Recibes este email porque has mostrado interés en invertir con Nudade. Si no quieres recibir más comunicaciones, responde con la palabra BAJA. <a href="{BASE}politica-privacidad/" target="_blank" style="color:#B9C6BE;text-decoration:underline;">Política de privacidad</a>.</p>
 </td></tr>
@@ -298,12 +298,12 @@ if mapa is not None:
                P("Si alguna inversión encaja con lo que buscas, lo vemos en una llamada de 20 minutos y te paso la documentación completa.", "font-size:12px;color:#1A1A1A;"),
                P("Un abrazo,", "font-size:12px;color:#1A1A1A;"),
                P("Iván Hernández Gonzalo", "font-size:12px;font-weight:bold;color:#1F3A2E;"),
-               P("Fundador · Nudade · 605 23 98 09 · info@nudade.es", "font-size:10px;color:#5A6B7D;"), "<br>",
+               P("Fundador · Nudade · 604 14 94 20 · info@nudade.es", "font-size:10px;color:#5A6B7D;"), "<br>",
                '<table border="0" cellpadding="16" cellspacing="0" style="border-collapse:collapse;width:100%;"><tr>'
                '<td style="background-color:#1F3A2E;border:1px solid #1F3A2E;">'
                + P("N U D A D E", "font-size:14px;font-weight:bold;color:#F5F2EC;")
                + P("Tu casa sigue siendo tu casa, ahora también es liquidez. Especialistas en nuda propiedad en España.", "font-size:11px;color:#F5F2EC;")
-               + P(f'<a href="{BASE}" style="color:#F5F2EC;">nudade.es</a> · <a href="{BASE}viviendas" style="color:#F5F2EC;">Viviendas</a> · <a href="https://wa.me/34605239809" style="color:#F5F2EC;">WhatsApp</a>', "font-size:11px;color:#F5F2EC;")
+               + P(f'<a href="{BASE}" style="color:#F5F2EC;">nudade.es</a> · <a href="{BASE}viviendas" style="color:#F5F2EC;">Viviendas</a> · <a href="https://wa.me/34604149420" style="color:#F5F2EC;">WhatsApp</a>', "font-size:11px;color:#F5F2EC;")
                + P("Información orientativa y no vinculante, según la ficha publicada de cada vivienda. Las condiciones pueden variar hasta la firma ante notario. Este email no constituye asesoramiento de inversión.", "font-size:8px;color:#B9C6BE;")
                + P(f'Recibes este email porque has mostrado interés en invertir con Nudade. Si no quieres recibir más comunicaciones, responde con la palabra BAJA. <a href="{BASE}politica-privacidad/" style="color:#B9C6BE;">Política de privacidad</a>.', "font-size:8px;color:#B9C6BE;")
                + "</td></tr></table>"]
