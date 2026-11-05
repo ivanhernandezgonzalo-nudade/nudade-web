@@ -51,10 +51,6 @@ T = {
         "desc": "Descripción", "usu": "Usufructuarios", "usu_1": "1 usufructuario", "usu_n": "{n} usufructuarios",
         "usu_txt": "Los usufructuarios siguen viviendo en la casa de por vida. El comprador adquiere hoy la nuda propiedad y recupera el pleno dominio cuando se extingue el usufructo.",
         "anyos": "años", "sexo": {"Mujer": "Mujer", "Hombre": "Hombre"},
-        "como": "Cómo se compra una nuda propiedad",
-        "pasos": [("Te enviamos el dossier", "Documentación de la vivienda, nota simple y tasación, para que lo estudies con calma."),
-                  ("Visita y oferta", "Organizamos la visita respetando a los usufructuarios y te acompañamos en la negociación."),
-                  ("Firma ante notario", "Escritura e inscripción en el Registro de la Propiedad, con todo el proceso revisado.")],
         "otras": "Otras viviendas disponibles", "ver": "Ver ficha",
         "foto": "foto", "de": "de", "render": "Recreación · posible reforma",
         "render_alt": ", recreación de una posible reforma", "prox": "Fotos próximamente",
@@ -77,10 +73,6 @@ T = {
         "desc": "Description", "usu": "Residents", "usu_1": "1 resident", "usu_n": "{n} residents",
         "usu_txt": "The residents keep living in the home for life. The buyer acquires the bare ownership today and gains full ownership when the lifetime right ends.",
         "anyos": "years old", "sexo": {"Mujer": "Woman", "Hombre": "Man"},
-        "como": "How buying bare ownership works",
-        "pasos": [("We send you the dossier", "Property documents, Land Registry extract and valuation, so you can review everything calmly."),
-                  ("Viewing and offer", "We arrange the viewing with respect for the residents and support you through the negotiation."),
-                  ("Signing before a notary", "Deed and registration in the Land Registry, with the whole process checked.")],
         "otras": "Other homes available", "ver": "View details",
         "foto": "photo", "de": "of", "render": "Rendering · possible renovation",
         "render_alt": ", rendering of a possible renovation", "prox": "Photos coming soon",
@@ -148,8 +140,7 @@ def active(v):
 
 
 def photos(v):
-    f = v.get("fotos") or ([v["foto"]] if v.get("foto") else [])
-    return [] if v.get("sinFotos") and not v.get("fotos") else f
+    return v.get("fotos") or ([v["foto"]] if v.get("foto") else [])
 
 
 def gallery(o, t):
@@ -159,6 +150,9 @@ def gallery(o, t):
     if not fotos:
         return ('<div style="position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(135deg,#ECE7DD,#ECE7DD 12px,#E4DED2 12px,#E4DED2 24px);display:flex;align-items:center;justify-content:center">'
                 '<span style="font-size:14px;font-weight:600;color:#5A6B7D;background:#F5F2EC;padding:8px 16px;border-radius:999px">' + E(t["prox"]) + '</span></div>')
+    if o.get("sinFotos"):  # imagen de marca "Fotografías no disponibles": se muestra tal cual, sin visor
+        return ('<div style="position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#1F3A2E">'
+                '<img src="/' + E(fotos[0]) + '" alt="' + E(alt) + '" loading="eager" style="width:100%;height:100%;object-fit:cover;display:block"></div>')
     n = len(fotos)
     rtag = ('<span style="position:absolute;left:14px;bottom:14px;background:rgba(15,22,18,.74);color:#F5F2EC;font-size:12px;font-weight:700;letter-spacing:.03em;padding:6px 12px;border-radius:999px;pointer-events:none">'
             + E(t["render"]) + '</span>')
@@ -255,17 +249,13 @@ def content(v, todas, lang, cta_band):
         '<strong style="display:block;font-size:clamp(1.9rem,3vw,2.4rem);letter-spacing:-.02em;color:#1F3A2E;font-weight:700;line-height:1.1;margin:4px 0 18px">' + E(o.get("pagoInicial") or "") + '</strong>'
         '<div style="display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid rgba(31,58,46,.1);font-size:14.5px"><span style="color:#5A6B7D">' + E(renta_row[0]) + '</span><strong style="color:#1F3A2E;text-align:right">' + E(renta_row[1]) + '</strong></div>'
         + ('<div style="display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid rgba(31,58,46,.1);font-size:14.5px"><span style="color:#5A6B7D">' + E(t["tasacion"]) + '</span><strong style="color:#1A1A1A">' + E(o["tasacion"]) + '</strong></div>' if o.get("tasacion") else '')
-        + '<div style="display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid rgba(31,58,46,.1);font-size:14.5px"><span style="color:#5A6B7D">' + E(t["usu"]) + '</span><strong style="color:#1F3A2E;text-align:right">' + E(", ".join(str(p.get("edad", "")) for p in owners) + " " + t["anyos"] if owners else "") + '</strong></div>'
+        + '<div style="display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid rgba(31,58,46,.1);font-size:14.5px"><span style="color:#5A6B7D">' + E(t["usu"]) + '</span><strong style="color:#1F3A2E;text-align:right">' + E(" · ".join(t["sexo"].get(p.get("sexo"), p.get("sexo", "")) + ", " + str(p.get("edad", "")) + " " + t["anyos"] for p in owners)) + '</strong></div>'
         '<button class="ndCallTrigger ndFBtn" style="font-family:inherit;cursor:pointer;display:block;width:100%;margin-top:18px;background:#1F3A2E;color:#F5F2EC;border:2px solid #1F3A2E;padding:15px;border-radius:999px;font-size:15px;font-weight:700;transition:background .25s">' + E(t["info"]) + '</button>'
         '<a href="' + E(wa_href) + '" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:10px;background:transparent;color:#1F3A2E;border:1.5px solid #1F3A2E;padding:13px;border-radius:999px;font-size:14.5px;font-weight:700;text-decoration:none">'
         '<svg viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path fill="#25D366" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2z"/></svg>'
         + E(t["wa"]) + '</a>'
         '<p style="font-size:12.5px;line-height:1.5;color:#5A6B7D;text-align:center;margin-top:14px">' + E(t["nota_res"] if estado == "reservada" else t["nota"]) + '</p>'
         '</aside>')
-
-    pasos = "".join('<li style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#1F3A2E;color:#F5F2EC;font-size:13px;font-weight:700">' + str(i + 1) + '</span>'
-                    '<span><strong style="display:block;font-size:15px;color:#1F3A2E;margin-bottom:3px">' + E(a) + '</strong><span style="font-size:14.5px;line-height:1.55;color:#5A6B7D">' + E(b) + '</span></span></li>'
-                    for i, (a, b) in enumerate(t["pasos"]))
 
     otras = [loc(x, lang) for x in todas if active(x) and x["id"] != v["id"]]
     otras.sort(key=lambda x: ({"disponible": 0, "reservada": 1}.get(x.get("estado") or "disponible", 2), x.get("orden") or 99))
@@ -303,7 +293,6 @@ def content(v, todas, lang, cta_band):
         + ('<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">' + extras + '</div>' if extras else '') + '</div>'
         + ('<div style="margin-top:44px">' + h2(t["desc"]) + '<p style="font-size:16px;line-height:1.7;color:#3A4A40;max-width:760px">' + E(o["descripcion"]) + '</p></div>' if o.get("descripcion") else '')
         + '<div style="margin-top:44px">' + h2(usu_lbl) + '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">' + pills + '</div><p style="font-size:15px;line-height:1.65;color:#5A6B7D;max-width:760px">' + E(t["usu_txt"]) + '</p></div>'
-        + '<div style="margin-top:44px;background:#ECE7DD;border-radius:14px;padding:clamp(22px,3vw,32px)">' + h2(t["como"]) + '<ol style="list-style:none;display:flex;flex-direction:column;gap:16px">' + pasos + '</ol></div>'
         + '</div></div></section>\n'
         '<section style="background:#ECE7DD;padding:clamp(56px,7vw,90px) clamp(20px,5vw,44px)">'
         '<div style="max-width:1240px;margin:0 auto">'
