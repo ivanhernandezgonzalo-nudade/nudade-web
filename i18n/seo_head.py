@@ -64,6 +64,20 @@ PAGES = [
         "crumbs": ["Home", "Homes in bare ownership"],
         "img_alt": "Older couple on the sofa at home",
     },
+    {
+        "file": "calculadora-nuda-propiedad/index.html", "lang": "es", "locale": "es_ES", "alt_locale": "en_GB",
+        "url": BASE + "/calculadora-nuda-propiedad/", "kind": "calc", "home": BASE + "/",
+        "crumbs": ["Inicio", "Calculadora de nuda propiedad"],
+        "app": "Calculadora de nuda propiedad",
+        "img_alt": "Pareja de personas mayores en el sofá de su casa",
+    },
+    {
+        "file": "en/bare-ownership-calculator/index.html", "lang": "en", "locale": "en_GB", "alt_locale": "es_ES",
+        "url": BASE + "/en/bare-ownership-calculator/", "kind": "calc", "home": BASE + "/en/",
+        "crumbs": ["Home", "Bare ownership calculator"],
+        "app": "Bare ownership calculator",
+        "img_alt": "Older couple on the sofa at home",
+    },
 ]
 
 
@@ -128,6 +142,21 @@ def block(p, src):
                      "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq
                 ],
             })
+    elif p["kind"] == "calc":
+        graph.append({
+            "@type": "WebApplication", "@id": p["url"] + "#app", "url": p["url"], "name": p["app"],
+            "description": desc, "inLanguage": p["lang"], "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Web", "isAccessibleForFree": True,
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
+            "provider": {"@id": BASE + "/#org"},
+        })
+        graph.append({
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": p["crumbs"][0], "item": p["home"]},
+                {"@type": "ListItem", "position": 2, "name": p["crumbs"][1], "item": p["url"]},
+            ],
+        })
     else:
         graph.append({
             "@type": "CollectionPage", "@id": p["url"] + "#webpage", "url": p["url"],
@@ -157,7 +186,7 @@ def run():
         j = src.index("\n", i) + 1
         src = src[:j] + b + "\n" + src[j:]
         open(path, "w", encoding="utf-8").write(src)
-    print("OK: Open Graph y JSON-LD actualizados en home y viviendas (ES/EN).")
+    print("OK: Open Graph y JSON-LD actualizados en home, viviendas y calculadora (ES/EN).")
 
 
 if __name__ == "__main__":
