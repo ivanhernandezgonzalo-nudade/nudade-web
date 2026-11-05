@@ -149,3 +149,5 @@ if __name__ == "__main__":
         print("\n".join(sorted(set(problems))))
         sys.exit(1)
     print("OK: versión inglesa generada sin restos en español.")
+    import seo_head  # noqa: E402
+    seo_head.run()

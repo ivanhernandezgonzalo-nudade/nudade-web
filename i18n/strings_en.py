@@ -354,7 +354,7 @@ JS = [
     ("'Calcular estimación'", "'Calculate estimate'"),
     ("'Completa los datos para calcular'", "'Fill in the details to calculate'"),
     ("'es-ES'", "'en-GB'"),
-    ("fmt(n) + '/mes'", "fmt(n) + '/month'"),
+    ("fmt(n) + '/mes'", "fmt(n) + '/' + 'month'"),
     ("'Importe estimado'", "'Estimated amount'"),
     ("'Pago único al cierre notarial'", "'Single payment at completion'"),
     ("'Sobre el valor de la vivienda'", "'Of the home\\u2019s value'"),
