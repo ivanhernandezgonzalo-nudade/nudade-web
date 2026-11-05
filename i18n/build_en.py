@@ -29,9 +29,18 @@ PAGES = [
         "title": "Homes for sale in bare ownership in Spain | Nudade",
         "desc": "Homes available in bare ownership (nuda propiedad) in Spain, with residents who keep living at home for life. Opportunities for investors with a social impact.",
     },
+    {
+        "src": "calculadora-nuda-propiedad/index.html", "dst": "en/bare-ownership-calculator/index.html",
+        "es": "/calculadora-nuda-propiedad/", "en": "/en/bare-ownership-calculator/",
+        "title": "Free bare ownership calculator for Spain: what is the home worth? | Nudade",
+        "desc": "Work out in a minute how much an older relative could receive by selling the bare ownership (nuda propiedad) of their Spanish home while living there for life. Lump sum, lifetime income or both.",
+        "subdir": True,
+    },
 ]
 
 LINKS = [
+    ('href="/calculadora-nuda-propiedad/"', 'href="/en/bare-ownership-calculator/"'),
+    ('href="/viviendas.html"', 'href="/en/homes.html"'),
     ('href="viviendas.html"', 'href="/en/homes.html"'),
     ('href="index.html#', 'href="/en/#'),
     ('href="index.html"', 'href="/en/"'),
@@ -115,6 +124,8 @@ def build(p):
     out = tpl + js
     for a, b in LINKS:
         out = out.replace(a, b)
+    if p.get("subdir"):
+        out = out.replace('href="/#', 'href="/en/#').replace('href="/"', 'href="/en/"')
 
     # Comprobación de restos en español
     body = out[out.index("<x-dc>"):]
@@ -139,6 +150,8 @@ def build(p):
 
 
 if __name__ == "__main__":
+    import build_calc  # noqa: E402
+    build_calc.build()
     problems = []
     for p in PAGES:
         for m in build(p):

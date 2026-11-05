@@ -290,6 +290,52 @@ ATTR = {
 }
 
 # Sustituciones literales en el script (y en cadenas HTML generadas por JS).
+# Acceso a la calculadora en la home y página /calculadora-nuda-propiedad/
+TEXT.update({
+    "Calculadora gratuita": "Free calculator",
+    "¿Cuánto podría valer la nuda propiedad de su casa?": "How much could the bare ownership of their home be worth?",
+    "Con el valor aproximado de la vivienda y la edad de los propietarios, la calculadora te da una estimación orientativa al instante. Gratis y sin compromiso.":
+        "With the home&rsquo;s approximate value and the owners&rsquo; ages, the calculator gives you an indicative estimate straight away. Free and with no obligation.",
+    "Resultado en menos de un minuto": "Result in under a minute",
+    "Basada en las tablas de esperanza de vida del INE": "Based on Spain&rsquo;s official (INE) life expectancy tables",
+    "Pago único, renta vitalicia o mixto": "Lump sum, lifetime income or a mix",
+    "Calcular ahora": "Calculate now",
+    "Prefiero una valoración personal": "I&rsquo;d rather have a personal valuation",
+    "Ejemplo orientativo": "Indicative example",
+    "Valor de la vivienda": "Home value",
+    "300.000 €": "&euro;300,000",
+    "Edad de la propietaria": "Owner&rsquo;s age",
+    "75 años": "75 years old",
+    "Podría recibir": "Could receive",
+    "146.000 € a 178.000 €": "&euro;146,000 to &euro;178,000",
+    "Con pago único, y sigue viviendo en su casa de por vida.": "As a lump sum, and she keeps living at home for life.",
+    "Haz tu cálculo ›": "Work it out ›",
+    "Calculadora de nuda propiedad": "Bare ownership calculator",
+    "Calcula en un minuto cuánto podría recibir una persona mayor por vender la nuda propiedad de su casa sin dejar de vivir en ella. Estimación orientativa, gratuita y sin compromiso.":
+        "Work out in a minute how much an older person could receive by selling the bare ownership of their home while still living in it. An indicative estimate, free and with no obligation.",
+    "Cómo se calcula": "How it is calculated",
+    "Qué influye en el valor de la nuda propiedad.": "What drives the value of bare ownership.",
+    "La nuda propiedad vale menos que la vivienda completa porque el comprador no podrá usarla mientras viva el usufructuario. La calculadora estima esa diferencia con cuatro datos.":
+        "Bare ownership is worth less than the full home because the buyer cannot use it while the resident is alive. The calculator estimates that difference from four pieces of information.",
+    "Partimos del valor de mercado aproximado. En la valoración definitiva lo fija una tasación independiente.":
+        "We start from the approximate market value. In the final valuation it is set by an independent appraisal.",
+    "Edad y esperanza de vida": "Age and life expectancy",
+    "Cuanto mayor es la persona propietaria, más alto es el importe que recibe. Usamos las tablas de esperanza de vida del INE.":
+        "The older the owner, the higher the amount they receive. We use the official INE life expectancy tables.",
+    "Uno o dos propietarios": "One or two owners",
+    "Si la casa es de una pareja, el usufructo dura hasta que fallece el último de los dos, así que el cálculo tiene en cuenta a ambos.":
+        "If a couple owns the home, the lifetime right lasts until the second of them passes away, so the calculation takes both into account.",
+    "Se puede cobrar todo al inicio, convertirlo en una renta mensual vitalicia o combinar las dos fórmulas.":
+        "The money can be paid all upfront, turned into a monthly income for life, or a mix of the two.",
+    "Ejemplo orientativo.": "Indicative example.",
+    "Una mujer de 75 años con una vivienda de 300.000 € recibiría con pago único entre 146.000 € y 178.000 €. El importe final depende de la tasación oficial, del estado de la vivienda y de su ubicación.":
+        "A 75-year-old woman with a home worth &euro;300,000 would receive a lump sum of between &euro;146,000 and &euro;178,000. The final amount depends on the official appraisal, the condition of the home and its location.",
+    "Guía: qué es la nuda propiedad": "Guide: what bare ownership is (in Spanish)",
+})
+ATTR.update({
+    "Abrir la calculadora de nuda propiedad": "Open the bare ownership calculator",
+})
+
 JS = [
     # Viewer / galería
     ("'Fotos de la vivienda'", "'Photos of the home'"),
