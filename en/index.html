@@ -1124,7 +1124,7 @@ class Component extends DCLogic {
     };
     const wireZoom = (root) => {
       root.querySelectorAll('.ndZoom').forEach(w => {
-        if (w.dataset.zoom) return; w.dataset.zoom = '1';
+        if (w.dataset.zoom || w.closest('[data-href]')) return; w.dataset.zoom = '1';
         const imgs = Array.from(w.querySelectorAll('img'));
         const srcs = imgs.map(im => im.getAttribute('src'));
         const flags = imgs.map(im => im.getAttribute('data-render') === '1');
@@ -1167,6 +1167,8 @@ class Component extends DCLogic {
         g.addEventListener('scroll', () => { c.textContent = (Math.round(g.scrollLeft / g.clientWidth) + 1) + ' / ' + n; }, { passive: true });
       });
     };
+    const fichaUrl = (v) => (v && v.id && (v.estado || 'disponible') !== 'vendida') ? '/en/homes/' + v.id + '/' : '';
+    const wireCardLinks = (g) => { if (!g) return; g.querySelectorAll('.ndVivCard[data-href]').forEach(c => { if (c.dataset.lnk) return; c.dataset.lnk = '1'; c.style.cursor = 'pointer'; c.addEventListener('click', (e) => { if (e.target.closest('a,button')) return; window.location.href = c.getAttribute('data-href'); }); }); g.querySelectorAll('a.ndVivBtn').forEach(b => { b.addEventListener('mouseenter', () => { b.style.background = '#1F3A2E'; b.style.color = '#F5F2EC'; }); b.addEventListener('mouseleave', () => { b.style.background = 'transparent'; b.style.color = '#1F3A2E'; }); }); };
         const SX = (s) => ({ Hombre: 'Male', Mujer: 'Female' }[s] || s);
     const EUR = (s) => { if (!s) return s; const n = parseFloat(String(s).replace(/[^0-9,]/g, '').replace(',', '.')); return isNaN(n) ? s : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n); };
     const FLOOR = (s) => { if (!s) return s; const m = /^(\d+)\s*[ªº]?\s*planta/i.exec(s); if (m) { const n = +m[1], suf = (n % 100 >= 11 && n % 100 <= 13) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th'); return n + suf + ' floor'; } if (/^bajo/i.test(s)) return 'Ground floor'; if (/^[aá]tico/i.test(s)) return 'Penthouse'; return s; };
@@ -1207,7 +1209,7 @@ class Component extends DCLogic {
       if (v.ascensor) amen.push('Lift');
       (v.extras || []).forEach(x => amen.push(x));
       const amenHtml = amen.map(a => '<span style="font-size:13px;color:#1A1A1A;background:#F5F2EC;border:1px solid rgba(31,58,46,.1);padding:5px 11px;border-radius:5px;font-weight:500">' + a + '</span>').join('');
-      return '<article data-reveal class="ndVivCard" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(31,58,46,.1);display:flex;flex-direction:column;transition:transform .4s ease, box-shadow .4s ease">'
+      return '<article data-reveal class="ndVivCard"' + (fichaUrl(v) ? ' data-href="' + fichaUrl(v) + '"' : '') + ' style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(31,58,46,.1);display:flex;flex-direction:column;transition:transform .4s ease, box-shadow .4s ease">'
         + media
         + ribbon
         + '<div style="position:absolute;top:14px;left:14px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none">' + (v.etiqueta ? '<span style="background:#F5F2EC;color:#1F3A2E;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px;box-shadow:0 4px 14px -6px rgba(15,22,18,.5)">' + v.etiqueta + '</span>' : '') + '<span style="background:rgba(31,58,46,.9);color:#F5F2EC;font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:6px 13px;border-radius:999px;backdrop-filter:blur(4px)">Bare ownership</span></div></div>'
@@ -1223,7 +1225,7 @@ class Component extends DCLogic {
           : '<div style="display:flex;flex-direction:column;gap:3px;text-align:right"><span style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#5A6B7D">Payment</span><span style="font-size:1rem;font-weight:700;color:#1F3A2E;line-height:1.25">Single payment</span></div>')
         + '</div>'
         + '<div class="vcTas" style="font-size:12px;color:#5A6B7D">' + (v.tasacion ? 'Official valuation: <strong style="color:#1A1A1A">' + v.tasacion + '</strong>' : '') + '</div>'
-        + '<a href="#valoracion" data-nav-viv style="display:block;text-align:center;background:transparent;color:#1F3A2E;border:1.5px solid #1F3A2E;padding:12px;border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;transition:background .25s, color .25s">' + ctaTxt + '</a>'
+        + (fichaUrl(v) ? '<a href="' + fichaUrl(v) + '" class="ndVivBtn" style="display:block;text-align:center;background:transparent;color:#1F3A2E;border:1.5px solid #1F3A2E;padding:12px;border-radius:999px;font-size:14px;font-weight:600;transition:background .25s, color .25s;text-decoration:none">View full details</a>' : '<a href="#valoracion" data-nav-viv style="display:block;text-align:center;background:transparent;color:#1F3A2E;border:1.5px solid #1F3A2E;padding:12px;border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;transition:background .25s, color .25s">' + ctaTxt + '</a>')
         + '</div></article>';
     };
     const wireVivGrid = () => {
@@ -1260,6 +1262,7 @@ class Component extends DCLogic {
           wireVivGrid();
           wireGal(grid);
           wireZoom(grid);
+      wireCardLinks(grid);
           vivCols(grid);
           alignCards(grid);
           grid.querySelectorAll('img').forEach(im => im.addEventListener('load', () => scheduleAlign(grid), { once: true }));

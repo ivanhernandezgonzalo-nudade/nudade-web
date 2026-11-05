@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /i18n/
 Disallow: /_blog/
+Disallow: /_calc/
+Disallow: /_viviendas/
 
 Sitemap: https://nudade.es/sitemap.xml
