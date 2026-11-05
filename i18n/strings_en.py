@@ -337,6 +337,8 @@ ATTR.update({
 })
 
 JS = [
+    ("'/viviendas/' + v.id + '/'", "'/en/homes/' + v.id + '/'"),
+    (">Ver ficha completa</a>'", ">View full details</a>'"),
     # Viewer / galería
     ("'Fotos de la vivienda'", "'Photos of the home'"),
     ("Recreación virtual de una posible reforma · No refleja el estado actual", "Virtual rendering of a possible renovation · Not the current condition"),

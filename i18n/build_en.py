@@ -164,3 +164,6 @@ if __name__ == "__main__":
     print("OK: versión inglesa generada sin restos en español.")
     import seo_head  # noqa: E402
     seo_head.run()
+    sys.path.insert(0, os.path.join(ROOT, "_viviendas"))
+    import build_fichas  # noqa: E402
+    build_fichas.build()
