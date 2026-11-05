@@ -118,7 +118,7 @@ def nav(active_blog=True):
       {item("/#por-que", "Por qué Nudade")}
       {item("/viviendas.html", "Viviendas")}
       {item("/#garantias", "Garantías")}
-      {item("/#calculadora", "Calcular")}
+      {item("/calculadora-nuda-propiedad/", "Calcular")}
       {item("/#faq", "Preguntas")}
       {item("/blog/", "Blog", active_blog)}
       <li><a href="{WA}" target="_blank" rel="noopener" class="nWa" aria-label="Escríbenos por WhatsApp">{WA_ICON}<span class="nWaLong">Escríbenos por </span>WhatsApp</a></li>
@@ -139,7 +139,7 @@ def footer():
         <p>Tu casa sigue siendo tu casa, ahora también es liquidez. Nuda propiedad en España.</p>
       </div>
       <div class="fCols">
-        <div><p class="fH">Nudade</p><ul><li><a href="/#como-funciona">Cómo funciona</a></li><li><a href="/#calculadora">Calcular</a></li><li><a href="/viviendas.html">Viviendas</a></li><li><a href="/blog/">Blog</a></li></ul></div>
+        <div><p class="fH">Nudade</p><ul><li><a href="/#como-funciona">Cómo funciona</a></li><li><a href="/calculadora-nuda-propiedad/">Calcular</a></li><li><a href="/viviendas.html">Viviendas</a></li><li><a href="/blog/">Blog</a></li></ul></div>
         <div><p class="fH">Contacto</p><ul><li><a href="{WA}" target="_blank" rel="noopener" class="fWa">{WA_ICON}WhatsApp</a></li><li><a href="mailto:info@nudade.es">info@nudade.es</a></li></ul></div>
         <div><p class="fH">Legal</p><ul><li><a href="/aviso-legal/">Aviso legal</a></li><li><a href="/politica-privacidad/">Política de privacidad</a></li><li><a href="/politica-cookies/">Política de cookies</a></li></ul></div>
       </div>
@@ -226,7 +226,7 @@ def cta():
     <p class="bCtaText">Te explicamos cómo funcionaría en vuestro caso, sin compromiso y sin prisas. Primero una cifra orientativa, luego las dudas que tengáis.</p>
   </div>
   <div class="bCtaBtns">
-    <a href="/#calculadora" class="bBtn light">Calcular el valor gratis</a>
+    <a href="/calculadora-nuda-propiedad/" class="bBtn light">Calcular el valor gratis</a>
     <a href="{WA}" target="_blank" rel="noopener" class="bBtn ghost">{WA_ICON}Escríbenos por WhatsApp</a>
   </div>
 </aside>"""
@@ -368,7 +368,7 @@ def build_llms(posts):
         "Datos clave:",
         "- Servicio: intermediación en compraventa de nuda propiedad con reserva de usufructo vitalicio en toda España.",
         "- Público: personas mayores propietarias de su vivienda y sus familias, y también inversores particulares con horizonte largo.",
-        "- Valoración orientativa gratuita y sin compromiso en https://nudade.es/#calculadora",
+        "- Valoración orientativa gratuita y sin compromiso en https://nudade.es/calculadora-nuda-propiedad/",
         "- Contacto: info@nudade.es",
         "",
         "## Páginas principales",
