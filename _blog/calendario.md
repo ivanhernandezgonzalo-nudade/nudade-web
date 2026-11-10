@@ -8,9 +8,9 @@ Estados: `publicado` · `en cola` (escrito, sale solo en su fecha) · `pendiente
 |---|---|---|---|---|---|
 | 1 | 2026-10-27 | Qué es la nuda propiedad: guía clara para familias | qué es la nuda propiedad | Informativa | publicado |
 | 2 | 2026-11-03 | Nuda propiedad o hipoteca inversa: diferencias que tu familia debe conocer | nuda propiedad o hipoteca inversa | Comparativa | publicado |
-| 3 | 2026-11-10 | Quién paga el IBI, la comunidad, las derramas y las reparaciones | nuda propiedad quién paga IBI comunidad | Informativa práctica | en cola |
+| 3 | 2026-11-10 | Quién paga el IBI, la comunidad, las derramas y las reparaciones | nuda propiedad quién paga IBI comunidad | Informativa práctica | publicado |
 | 4 | 2026-11-17 | Ventajas y desventajas de vender la nuda propiedad: lo que tu familia debe sopesar | ventajas y desventajas nuda propiedad | Decisión | en cola |
-| 5 | 2026-11-24 | Impuestos al vender la nuda propiedad: IRPF, plusvalía y mayores de 65 | vender nuda propiedad impuestos mayores 65 | Fiscal | pendiente |
+| 5 | 2026-11-24 | Impuestos al vender la nuda propiedad: IRPF, plusvalía y mayores de 65 | vender nuda propiedad impuestos mayores 65 | Fiscal | en cola |
 | 6 | 2026-12-01 | Cómo se calcula el valor de la nuda propiedad (con ejemplos por edad) | cómo calcular valor nuda propiedad | Herramienta, enlaza a la calculadora | pendiente |
 | 7 | 2026-12-08 | Cómo hablar con tus padres de vender la nuda propiedad | hablar con mis padres vender casa | Emocional, diferencial de marca | pendiente |
 | 8 | 2026-12-15 | Comprar una nuda propiedad: 8 consejos para el inversor | comprar nuda propiedad consejos | Inversor | pendiente |
