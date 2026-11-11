@@ -1,2 +1,6 @@
-/off-market/*
+# privadas:start (generado por _viviendas/build_fichas.py)
+/viviendas/marbella-guadalmina-baja/*
   X-Robots-Tag: noindex, nofollow, noarchive
+/en/homes/marbella-guadalmina-baja/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+# privadas:end
