@@ -11,6 +11,10 @@ Reglas
 - _viviendas/publicadas.json guarda todos los id que han tenido ficha alguna vez, para
   mantener esas redirecciones en _redirects.
 - El sitemap se actualiza solo con las fichas vigentes.
+- Viviendas privadas (_viviendas/privadas.json, mismo esquema): tienen ficha con el mismo formato
+  en /viviendas/<id>/ y /en/homes/<id>/, pero no salen en la home, el listado, el sitemap ni en
+  "otras viviendas", y llevan noindex (meta + X-Robots-Tag en _headers). Solo las ve quien tiene
+  el enlace. Para publicarla en la web, mueve el objeto de privadas.json a viviendas.json.
 
 El diseño reutiliza viviendas.html y en/homes.html (menú, pie, modales, banda de inversores
 y script), así que cualquier cambio de estilo en el listado se hereda en las fichas.
@@ -230,7 +234,8 @@ def content(v, todas, lang, cta_band):
         facts.append(fact(t["sup"], o["superficie"]))
     if o.get("altura"):
         facts.append(fact(t["planta"], o["altura"]))
-    facts.append(fact(t["asc"], t["si"] if o.get("ascensor") else t["no"]))
+    if "ascensor" in o:  # en casas y villas no aplica: se omite si no viene el campo
+        facts.append(fact(t["asc"], t["si"] if o.get("ascensor") else t["no"]))
     facts.append(fact(t["ubic"], ", ".join(x for x in [o.get("zona"), o.get("localidad")] if x)))
     extras = "".join(chip(x) for x in (o.get("extras") or []))
 
@@ -433,6 +438,27 @@ def update_sitemap(ids):
     open(path, "w", encoding="utf-8").write(s)
 
 
+PRIV_START, PRIV_END = "# privadas:start (generado por _viviendas/build_fichas.py)", "# privadas:end"
+NOINDEX = '<meta name="robots" content="noindex, nofollow, noarchive">'
+
+
+def update_headers(priv_ids):
+    path = os.path.join(ROOT, "_headers")
+    s = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
+    s = re.sub(re.escape(PRIV_START) + r".*?" + re.escape(PRIV_END) + r"\n?", "", s, flags=re.S).strip("\n")
+    if priv_ids:
+        lines = [PRIV_START]
+        for i in sorted(priv_ids):
+            for u in (T["es"]["ficha"].format(id=i), T["en"]["ficha"].format(id=i)):
+                lines += [u + "*", "  X-Robots-Tag: noindex, nofollow, noarchive"]
+        lines.append(PRIV_END)
+        s = (s + "\n\n" if s else "") + "\n".join(lines)
+    if s:
+        open(path, "w", encoding="utf-8").write(s + "\n")
+    elif os.path.exists(path):
+        os.remove(path)
+
+
 def update_redirects(retired):
     path = os.path.join(ROOT, "_redirects")
     s = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
@@ -455,23 +481,36 @@ def build():
     registro = json.load(open(reg_path, encoding="utf-8")) if os.path.exists(reg_path) else []
     vivas = [v for v in todas if active(v)]
     ids = [v["id"] for v in vivas]
+    priv_path = os.path.join(ROOT, "_viviendas", "privadas.json")
+    privadas = [v for v in (json.load(open(priv_path, encoding="utf-8")).get("viviendas", []) if os.path.exists(priv_path) else [])
+                if active(v) and v["id"] not in ids]
+    priv_ids = [v["id"] for v in privadas]
     shells = {"es": open(os.path.join(ROOT, "viviendas.html"), encoding="utf-8").read(),
               "en": open(os.path.join(ROOT, "en", "homes.html"), encoding="utf-8").read()}
     dirs = {"es": os.path.join(ROOT, "viviendas"), "en": os.path.join(ROOT, "en", "homes")}
     for lang, d in dirs.items():
         os.makedirs(d, exist_ok=True)
         for name in os.listdir(d):  # fichas retiradas
-            if name not in ids and os.path.isdir(os.path.join(d, name)):
+            if name not in ids and name not in priv_ids and os.path.isdir(os.path.join(d, name)):
                 shutil.rmtree(os.path.join(d, name))
         for v in vivas:
             out = os.path.join(d, v["id"], "index.html")
             os.makedirs(os.path.dirname(out), exist_ok=True)
             open(out, "w", encoding="utf-8").write(page(shells[lang], v, todas, lang))
+        for v in privadas:
+            out = os.path.join(d, v["id"], "index.html")
+            os.makedirs(os.path.dirname(out), exist_ok=True)
+            p = page(shells[lang], v, todas, lang)
+            p = re.sub(r'<link rel="alternate" hreflang="[^"]*" href="[^"]*">\n?', "", p)
+            p = p.replace("<head>", "<head>\n" + NOINDEX, 1)
+            open(out, "w", encoding="utf-8").write(p)
     registro = sorted(set(registro) | set(ids))
     json.dump(registro, open(reg_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     update_sitemap(ids)
     update_redirects([i for i in registro if i not in ids])
-    print("OK: fichas generadas (%d) en /viviendas/<id>/ y /en/homes/<id>/" % len(ids))
+    update_headers(priv_ids)
+    print("OK: fichas generadas (%d) en /viviendas/<id>/ y /en/homes/<id>/" % len(ids)
+          + (" + %d privadas sin enlazar (%s)" % (len(priv_ids), ", ".join(priv_ids)) if priv_ids else ""))
 
 
 if __name__ == "__main__":

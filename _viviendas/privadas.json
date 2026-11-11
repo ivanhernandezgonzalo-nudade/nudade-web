@@ -1,0 +1,76 @@
+{
+ "viviendas": [
+  {
+   "id": "marbella-guadalmina-baja",
+   "titulo": "Villa en Guadalmina Baja, Marbella",
+   "localidad": "Marbella",
+   "cp": "29670",
+   "zona": "Guadalmina Baja",
+   "pagoInicial": "2.610.000 €",
+   "renta": "",
+   "tasacion": "",
+   "habitaciones": "3",
+   "superficie": "340 m²",
+   "altura": "",
+   "extras": [
+    "Parcela de 2.500 m²",
+    "140 m² de porches cubiertos",
+    "3 baños",
+    "Piscina",
+    "Jardín",
+    "Patio interior con fuente",
+    "Aerotermia, solar y suelo radiante",
+    "Libre de cargas"
+   ],
+   "descripcion": "Villa clásica de gran calidad en Guadalmina Baja, una de las zonas residenciales más consolidadas de Marbella, cerca de la playa y del golf. Se levanta sobre una parcela de 2.500 m², con 340 m² de vivienda y 140 m² de porches cubiertos, piscina y un jardín maduro con mucha privacidad. Mármol, carpinterías nobles y espacios amplios que se abren a un patio interior con fuente. Tres dormitorios y tres baños. La climatización es nueva, con aerotermia, energía solar y suelo radiante. Vivienda en excelente estado y libre de cargas. Valor en pleno dominio: 4.570.000 €; la nuda propiedad se ofrece a 2.610.000 €, un 43 % por debajo.",
+   "propietarios": [
+    {
+     "sexo": "Hombre",
+     "edad": 80
+    },
+    {
+     "sexo": "Mujer",
+     "edad": 70
+    }
+   ],
+   "foto": "assets/viviendas/marbella-guadalmina-baja-1-piscina.webp",
+   "fotos": [
+    "assets/viviendas/marbella-guadalmina-baja-1-piscina.webp",
+    "assets/viviendas/marbella-guadalmina-baja-2-salon.webp",
+    "assets/viviendas/marbella-guadalmina-baja-3-patio.webp",
+    "assets/viviendas/marbella-guadalmina-baja-4-galeria-patio.webp",
+    "assets/viviendas/marbella-guadalmina-baja-5-porche.webp",
+    "assets/viviendas/marbella-guadalmina-baja-6-salon-biblioteca.webp",
+    "assets/viviendas/marbella-guadalmina-baja-7-galeria.webp",
+    "assets/viviendas/marbella-guadalmina-baja-8-salon-estar.webp",
+    "assets/viviendas/marbella-guadalmina-baja-9-cocina.webp",
+    "assets/viviendas/marbella-guadalmina-baja-10-dormitorio-principal.webp",
+    "assets/viviendas/marbella-guadalmina-baja-11-dormitorio-jardin.webp",
+    "assets/viviendas/marbella-guadalmina-baja-12-despacho.webp",
+    "assets/viviendas/marbella-guadalmina-baja-13-dormitorio.webp",
+    "assets/viviendas/marbella-guadalmina-baja-14-bano.webp",
+    "assets/viviendas/marbella-guadalmina-baja-15-comedor.webp"
+   ],
+   "renders": [],
+   "etiqueta": "",
+   "destacada": true,
+   "estado": "disponible",
+   "orden": 6,
+   "en": {
+    "titulo": "Villa in Guadalmina Baja, Marbella",
+    "altura": "",
+    "extras": [
+     "2,500 m² plot",
+     "140 m² of covered terraces",
+     "3 bathrooms",
+     "Swimming pool",
+     "Garden",
+     "Inner courtyard with fountain",
+     "Heat pump, solar and underfloor heating",
+     "Free of charges"
+    ],
+    "descripcion": "High-quality classical villa in Guadalmina Baja, one of Marbella's most established residential areas, close to the beach and golf. It sits on a 2,500 m² plot, with 340 m² of living space and 140 m² of covered terraces, a swimming pool and a mature, very private garden. Marble, fine joinery and generous spaces opening onto an inner courtyard with a fountain. Three bedrooms and three bathrooms. The climate system is new, with heat pump, solar energy and underfloor heating. In excellent condition and free of charges. Full ownership value: €4,570,000; the bare ownership is offered at €2,610,000, 43% below."
+   }
+  }
+ ]
+}
